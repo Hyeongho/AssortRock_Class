@@ -1,0 +1,5 @@
+﻿  Player.cpp
+  main.cpp
+E:\C++클라\ASortRock_Class\210723\210723\main.cpp(87,39): warning C4305: '인수': 'double'에서 'float'(으)로 잘립니다.
+  코드를 생성하고 있습니다...
+  210723.vcxproj -> E:\C++클라\ASortRock_Class\210723\Debug\210723.exe

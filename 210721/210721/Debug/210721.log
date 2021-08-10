@@ -1,0 +1,3 @@
+﻿  main1.cpp
+E:\C++클라\ASortRock_Class\210721\210721\main1.cpp(100,8): error C2675: 단항 '-': 'Point'이(가) 이 연산자를 정의하지 않거나 미리 정의된 연산자에 허용되는 형식으로의 변환을 정의하지 않습니다.
+E:\C++클라\ASortRock_Class\210721\210721\main1.cpp(100,8): error C2088: '-': struct에 맞지 않습니다.

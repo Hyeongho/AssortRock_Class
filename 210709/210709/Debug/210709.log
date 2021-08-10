@@ -1,0 +1,5 @@
+﻿  main.cpp
+E:\C++클라\ASortRock_Class\210709\210709\main.cpp(70,7): error C2065: 'Knight': 선언되지 않은 식별자입니다.
+E:\C++클라\ASortRock_Class\210709\210709\main.cpp(70,7): error C2131: 식이 상수로 계산되지 않았습니다.
+E:\C++클라\ASortRock_Class\210709\210709\main.cpp(70,7): message : 상수가 아닌 식 또는 부분식이 있습니다.
+E:\C++클라\ASortRock_Class\210709\210709\main.cpp(70,1): error C2051: case 식이 상수가 아닙니다.

@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="02. Map">
+      <UniqueIdentifier>{0ae1c607-cbab-4f4d-91d4-6225ea1eb9f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. GameManager">
+      <UniqueIdentifier>{210f0ed8-e4a8-4a2b-bf59-121f7812bb68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object">
+      <UniqueIdentifier>{8f089fb4-152e-41e0-ad0f-ae622276ea1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Store">
+      <UniqueIdentifier>{18880073-83b4-4873-b7af-ded29c9b202f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Inventory">
+      <UniqueIdentifier>{c2a62cb5-d586-4d08-a327-f1e9185cab9d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>01. GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MapManager.cpp">
+      <Filter>02. Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>02. Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>03. Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>03. Object</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectManager.cpp">
+      <Filter>03. Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Store.cpp">
+      <Filter>04. Store</Filter>
+    </ClCompile>
+    <ClCompile Include="StoreManager.cpp">
+      <Filter>04. Store</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>04. Store</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>05. Inventory</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Game.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>01. GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MapManager.h">
+      <Filter>02. Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>02. Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>03. Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>03. Object</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectManager.h">
+      <Filter>03. Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Store.h">
+      <Filter>04. Store</Filter>
+    </ClInclude>
+    <ClInclude Include="StoreManager.h">
+      <Filter>04. Store</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>04. Store</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.h">
+      <Filter>05. Inventory</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
