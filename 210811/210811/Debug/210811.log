@@ -1,0 +1,29 @@
+﻿  main.cpp
+E:\C++클라\AssortRock_Class\210811\210811\HashTable.h(181,9): warning C4101: 'result' :참조되지 않은 지역 변수입니다.
+E:\C++클라\AssortRock_Class\210811\210811\HashTable.h(175): message : 클래스 템플릿 멤버 함수 'CHashTableIterator<Key,Value> CHashTable<Key,Value,1223>::Find(const Key &)'을(를) 컴파일하는 중입니다.
+          with
+          [
+              Key=const char *,
+              Value=const char *
+          ]
+E:\C++클라\AssortRock_Class\210811\210811\main.cpp(33): message : 컴파일되는 함수 템플릿 인스턴스화 'CHashTableIterator<Key,Value> CHashTable<Key,Value,1223>::Find(const Key &)'에 대한 참조를 확인하세요.
+          with
+          [
+              Key=const char *,
+              Value=const char *
+          ]
+E:\C++클라\AssortRock_Class\210811\210811\main.cpp(13): message : 컴파일되는 클래스 템플릿 인스턴스화 'CHashTable<const char *,const char *,1223>'에 대한 참조를 확인하세요.
+E:\C++클라\AssortRock_Class\210811\210811\HashTable.h(160,9): warning C4101: 'result' :참조되지 않은 지역 변수입니다.
+E:\C++클라\AssortRock_Class\210811\210811\HashTable.h(154): message : 클래스 템플릿 멤버 함수 'Value &CHashTable<const char *,Value,1223>::operator [](const Key &)'을(를) 컴파일하는 중입니다.
+          with
+          [
+              Value=const char *,
+              Key=const char *
+          ]
+E:\C++클라\AssortRock_Class\210811\210811\main.cpp(23): message : 컴파일되는 함수 템플릿 인스턴스화 'Value &CHashTable<const char *,Value,1223>::operator [](const Key &)'에 대한 참조를 확인하세요.
+          with
+          [
+              Value=const char *,
+              Key=const char *
+          ]
+  210811.vcxproj -> E:\C++클라\AssortRock_Class\210811\Debug\210811.exe
