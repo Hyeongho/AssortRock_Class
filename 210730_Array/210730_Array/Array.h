@@ -128,13 +128,13 @@ public:
 		return m_Array[Index];
 	}
 
-	void erase(const T& data)
+	bool erase(const T& data)
 	{
 		int Index = -1;
 
 		for (int i = 0; i < m_Size; i++)
 		{
-			if (m_Array == data)
+			if (m_Array[i] == data)
 			{
 				Index = i;
 				break;
@@ -149,28 +149,28 @@ public:
 		return eraseIndex(Index);
 	}
 
-	void eraseIndex(int Index)
+	bool eraseIndex(int Index)
 	{
 		if (Index < 0 || Index >= m_Size)
 		{
-			return -1;
+			return false;
 		}
 
-		for (int i = 0; i < m_Size - 1; i++)
+		for (int i = Index; i < m_Size - 1; i++)
 		{
 			m_Array[i] = m_Array[i + 1];
 		}
 
 		m_Size--;
 
-		return Index;
+		return true;
 	}
 
 	void sort(bool (*pFunc)(const T&, const T&))
 	{
 		for (int i = 0; i < m_Size - 1; i++)
 		{
-			for (int j = 1; j < m_Size; j++)
+			for (int j = i + 1; j < m_Size; j++)
 			{
 				if (pFunc(m_Array[i], m_Array[j]))
 				{

@@ -25,7 +25,7 @@ int main()
 	std::cout << listInt.back() << std::endl;
 	std::cout << listInt.front() << std::endl;
 
-	CList<int>::iterator	iter;
+	CList<int>::iterator iter;
 
 	iter = listInt.erase(80);
 

@@ -138,7 +138,7 @@ public:
 	}
 
 private:
-	typedef CListNode<T>	NODE;
+	typedef CListNode<T> NODE;
 	typedef CListNode<T>* PNODE;
 
 public:

@@ -1,0 +1,13 @@
+﻿  GameManager.cpp
+D:\Lecture\37th\API\GameFramework\GameFramework\Include\GameManager.cpp(148,13): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Lecture\37th\API\GameFramework\GameFramework\Include\GameManager.cpp(147,62): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Lecture\37th\API\GameFramework\GameFramework\Include\GameManager.cpp(147,46): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Lecture\37th\API\GameFramework\GameFramework\Include\GameManager.cpp(147,29): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Lecture\37th\API\GameFramework\GameFramework\Include\GameManager.cpp(158,11): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Lecture\37th\API\GameFramework\GameFramework\Include\GameManager.cpp(157,54): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Lecture\37th\API\GameFramework\GameFramework\Include\GameManager.cpp(157,41): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Lecture\37th\API\GameFramework\GameFramework\Include\GameManager.cpp(157,27): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Timer.cpp
+  main.cpp
+  코드를 생성하고 있습니다...
+  GameFramework.vcxproj -> D:\Lecture\37th\API\GameFramework\GameFramework\Bin\GameFramework_Debug.exe
