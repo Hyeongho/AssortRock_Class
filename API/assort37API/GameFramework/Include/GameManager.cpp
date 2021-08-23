@@ -1,6 +1,8 @@
 
 #include "GameManager.h"
 #include "Timer.h"
+#include "Scene/SceneManager.h"
+#include "Scene/MainScene.h"
 
 CGameManager* CGameManager::m_Inst = nullptr;
 bool CGameManager::m_Loop = true;
@@ -12,6 +14,8 @@ CGameManager::CGameManager()	:
 
 CGameManager::~CGameManager()
 {
+	CSceneManager::DestroyInst();
+
 	SAFE_DELETE(m_Timer);
 
 	// GetDC를 이용해서 생성한 DC는 반드시 ReleaseDC를 해주어야 한다.
@@ -31,10 +35,11 @@ bool CGameManager::Init(HINSTANCE hInst)
 	// DC를 생성한다.
 	m_hDC = GetDC(m_hWnd);
 
-	m_RenderRC.Left = 100;
-	m_RenderRC.Top = 100;
-	m_RenderRC.Right = 200;
-	m_RenderRC.Bottom = 200;
+	// 장면관리자 초기화
+	if (!CSceneManager::GetInst()->Init())
+		return false;
+
+	CSceneManager::GetInst()->CreateScene<CMainScene>();
 
 	// 타이머를 생성한다.
 	m_Timer = new CTimer;
@@ -89,104 +94,22 @@ void CGameManager::Logic()
 
 bool CGameManager::Update(float DeltaTime)
 {
-	return false;
+	return CSceneManager::GetInst()->Update(DeltaTime);
 }
 
 bool CGameManager::PostUpdate(float DeltaTime)
 {
-	return false;
+	return CSceneManager::GetInst()->PostUpdate(DeltaTime);
 }
 
 bool CGameManager::Collision(float DeltaTime)
 {
-	return false;
+	return CSceneManager::GetInst()->Collision(DeltaTime);
 }
 
 void CGameManager::Render(float DeltaTime)
-{
-	// GetAsyncKeyState 함수는 키가 입력되었는지를 감지할 수 있는 함수이다.
-	// 0이 리턴되면 키를 누르지 않은것이다.
-	// 0x8000 이 리턴이 되면 키를 지금 누른것이다.
-	// 0x1이 리턴이 되면 키를 지금은 안눌렀지만 이전프레임에 키를 눌렀다는 것이다.
-	// 0x8001 이 리턴이 되면 지금도 눌렀고 이전프레임에도 눌러서 계속 누르고 있다는
-	// 것이다.
-	if (GetAsyncKeyState('W') & 0x8000)
-	{
-		m_RenderRC.Top -= 200.f * DeltaTime;
-		m_RenderRC.Bottom -= 200.f * DeltaTime;
-	}
-
-	if (GetAsyncKeyState('S') & 0x8000)
-	{
-		m_RenderRC.Top += 200.f * DeltaTime;
-		m_RenderRC.Bottom += 200.f * DeltaTime;
-	}
-
-	if (GetAsyncKeyState('A') & 0x8000)
-	{
-		m_RenderRC.Left -= 200.f * DeltaTime;
-		m_RenderRC.Right -= 200.f * DeltaTime;
-	}
-
-	if (GetAsyncKeyState('D') & 0x8000)
-	{
-		m_RenderRC.Left += 200.f * DeltaTime;
-		m_RenderRC.Right += 200.f * DeltaTime;
-	}
-
-	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
-	{
-		BulletInfo	Info;
-		Info.rc.Left = m_RenderRC.Right;
-		Info.rc.Right = Info.rc.Left + 50.f;
-		Info.rc.Top = m_RenderRC.Top + 25.f;
-		Info.rc.Bottom = Info.rc.Top + 50.f;
-		Info.Distance = 0.f;
-
-		m_BulletList.push_back(Info);
-	}
-
-	Rectangle(m_hDC, m_RenderRC.Left, m_RenderRC.Top, m_RenderRC.Right,
-		m_RenderRC.Bottom);
-
-	std::list<BulletInfo>::iterator	iter;
-	
-	for (iter = m_BulletList.begin(); iter != m_BulletList.end();)
-	{
-		(*iter).rc.Left += 400.f * DeltaTime;
-		(*iter).rc.Right += 400.f * DeltaTime;
-
-		(*iter).Distance += 400.f * DeltaTime;
-
-		if ((*iter).Distance >= 800.f)
-		{
-			// erase함수는 해당 iterator를 제거하고 다음노드를 가지고 있는
-			// iterator를 반환해준다.
-			// 그런데 위에서 ++iter를 하고 있으므로 이렇게 처리하면 지운노드의
-			// 다음 iterator는 동작이 안되게 된다.
-			// 그러므로 ++iter를 없앤다.
-			iter = m_BulletList.erase(iter);
-			continue;
-		}
-
-		Rectangle(m_hDC, (*iter).rc.Left, (*iter).rc.Top, (*iter).rc.Right,
-			(*iter).rc.Bottom);
-		++iter;
-	}
-
-	TextOut(m_hDC, 120, 70, TEXT("네모"), lstrlen(TEXT("네모")));
-
-	char	FPSText[32] = {};
-
-	// sprintf_s : 문자열을 만들어주는 함수이다.
-	sprintf_s(FPSText, "FPS : %.5f", m_Timer->GetFPS());
-	TextOutA(m_hDC, 1000, 50, FPSText, strlen(FPSText));
-
-	// TCHAR : 유니코드일 경우 wchar_t 로 만들어진다.
-	TCHAR	BulletCountText[32] = {};
-	wsprintf(BulletCountText, TEXT("BulletCount : %d"), m_BulletList.size());
-
-	TextOut(m_hDC, 1000, 100, BulletCountText, lstrlen(BulletCountText));
+{ 
+	CSceneManager::GetInst()->Render(m_hDC);	
 }
 
 ATOM CGameManager::Register()
@@ -226,7 +149,7 @@ ATOM CGameManager::Register()
 BOOL CGameManager::Create()
 {
 	m_hWnd = CreateWindowW(TEXT("GameFramework"), TEXT("GameFramework"), WS_OVERLAPPEDWINDOW,
-		1920, 100, m_RS.Width, m_RS.Height, nullptr, nullptr, m_hInst, nullptr);
+		100, 100, 1280, 720, nullptr, nullptr, m_hInst, nullptr);
 
 	if (!m_hWnd)
 	{
@@ -244,7 +167,7 @@ BOOL CGameManager::Create()
 	AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
 	// 위에서 얻어온 Rect를 이용해서 윈도우 크기를 지정한다.
-	SetWindowPos(m_hWnd, HWND_TOPMOST, 1920, 100, rc.right - rc.left, 
+	SetWindowPos(m_hWnd, HWND_TOPMOST, 100, 100, rc.right - rc.left, 
 		rc.bottom - rc.top,
 		SWP_NOZORDER);
 

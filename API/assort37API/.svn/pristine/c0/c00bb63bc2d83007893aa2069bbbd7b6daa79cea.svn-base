@@ -1,0 +1,48 @@
+
+#include "Player.h"
+
+CPlayer::CPlayer()
+{
+}
+
+CPlayer::CPlayer(const CPlayer& obj)	:
+	CCharacter(obj)
+{
+}
+
+CPlayer::~CPlayer()
+{
+}
+
+bool CPlayer::Init()
+{
+	if (!CCharacter::Init())
+		return false;
+
+	return true;
+}
+
+void CPlayer::Update(float DeltaTime)
+{
+	CCharacter::Update(DeltaTime);
+}
+
+void CPlayer::PostUpdate(float DeltaTime)
+{
+	CCharacter::PostUpdate(DeltaTime);
+}
+
+void CPlayer::Collision(float DeltaTime)
+{
+	CCharacter::Collision(DeltaTime);
+}
+
+void CPlayer::Render(HDC hDC)
+{
+	CCharacter::Render(hDC);
+}
+
+CPlayer* CPlayer::Clone()
+{
+	return new CPlayer(*this);
+}

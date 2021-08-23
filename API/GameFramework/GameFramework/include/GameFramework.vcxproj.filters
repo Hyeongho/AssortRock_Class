@@ -31,6 +31,12 @@
     <Filter Include="01. GameManager\03. Math">
       <UniqueIdentifier>{06b6f6cb-b978-4dec-bf22-8c2388295931}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Object\01. Character">
+      <UniqueIdentifier>{993c9128-8da9-40b0-a9b8-6d7a9143eb19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\02. Bullet">
+      <UniqueIdentifier>{8b4ef478-1716-414d-a7f8-6d96aea4789b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -50,6 +56,27 @@
     </ClCompile>
     <ClCompile Include="Math.cpp">
       <Filter>01. GameManager\03. Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Player.cpp">
+      <Filter>03. Object\01. Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Character.cpp">
+      <Filter>03. Object\01. Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Bullet.cpp">
+      <Filter>03. Object\02. Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SceneManager.cpp">
+      <Filter>02. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Scene.cpp">
+      <Filter>02. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\MainScene.cpp">
+      <Filter>02. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Monster.cpp">
+      <Filter>03. Object\01. Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +100,27 @@
     </ClInclude>
     <ClInclude Include="Math.h">
       <Filter>01. GameManager\03. Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Player.h">
+      <Filter>03. Object\01. Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Character.h">
+      <Filter>03. Object\01. Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Bullet.h">
+      <Filter>03. Object\02. Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneManager.h">
+      <Filter>02. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Scene.h">
+      <Filter>02. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\MainScene.h">
+      <Filter>02. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Monster.h">
+      <Filter>03. Object\01. Character</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

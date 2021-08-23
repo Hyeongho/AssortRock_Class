@@ -13,10 +13,6 @@ private:
 	HWND m_hWnd;
 	HDC m_hDC;
 	Resolution m_RS;
-	RectInfo m_RenderRC;
-	
-	std::list<BulletInfo> m_BulletList;
-	RectInfo m_Bullet;
 
 	class CTimer* m_Timer;
 

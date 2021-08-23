@@ -8,6 +8,7 @@
 #include <Windows.h>
 #include <list>		// 더블링크드리스트 템플릿 자료구조
 #include <vector>	// 동적배열 템플릿 자료구조
+#include <string>
 
 #include "resource.h"
 
@@ -27,10 +28,4 @@ struct RectInfo
 	float Top;
 	float Right;
 	float Bottom;
-};
-
-struct BulletInfo
-{
-	RectInfo rc;
-	float Distance;
 };
