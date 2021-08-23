@@ -17,5 +17,12 @@ public:
 	virtual void Collision(float DeltaTime);
 	virtual void Render(HDC hDC);
 	virtual CPlayer* Clone();
+
+public:
+	void MoveUp(float DeltaTime);
+	void MoveDown(float DeltaTime);
+	void MoveLeft(float DeltaTime);
+	void MoveRight(float DeltaTime);
+	void BulleFire(float DeltaTime);
 };
 

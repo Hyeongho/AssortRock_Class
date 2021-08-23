@@ -2,12 +2,10 @@
 #include "Bullet.h"
 #include "../Scene/Scene.h"
 
-CMonster::CMonster()
+CMonster::CMonster() : m_FireTime(0.f), m_FireTimeMax(1.f)
 {
 	m_Dir.x = 0.f;
 	m_Dir.y = 1.f;
-
-	Delay = 0.f;
 }
 
 CMonster::CMonster(const CMonster& obj) : CCharacter(obj)
@@ -50,14 +48,14 @@ void CMonster::Update(float DeltaTime)
 		몬스터가 일정 시간마다 한번씩 총알을 왼쪽으로 발사하게 만들기
 	*/
 
-	Delay += DeltaTime;
+	m_FireTime += DeltaTime;
 
-	if (Delay >= 10)
+	if (m_FireTime >= m_FireTimeMax)
 	{
+		m_FireTime -= m_FireTimeMax;
+
 		CBullet* Bullet = m_Scene->CreateObject<CBullet>("Bullet", Vector2(m_Pos - Vector2(50.f, 25.f)), Vector2(50.f, 50.f));
 		Bullet->SetDir(-1.f, 0.f);
-
-		Delay = 0.f;
 	}
 }
 

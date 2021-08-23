@@ -13,7 +13,8 @@ public:
 private:
 	Vector2 m_Dir;
 
-	float Delay;
+	float m_FireTime;
+	float m_FireTimeMax;
 
 public:
 	virtual bool Init();

@@ -9,10 +9,16 @@
 #include <list>		// 더블링크드리스트 템플릿 자료구조
 #include <vector>	// 동적배열 템플릿 자료구조
 #include <string>
+#include <unordered_map>
+#include <crtdbg.h>
+#include <functional>
 
 #include "resource.h"
 
 #include "Math.h"
+#include "Flag.h"
+
+#define KEYCOUNT_MAX 256
 
 #define SAFE_DELETE(p) if(p) {delete p; p = nullptr;}
 

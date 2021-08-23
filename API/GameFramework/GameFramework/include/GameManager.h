@@ -20,7 +20,7 @@ private:
 
 public:
 	bool Init(HINSTANCE hInst);
-	int run();
+	int Run();
 
 private:
 	void Logic();

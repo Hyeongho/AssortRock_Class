@@ -1,5 +1,6 @@
 #include "GameManager.h"
 #include "Timer.h"
+#include "Input.h"
 #include "Scene/SceneManager.h"
 #include "Scene/MainScene.h"
 
@@ -13,6 +14,8 @@ CGameManager::CGameManager() : m_Timer(nullptr)
 CGameManager::~CGameManager()
 {
     CSceneManager::DestroyInst();
+
+    CInput::DestroyInst();
 
     SAFE_DELETE(m_Timer);
 
@@ -32,6 +35,12 @@ bool CGameManager::Init(HINSTANCE hInst)
     // DC를 생성한다.
     m_hDC = GetDC(m_hWnd);
 
+    // 입력관리자 초기화
+    if (!CInput::GetInst()->Init())
+    {
+        return false;
+    }
+
     // 장면관리자 초기화
     if (!CSceneManager::GetInst()->Init())
     {
@@ -46,7 +55,7 @@ bool CGameManager::Init(HINSTANCE hInst)
 	return true;
 }
 
-int CGameManager::run()
+int CGameManager::Run()
 {
     MSG msg;
 
@@ -91,6 +100,9 @@ int CGameManager::run()
 void CGameManager::Logic()
 {
     float DeltaTime = m_Timer->Update();
+
+    // 입력 업데이트
+    CInput::GetInst()->Update(DeltaTime);
 
     Update(DeltaTime);
     PostUpdate(DeltaTime);

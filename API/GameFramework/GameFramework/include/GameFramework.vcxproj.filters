@@ -37,6 +37,9 @@
     <Filter Include="03. Object\02. Bullet">
       <UniqueIdentifier>{8b4ef478-1716-414d-a7f8-6d96aea4789b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. GameManager\04. Input">
+      <UniqueIdentifier>{5e05d02e-bae9-46f2-8d81-13f315447709}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -77,6 +80,9 @@
     </ClCompile>
     <ClCompile Include="Object\Monster.cpp">
       <Filter>03. Object\01. Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>01. GameManager\04. Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -121,6 +127,12 @@
     </ClInclude>
     <ClInclude Include="Object\Monster.h">
       <Filter>03. Object\01. Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>01. GameManager\04. Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Flag.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

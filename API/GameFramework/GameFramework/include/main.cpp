@@ -7,7 +7,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     _In_ LPWSTR    lpCmdLine,
     _In_ int       nCmdShow)
 {
-    CGameManager::GetInst();
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+    //_CrtSetBreakAlloc(100);
 
     if (!CGameManager::GetInst()->Init(hInstance))
     {
@@ -15,9 +16,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return 0;
     }
 
-    CGameManager::GetInst()->run();
+    int RetValue = CGameManager::GetInst()->Run();
 
     CGameManager::DestroyInst();
 
-	return 0;
+	return RetValue;
 }
