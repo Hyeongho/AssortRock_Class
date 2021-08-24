@@ -40,6 +40,9 @@
     <Filter Include="01. GameManager\04. Input">
       <UniqueIdentifier>{5e05d02e-bae9-46f2-8d81-13f315447709}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. GameManager\05. SharedPtr">
+      <UniqueIdentifier>{40b97108-13f5-4ddf-bf3d-5e180fe9c471}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -133,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="Flag.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SharedPtr.h">
+      <Filter>01. GameManager\05. SharedPtr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

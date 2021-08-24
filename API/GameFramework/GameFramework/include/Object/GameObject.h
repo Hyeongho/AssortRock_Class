@@ -13,8 +13,44 @@ public:
 
 protected:
 	class CScene* m_Scene;
+	Vector2 m_PrevPos;
 	Vector2 m_Pos;
 	Vector2 m_Size;
+	Vector2 m_Pivot;
+	Vector2 m_Velocitry;
+	float m_MoveSpeed;
+	float m_TimeScale;
+
+public:
+	Vector2 GetPos() const
+	{
+		return m_Pos;
+	}
+
+	Vector2 GetSize() const
+	{
+		return m_Size;
+	}
+
+	Vector2 GetPivot() const
+	{
+		return m_Pivot;
+	}
+
+	Vector2 GetVelocity() const
+	{
+		return m_Velocitry;
+	}
+
+	float GetMoveSpeed() const
+	{
+		return m_MoveSpeed;
+	}
+
+	float GetMoveSpeedFrame() const
+	{
+		return m_Velocitry.Length();
+	}
 
 public:
 	void SetScene(class CScene* Scene)
@@ -43,6 +79,31 @@ public:
 	{
 		m_Size = Size;
 	}
+
+	void SetPivot(float x, float y)
+	{
+		m_Pivot.x = x;
+		m_Pivot.y = y;
+	}
+
+	void SetPivot(const Vector2& Pivot)
+	{
+		m_Pivot = Pivot;
+	}
+
+	void SetMoveSpeed(float Speed)
+	{
+		m_MoveSpeed = Speed;
+	}
+
+	void SetTimeScale(float TimeScale)
+	{
+		m_TimeScale = TimeScale;
+	}
+
+	void Move(const Vector2& Dir);
+	void Move(const Vector2& Dir, float Speed);
+
 	
 public:
 	virtual bool Init();

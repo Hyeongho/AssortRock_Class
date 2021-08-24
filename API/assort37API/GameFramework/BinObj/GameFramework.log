@@ -1,16 +1,2 @@
-﻿  GameManager.cpp
-  Input.cpp
-  main.cpp
-  Math.cpp
-  Bullet.cpp
-  Character.cpp
-  GameObject.cpp
-  Monster.cpp
-  Player.cpp
-  Ref.cpp
-  MainScene.cpp
-  Scene.cpp
-  SceneManager.cpp
-  Timer.cpp
-  코드를 생성하고 있습니다...
+﻿  Player.cpp
   GameFramework.vcxproj -> E:\C++클라\AssortRock_Class\API\assort37API\GameFramework\Bin\GameFramework_Debug.exe

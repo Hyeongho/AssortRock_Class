@@ -12,7 +12,6 @@ public:
 
 protected:
 	Vector2 m_Dir;
-	float m_Speed;
 	float m_Distance;
 
 public:
@@ -20,11 +19,6 @@ public:
 	{
 		m_Dir.x = x;
 		m_Dir.y = y;
-	}
-
-	void SetSpeed(float Speed)
-	{
-		m_Speed = Speed;
 	}
 
 	void SetDistance(float Distance)

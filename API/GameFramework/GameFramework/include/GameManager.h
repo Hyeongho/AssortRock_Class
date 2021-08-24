@@ -15,8 +15,18 @@ private:
 	Resolution m_RS;
 
 	class CTimer* m_Timer;
+	float m_TimeScale;
 
 	static bool m_Loop;
+
+public:
+	void SetTimeScale(float TimeScale)
+	{
+		m_TimeScale = TimeScale;
+	}
+
+public:
+	float GetDeltaTime() const;
 
 public:
 	bool Init(HINSTANCE hInst);

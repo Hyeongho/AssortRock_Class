@@ -136,7 +136,14 @@ bool CInput::Init()
 	CreateKey("MoveLeft", 'A');
 	CreateKey("MoveRight", 'D');
 	CreateKey("Fire", VK_SPACE);
-	SetCtrlKey("Fire", true);
+	//SetCtrlKey("Fire", true);
+
+	CreateKey("Pause", 'P');
+	SetCtrlKey("Pause", true);
+	CreateKey("Resume", 'R');
+	SetCtrlKey("Resume", true);
+
+	CreateKey("Skill1", '1');
 
 	return true;
 }

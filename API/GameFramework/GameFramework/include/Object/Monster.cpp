@@ -30,7 +30,7 @@ void CMonster::Update(float DeltaTime)
 {
 	CCharacter::Update(DeltaTime);
 
-	m_Pos += m_Dir * 100.f * DeltaTime;
+	m_Pos += m_Dir * 300.f * DeltaTime;
 
 	if (m_Pos.y + m_Size.y >= 720.f)
 	{
@@ -54,7 +54,7 @@ void CMonster::Update(float DeltaTime)
 	{
 		m_FireTime -= m_FireTimeMax;
 
-		CBullet* Bullet = m_Scene->CreateObject<CBullet>("Bullet", Vector2(m_Pos - Vector2(50.f, 25.f)), Vector2(50.f, 50.f));
+		CSharedPtr<CBullet> Bullet = m_Scene->CreateObject<CBullet>("Bullet", Vector2(m_Pos + Vector2(-50.f, 25.f)), Vector2(50.f, 50.f));
 		Bullet->SetDir(-1.f, 0.f);
 	}
 }

@@ -9,7 +9,8 @@ CGameManager* CGameManager::m_Inst = nullptr;
 bool CGameManager::m_Loop = true;
 
 CGameManager::CGameManager()	:
-	m_Timer(nullptr)
+	m_Timer(nullptr),
+	m_TimeScale(1.f)
 {
 }
 
@@ -23,6 +24,11 @@ CGameManager::~CGameManager()
 
 	// GetDC를 이용해서 생성한 DC는 반드시 ReleaseDC를 해주어야 한다.
 	ReleaseDC(m_hWnd, m_hDC);
+}
+
+float CGameManager::GetDeltaTime() const
+{
+	return m_Timer->GetDeltaTime() * m_TimeScale;
 }
 
 bool CGameManager::Init(HINSTANCE hInst)
@@ -91,7 +97,7 @@ int CGameManager::Run()
 
 void CGameManager::Logic()
 {
-	float DeltaTime = m_Timer->Update();
+	float DeltaTime = m_Timer->Update() * m_TimeScale;
 
 	// 입력 업데이트
 	CInput::GetInst()->Update(DeltaTime);

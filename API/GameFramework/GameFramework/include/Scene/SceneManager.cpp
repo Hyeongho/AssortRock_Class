@@ -21,23 +21,23 @@ bool CSceneManager::Init()
 	return true;
 }
 
-bool CSceneManager::Update(float DelataTime)
+bool CSceneManager::Update(float DeltaTime)
 {
-	m_Scene->Update(DelataTime);
+	m_Scene->Update(DeltaTime);
 
 	return false;
 }
 
-bool CSceneManager::PostUpdate(float DelataTime)
+bool CSceneManager::PostUpdate(float DeltaTime)
 {
-	m_Scene->PostUpdate(DelataTime);
+	m_Scene->PostUpdate(DeltaTime);
 
 	return false;
 }
 
-bool CSceneManager::Collision(float DelataTime)
+bool CSceneManager::Collision(float DeltaTime)
 {
-	m_Scene->Collision(DelataTime);
+	m_Scene->Collision(DeltaTime);
 
 	return false;
 }

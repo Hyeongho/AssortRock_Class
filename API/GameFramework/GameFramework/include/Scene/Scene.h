@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../GameInfo.h"
+#include "../Object/GameObject.h"
 
 class CScene
 {
@@ -11,13 +12,13 @@ protected:
 	virtual ~CScene();
 
 private:
-	std::list<class CGameObject*> m_ObjList;
+	std::list<CSharedPtr<CGameObject>> m_ObjList;
 
 public:
 	virtual bool Init();
-	virtual bool Update(float DelataTime);
-	virtual bool PostUpdate(float DelataTime);
-	virtual bool Collision(float DelataTime);
+	virtual bool Update(float DeltaTime);
+	virtual bool PostUpdate(float DeltaTime);
+	virtual bool Collision(float DeltaTime);
 	virtual bool Render(HDC hDC);
 
 public:

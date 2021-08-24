@@ -6,16 +6,33 @@ class CRef
 {
 public:
 	CRef();
+	CRef(const CRef& ref);
 	virtual ~CRef();
 
 protected:
 	std::string m_Name;
 	bool m_Active;
+	int m_RefCount;
 
 public:
 	void Destroy()
 	{
 		m_Active = false;
+	}
+
+	void AddRef()
+	{
+		m_RefCount++;
+	}
+
+	void Release()
+	{
+		m_RefCount--;
+
+		if (m_RefCount == 0)
+		{
+			delete this;
+		}
 	}
 
 public:

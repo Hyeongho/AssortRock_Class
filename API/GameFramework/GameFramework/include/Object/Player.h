@@ -1,5 +1,7 @@
 #pragma once
 #include "Character.h"
+#include "Bullet.h"
+
 class CPlayer :
     public CCharacter
 {
@@ -9,6 +11,11 @@ public:
 	CPlayer();
 	CPlayer(const CPlayer& obj);
 	virtual ~CPlayer();
+
+protected:
+	bool m_Skill1Enable;
+	float m_Skill1Time;
+	std::list<CSharedPtr<CBullet>> m_Skill1BulletList;
 
 public:
 	virtual bool Init();
@@ -24,5 +31,8 @@ public:
 	void MoveLeft(float DeltaTime);
 	void MoveRight(float DeltaTime);
 	void BulleFire(float DeltaTime);
+	void Pause(float DeltaTime);
+	void Resume(float DeltaTime);
+	void Skill1(float DeltaTime);
 };
 

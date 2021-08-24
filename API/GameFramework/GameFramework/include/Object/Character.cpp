@@ -29,12 +29,12 @@ void CCharacter::Update(float DeltaTime)
 
 void CCharacter::PostUpdate(float DeltaTime)
 {
-	CGameObject::Update(DeltaTime);
+	CGameObject::PostUpdate(DeltaTime);
 }
 
 void CCharacter::Collision(float DeltaTime)
 {
-	CGameObject::Update(DeltaTime);
+	CGameObject::Collision(DeltaTime);
 }
 
 void CCharacter::Render(HDC hDC)

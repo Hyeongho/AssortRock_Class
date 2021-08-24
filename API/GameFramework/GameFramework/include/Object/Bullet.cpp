@@ -7,13 +7,12 @@ CBullet::CBullet()
 
 	m_Distance = 800.f;
 
-	m_Speed = 500.f;
+	SetMoveSpeed(500.f);
 }
 
 CBullet::CBullet(const CBullet& obj) : CGameObject(obj)
 {
 	m_Dir = obj.m_Dir;
-	m_Speed = obj.m_Speed;
 }
 
 CBullet::~CBullet()
@@ -37,9 +36,9 @@ void CBullet::Update(float DeltaTime)
 	Vector2 Dir = m_Dir;
 	Dir.Normalize();
 
-	m_Pos += Dir * m_Speed * DeltaTime;
+	Move(Dir);
 
-	m_Distance -= m_Speed * DeltaTime;
+	m_Distance -= GetMoveSpeedFrame();
 
 	if (m_Distance <= 0.f)
 	{

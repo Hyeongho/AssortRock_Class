@@ -20,9 +20,9 @@ public:
 
 public:
 	bool Init();
-	bool Update(float DelataTime);
-	bool PostUpdate(float DelataTime);
-	bool Collision(float DelataTime);
+	bool Update(float DeltaTime);
+	bool PostUpdate(float DeltaTime);
+	bool Collision(float DeltaTime);
 	bool Render(HDC hDC);
 
 private:
