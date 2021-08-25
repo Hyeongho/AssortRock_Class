@@ -4,6 +4,8 @@
 #include "Scene/SceneManager.h"
 #include "Scene/MainScene.h"
 #include "Input.h"
+#include "PathManager.h"
+#include "Resource/ResourceManager.h"
 
 CGameManager* CGameManager::m_Inst = nullptr;
 bool CGameManager::m_Loop = true;
@@ -19,6 +21,9 @@ CGameManager::~CGameManager()
 	CSceneManager::DestroyInst();
 
 	CInput::DestroyInst();
+
+	CResourceManager::DestroyInst();
+	CPathManager::DestroyInst();
 
 	SAFE_DELETE(m_Timer);
 
@@ -43,6 +48,14 @@ bool CGameManager::Init(HINSTANCE hInst)
 
 	// DC를 생성한다.
 	m_hDC = GetDC(m_hWnd);
+
+	// 경로관리자 초기화
+	if (!CPathManager::GetInst()->Init())
+		return false;
+
+	// 리소스 관리자 초기화
+	if (!CResourceManager::GetInst()->Init())
+		return false;
 
 	// 입력관리자 초기화
 	if (!CInput::GetInst()->Init())

@@ -20,6 +20,22 @@ private:
 	static bool m_Loop;
 
 public:
+	HDC GetWindowDC() const
+	{
+		return m_hDC;
+	}
+
+	HWND GetWindowHandle() const
+	{
+		return m_hWnd;
+	}
+
+	HINSTANCE GetWindowInstance() const
+	{
+		return m_hInst;
+	}
+
+public:
 	void SetTimeScale(float TimeScale)
 	{
 		m_TimeScale = TimeScale;

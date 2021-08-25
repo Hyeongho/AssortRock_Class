@@ -21,6 +21,10 @@
 
 #define KEYCOUNT_MAX 256
 
+#define ROOT_PATH "RootPath"
+#define TEXTURE_PATH "TexturePath"
+#define SOUND_PATH "SoundPath"
+
 #define SAFE_DELETE(p) if(p) {delete p; p = nullptr;}
 #define SAFE_RELEASE(p) if(p) {p->Release(); p = nullptr;}
 

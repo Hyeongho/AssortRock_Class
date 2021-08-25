@@ -12,6 +12,12 @@ protected:
 	virtual ~CScene();
 
 private:
+	class CSceneResource* m_Resource;
+
+public:
+	class CSceneResource* GetSceneResource() const;
+
+private:
 	std::list<CSharedPtr<CGameObject>> m_ObjList;
 
 public:

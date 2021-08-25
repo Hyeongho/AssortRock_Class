@@ -43,6 +43,18 @@
     <Filter Include="01. GameManager\05. SharedPtr">
       <UniqueIdentifier>{40b97108-13f5-4ddf-bf3d-5e180fe9c471}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. GameManager\06. Path">
+      <UniqueIdentifier>{1f0eebd4-9314-4b1b-b25c-0c0e28b73f27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Resource">
+      <UniqueIdentifier>{dbe64f57-784c-4d8f-b03a-45084990cb94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Resource\01. Texture">
+      <UniqueIdentifier>{e3666f20-f79e-40d4-85f9-0af5a7df3fcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scene\01. Resource">
+      <UniqueIdentifier>{350f64e2-b122-4a58-9bb3-66345c550f3c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -86,6 +98,18 @@
     </ClCompile>
     <ClCompile Include="Input.cpp">
       <Filter>01. GameManager\04. Input</Filter>
+    </ClCompile>
+    <ClCompile Include="PathManager.cpp">
+      <Filter>01. GameManager\06. Path</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\ResourceManager.cpp">
+      <Filter>04. Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\Texture.cpp">
+      <Filter>04. Resource\01. Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SceneResource.cpp">
+      <Filter>02. Scene\01. Resource</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +163,18 @@
     </ClInclude>
     <ClInclude Include="SharedPtr.h">
       <Filter>01. GameManager\05. SharedPtr</Filter>
+    </ClInclude>
+    <ClInclude Include="PathManager.h">
+      <Filter>01. GameManager\06. Path</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\ResourceManager.h">
+      <Filter>04. Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\Texture.h">
+      <Filter>04. Resource\01. Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneResource.h">
+      <Filter>02. Scene\01. Resource</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

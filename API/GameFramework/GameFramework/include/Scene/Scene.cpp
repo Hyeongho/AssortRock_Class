@@ -1,12 +1,19 @@
 #include "Scene.h"
+#include "SceneResource.h"
 
 CScene::CScene()
 {
+	m_Resource = new CSceneResource;
 }
 
 CScene::~CScene()
 {
 	
+}
+
+CSceneResource* CScene::GetSceneResource() const
+{
+	return m_Resource;
 }
 
 bool CScene::Init()
