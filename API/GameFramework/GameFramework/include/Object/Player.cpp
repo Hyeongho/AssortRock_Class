@@ -26,7 +26,12 @@ bool CPlayer::Init()
 
 	SetPivot(0.5f, 0.5f);
 
-	SetTexture("Teemo", TEXT("teemo.bmp"));
+	//SetTexture("Teemo", TEXT("teemo.bmp"));
+
+	CreateAnimation();
+	AddAnimation("LucidNunNaRightIdle");
+	AddAnimation("LucidNunNaRightWalk");
+	AddAnimation("LucidNunNaRightAttack", false, 0.2f);
 
 	CInput::GetInst()->SetCallback<CPlayer>("MoveUp", KeyState_Push, this, &CPlayer::MoveUp);
 	CInput::GetInst()->SetCallback<CPlayer>("MoveDown", KeyState_Push, this, &CPlayer::MoveDown);

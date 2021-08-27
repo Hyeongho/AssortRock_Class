@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Texture.h"
+#include "AnimationSequence.h"
 
 class CResourceManager
 {
@@ -10,6 +11,7 @@ private:
 
 private:
 	std::unordered_map<std::string, CSharedPtr<CTexture>> m_mapTexture;
+	std::unordered_map<std::string, CSharedPtr<CAnimationSequence>> m_mapAnimationSequence;
 	
 public:
 	bool Init();
@@ -23,6 +25,18 @@ public:
 	void ResourceTexture(const std::string& Name);
 
 	CTexture* FindTexture(const std::string& Name);
+
+public:
+	bool CreateAnimationSequence(const std::string& SequenceName, const std::string& TextureName);
+	bool CreateAnimationSequence(const std::string& SequenceName, const std::string& TextureName, const TCHAR* FileName, const std::string& PathName = TEXTURE_PATH);
+	bool CreateAnimationSequence(const std::string& SequenceName, const std::string& TextureName, const std::vector<std::wstring>& vecFilName, const std::string& PathName = TEXTURE_PATH);
+
+	void AddAnimationFrameData(const std::string& SequenceName, const Vector2& StartPos, const Vector2& Size);
+	void AddAnimationFrameData(const std::string& SequenceName, float PosX, float PosY, float SizeX, float SizeY);
+
+	void ResourceAnimationSequence(const std::string& Name);
+
+	CAnimationSequence* FindAnimationSequence(const std::string& Name); 
 
 private:
 	static CResourceManager* m_Inst;

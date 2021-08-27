@@ -7,12 +7,24 @@ CSceneResource::CSceneResource()
 
 CSceneResource::~CSceneResource()
 {
-	auto iter = m_mapTexture.begin();
-	auto iterEnd = m_mapTexture.end();
-
-	for (; iter != iterEnd; iter++)
 	{
-		CResourceManager::GetInst()->ResourceTexture(iter->first);
+		auto iter = m_mapTexture.begin();
+		auto iterEnd = m_mapTexture.end();
+
+		for (; iter != iterEnd; iter++)
+		{
+			CResourceManager::GetInst()->ResourceTexture(iter->first);
+		}
+	}
+
+	{
+		auto iter = m_mapAnimationSequence.begin();
+		auto iterEnd = m_mapAnimationSequence.end();
+
+		for (; iter != iterEnd; iter++)
+		{
+			CResourceManager::GetInst()->ResourceAnimationSequence(iter->first);
+		}
 	}
 }
 
@@ -83,6 +95,103 @@ CTexture* CSceneResource::FindTexture(const std::string& Name)
 	auto iter = m_mapTexture.find(Name);
 
 	if (iter == m_mapTexture.end())
+	{
+		return nullptr;
+	}
+
+	return iter->second;
+}
+
+bool CSceneResource::CreateAnimationSequence(const std::string& SequenceName, const std::string& TextureName)
+{
+	if (FindAnimationSequence(SequenceName))
+	{
+		return true;
+	}
+
+	if (!CResourceManager::GetInst()->CreateAnimationSequence(SequenceName, TextureName))
+	{
+		return false;
+	}
+
+	CAnimationSequence* Sequence = CResourceManager::GetInst()->FindAnimationSequence(SequenceName);
+
+	m_mapAnimationSequence.insert(std::make_pair(SequenceName, Sequence));
+
+	return true;
+}
+
+bool CSceneResource::CreateAnimationSequence(const std::string& SequenceName, const std::string& TextureName, const TCHAR* FileName, const std::string& PathName)
+{
+	if (FindAnimationSequence(SequenceName))
+	{
+		return true;
+	}
+
+	LoadTexture(TextureName, FileName, PathName);
+
+	if (!CResourceManager::GetInst()->CreateAnimationSequence(SequenceName, TextureName))
+	{
+		return false;
+	}
+
+	CAnimationSequence* Sequence = CResourceManager::GetInst()->FindAnimationSequence(SequenceName);
+
+	m_mapAnimationSequence.insert(std::make_pair(SequenceName, Sequence));
+
+	return true;
+}
+
+bool CSceneResource::CreateAnimationSequence(const std::string& SequenceName, const std::string& TextureName, const std::vector<std::wstring>& vecFilName, const std::string& PathName)
+{
+	if (FindAnimationSequence(SequenceName))
+	{
+		return true;
+	}
+
+	LoadTexture(TextureName, vecFilName, PathName);
+
+	if (!CResourceManager::GetInst()->CreateAnimationSequence(SequenceName, TextureName))
+	{
+		return false;
+	}
+
+	CAnimationSequence* Sequence = CResourceManager::GetInst()->FindAnimationSequence(SequenceName);
+
+	m_mapAnimationSequence.insert(std::make_pair(SequenceName, Sequence));
+
+	return true;
+}
+
+void CSceneResource::AddAnimationFrameData(const std::string& SequenceName, const Vector2& StartPos, const Vector2& Size)
+{
+	CAnimationSequence* Sequence = FindAnimationSequence(SequenceName);
+
+	if (!Sequence)
+	{
+		return;
+	}
+
+	Sequence->AddFrameData(StartPos, Size);
+}
+
+void CSceneResource::AddAnimationFrameData(const std::string& SequenceName, float PosX, float PosY, float SizeX, float SizeY)
+{
+	CAnimationSequence* Sequence = FindAnimationSequence(SequenceName);
+
+	if (!Sequence)
+	{
+		return;
+	}
+
+	Sequence->AddFrameData(PosX, PosY, SizeX, SizeY);
+}
+
+CAnimationSequence* CSceneResource::FindAnimationSequence(const std::string& Name)
+{
+	auto iter = m_mapAnimationSequence.find(Name);
+
+	if (iter == m_mapAnimationSequence.end())
 	{
 		return nullptr;
 	}

@@ -26,6 +26,19 @@ protected:
 
 	Vector2 m_ImageStart;
 
+protected:
+	class CAnimation* m_Animation;
+
+public:
+	void CreateAnimation();
+	void AddAnimation(const std::string& SequenceName, bool Loop = true, float PlayTime = 1.f, float PlayScale = 1.f, bool Reverse = false);
+	void SetAnimationPlayTime(const std::string& Name, float PlayTime);
+	void SetAnimationPlayScale(const std::string& Name, float PlayScale);
+	void SetCurrentAnimation(const std::string& Name);
+	void ChangeAnimation(const std::string& Name);
+	void SetAnimationReverse(const std::string& Name, bool Reverse);
+	void SetAnimationLoop(const std::string& Name, bool Loop);
+
 public:
 	Vector2 GetPos() const
 	{
@@ -58,10 +71,7 @@ public:
 	}
 
 public:
-	void SetScene(class CScene* Scene)
-	{
-		m_Scene = Scene;
-	}
+	void SetScene(class CScene* Scene);
 
 	void SetPos(float x, float y)
 	{

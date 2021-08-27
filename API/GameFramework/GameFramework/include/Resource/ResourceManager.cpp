@@ -114,3 +114,131 @@ CTexture* CResourceManager::FindTexture(const std::string& Name)
 
 	return iter->second;
 }
+
+bool CResourceManager::CreateAnimationSequence(const std::string& SequenceName, const std::string& TextureName)
+{
+	CAnimationSequence* Sequence = FindAnimationSequence(SequenceName);
+
+	if (Sequence)
+	{
+		return true;
+	}
+
+	Sequence = new CAnimationSequence;
+
+	CTexture* Texture = FindTexture(TextureName);
+
+	if (!Sequence->Init(SequenceName, Texture))
+	{
+		SAFE_RELEASE(Sequence);
+		return false;
+	}
+
+	m_mapAnimationSequence.insert(std::make_pair(SequenceName, Sequence));
+
+	return true;
+}
+
+bool CResourceManager::CreateAnimationSequence(const std::string& SequenceName, const std::string& TextureName, const TCHAR* FileName, const std::string& PathName)
+{
+	CAnimationSequence* Sequence = FindAnimationSequence(SequenceName);
+
+	if (Sequence)
+	{
+		return true;
+	}
+
+	if (!LoadTexture(TextureName, FileName, PathName))
+	{
+		return false;
+	}
+
+	Sequence = new CAnimationSequence;
+
+	CTexture* Texture = FindTexture(TextureName);
+
+	if (!Sequence->Init(SequenceName, Texture))
+	{
+		SAFE_RELEASE(Sequence);
+		return false;
+	}
+
+	m_mapAnimationSequence.insert(std::make_pair(SequenceName, Sequence));
+
+	return true;
+}
+
+bool CResourceManager::CreateAnimationSequence(const std::string& SequenceName, const std::string& TextureName, const std::vector<std::wstring>& vecFilName, const std::string& PathName)
+{
+	CAnimationSequence* Sequence = FindAnimationSequence(SequenceName);
+
+	if (Sequence)
+	{
+		return true;
+	}
+
+	if (!LoadTexture(TextureName, vecFilName, PathName))
+	{
+		return false;
+	}
+
+	Sequence = new CAnimationSequence;
+
+	CTexture* Texture = FindTexture(TextureName);
+
+	if (!Sequence->Init(SequenceName, Texture))
+	{
+		SAFE_RELEASE(Sequence);
+		return false;
+	}
+
+	m_mapAnimationSequence.insert(std::make_pair(SequenceName, Sequence));
+
+	return true;
+}
+
+void CResourceManager::AddAnimationFrameData(const std::string& SequenceName, const Vector2& StartPos, const Vector2& Size)
+{
+	CAnimationSequence* Sequence = FindAnimationSequence(SequenceName);
+
+	if (!Sequence)
+	{
+		return;
+	}
+
+	Sequence->AddFrameData(StartPos, Size);
+}
+
+void CResourceManager::AddAnimationFrameData(const std::string& SequenceName, float PosX, float PosY, float SizeX, float SizeY)
+{
+	CAnimationSequence* Sequence = FindAnimationSequence(SequenceName);
+
+	if (!Sequence)
+	{
+		return;
+	}
+
+	Sequence->AddFrameData(PosX, PosY, SizeX, SizeY);
+}
+
+void CResourceManager::ResourceAnimationSequence(const std::string& Name)
+{
+	auto iter = m_mapAnimationSequence.find(Name);
+
+	if (iter->second->GetRefCount() == 1)
+	{
+		m_mapAnimationSequence.erase(iter);
+	}
+}
+
+CAnimationSequence* CResourceManager::FindAnimationSequence(const std::string& Name)
+{
+	auto iter = m_mapAnimationSequence.find(Name);
+
+	if (iter == m_mapAnimationSequence.end())
+	{
+		return nullptr;
+	}
+
+	return iter->second;
+}

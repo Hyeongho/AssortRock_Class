@@ -66,7 +66,7 @@ public:
 public:
     bool LoadTexture(const std::string& Name, const TCHAR* FileName, const std::string& PathName = TEXTURE_PATH);
     bool LoadTextureFullPath(const std::string& Name, const TCHAR* FullPath);
-    bool LoadTexture(const std::string& Name, const std::vector<std::wstring>& vecFilName, const std::string& PathName);
+    bool LoadTexture(const std::string& Name, const std::vector<std::wstring>& vecFilName, const std::string& PathName = TEXTURE_PATH);
 
     void Render(HDC hDC, const Vector2& WindowPos, const Vector2& ImgPos, const Vector2& Size, int Index = 0);
 };

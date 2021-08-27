@@ -11,5 +11,8 @@ private:
 
 public:
 	virtual bool Init();
+
+private:
+	void LoadAnimationSequence();
 };
 

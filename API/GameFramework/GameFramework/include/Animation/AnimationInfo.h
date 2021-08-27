@@ -1,24 +1,10 @@
 #pragma once
 
-#include "../Resource//Texture.h"
-
-struct AnimationFrameData
-{
-	Vector2 StartPos;
-	Vector2 Size;
-};
-
-struct AnimationSequnce
-{
-	std::string Name;
-	ETexture_Type TextureType;
-	CSharedPtr<CTexture> Texture;
-	std::vector<AnimationFrameData> vecFrameData;
-};
+#include "../Resource/AnimationSequence.h"
 
 struct AnimationInfo
 {
-	AnimationSequnce* Sequnce;
+	CSharedPtr<CAnimationSequence> Sequence;
 	int Frame; // 현재 애니메이션이 몇 프레임째를 돌고 있는지를 저장한다.
 	float Time; // 현재시간
 	float FrameTime; // 1프레임이 몇초만에 흘러야 하는지.
@@ -27,7 +13,7 @@ struct AnimationInfo
 	bool Loop;
 	bool Reverse;
 
-	AnimationInfo() : Frame(0), Time(0.f), FrameTime(0.f), PlayTime(0.f), PlayScale(1.f), Loop(false), Reverse(false)
+	AnimationInfo() : Sequence(nullptr), Frame(0), Time(0.f), FrameTime(0.f), PlayTime(0.f), PlayScale(1.f), Loop(false), Reverse(false)
 	{
 
 	}

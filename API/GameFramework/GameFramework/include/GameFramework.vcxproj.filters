@@ -58,6 +58,9 @@
     <Filter Include="05. Animation">
       <UniqueIdentifier>{8d76326c-0654-4a52-ad2d-be2d8e8d7a25}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Resource\02. Animation">
+      <UniqueIdentifier>{3e818422-0bd1-4511-9fe2-3cbb7281715d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -116,6 +119,9 @@
     </ClCompile>
     <ClCompile Include="Animation\Animation.cpp">
       <Filter>05. Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\AnimationSequence.cpp">
+      <Filter>04. Resource\02. Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +193,9 @@
     </ClInclude>
     <ClInclude Include="Animation\AnimationInfo.h">
       <Filter>05. Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\AnimationSequence.h">
+      <Filter>04. Resource\02. Animation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

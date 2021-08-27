@@ -43,3 +43,9 @@ struct RectInfo
 	float Right;
 	float Bottom;
 };
+
+struct AnimationFrameData
+{
+	Vector2 StartPos;
+	Vector2 Size;
+};

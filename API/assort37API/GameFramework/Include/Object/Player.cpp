@@ -28,7 +28,13 @@ bool CPlayer::Init()
 
 	SetPivot(0.5f, 0.5f);
 
-	SetTexture("Teemo", TEXT("teemo.bmp"));
+	//SetTexture("Teemo", TEXT("teemo.bmp"));
+	CreateAnimation();
+	AddAnimation("LucidNunNaRightIdle");
+	AddAnimation("LucidNunNaRightWalk");
+	AddAnimation("LucidNunNaRightAttack", false, 0.2f);
+
+
 
 
 
