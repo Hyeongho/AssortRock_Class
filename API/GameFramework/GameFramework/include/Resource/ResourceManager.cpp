@@ -59,6 +59,50 @@ bool CResourceManager::LoadTextureFullPath(const std::string& Name, const TCHAR*
 	return true;
 }
 
+bool CResourceManager::LoadTexture(const std::string& Name, const std::vector<std::wstring>& vecFileName, const std::string& PathName)
+{
+	CTexture* Texture = FindTexture(Name);
+
+	if (Texture)
+	{
+		return true;
+	}
+
+	Texture = new CTexture;
+
+	if (!Texture->LoadTexture(Name, vecFileName, PathName))
+	{
+		SAFE_RELEASE(Texture);
+		return false;
+	}
+
+	m_mapTexture.insert(std::make_pair(Name, Texture));
+
+	return true;
+}
+
+void CResourceManager::SetTextureColorKey(const std::string& Name, const char r, const char g, const char b, int Index)
+{
+	CTexture* Texture = FindTexture(Name);
+
+	if (!Texture)
+	{
+		return;
+	}
+
+	Texture->SetColorKey(r, g, b, Index);
+}
+
+void CResourceManager::ResourceTexture(const std::string& Name)
+{
+	auto iter = m_mapTexture.find(Name);
+
+	if (iter->second->GetRefCount() == 1)
+	{
+		m_mapTexture.erase(iter);
+	}
+}
+
 CTexture* CResourceManager::FindTexture(const std::string& Name)
 {
 	auto iter = m_mapTexture.find(Name);

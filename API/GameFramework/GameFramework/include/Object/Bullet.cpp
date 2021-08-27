@@ -26,6 +26,11 @@ bool CBullet::Init()
 		return false;
 	}
 
+	SetTexture("Bullet", TEXT("Hit2.bmp"));
+	SetSize(178.f, 164.f);
+	SetImageStart(178.f * 5, 0.f);
+	SetTextureColorKey(255, 0, 255);
+
 	return true;
 }
 

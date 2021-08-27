@@ -55,6 +55,9 @@
     <Filter Include="02. Scene\01. Resource">
       <UniqueIdentifier>{350f64e2-b122-4a58-9bb3-66345c550f3c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="05. Animation">
+      <UniqueIdentifier>{8d76326c-0654-4a52-ad2d-be2d8e8d7a25}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -110,6 +113,9 @@
     </ClCompile>
     <ClCompile Include="Scene\SceneResource.cpp">
       <Filter>02. Scene\01. Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation\Animation.cpp">
+      <Filter>05. Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -175,6 +181,12 @@
     </ClInclude>
     <ClInclude Include="Scene\SceneResource.h">
       <Filter>02. Scene\01. Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\Animation.h">
+      <Filter>05. Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\AnimationInfo.h">
+      <Filter>05. Animation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

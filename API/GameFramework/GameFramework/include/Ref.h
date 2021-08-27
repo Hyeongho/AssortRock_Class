@@ -25,14 +25,22 @@ public:
 		m_RefCount++;
 	}
 
-	void Release()
+	int GetRefCount() const
+	{
+		return m_RefCount;
+	}
+
+	int Release()
 	{
 		m_RefCount--;
 
 		if (m_RefCount == 0)
 		{
 			delete this;
+			return 0;
 		}
+
+		return m_RefCount;
 	}
 
 public:

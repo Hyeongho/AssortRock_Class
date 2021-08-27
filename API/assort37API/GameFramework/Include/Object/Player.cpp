@@ -28,6 +28,10 @@ bool CPlayer::Init()
 
 	SetPivot(0.5f, 0.5f);
 
+	SetTexture("Teemo", TEXT("teemo.bmp"));
+
+
+
 	CInput::GetInst()->SetCallback<CPlayer>("MoveUp", KeyState_Push,
 		this, &CPlayer::MoveUp);
 

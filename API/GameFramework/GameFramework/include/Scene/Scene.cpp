@@ -8,7 +8,7 @@ CScene::CScene()
 
 CScene::~CScene()
 {
-	
+	SAFE_DELETE(m_Resource);
 }
 
 CSceneResource* CScene::GetSceneResource() const

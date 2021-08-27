@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Ref.h"
+#include "../Resource/Texture.h"
 
 class CGameObject : public CRef
 {
@@ -20,6 +21,10 @@ protected:
 	Vector2 m_Velocitry;
 	float m_MoveSpeed;
 	float m_TimeScale;
+
+	CSharedPtr<CTexture> m_Texture;
+
+	Vector2 m_ImageStart;
 
 public:
 	Vector2 GetPos() const
@@ -104,6 +109,34 @@ public:
 	void Move(const Vector2& Dir);
 	void Move(const Vector2& Dir, float Speed);
 
+	void SetImageStart(float x, float y)
+	{
+		m_ImageStart.x = x;
+		m_ImageStart.y = y;
+	}
+
+	void SetImageStart(const Vector2& ImageStart)
+	{
+		m_ImageStart = ImageStart;
+	}
+
+public:
+	void SetTexture(CTexture* Texture)
+	{
+		m_Texture = Texture;
+
+		if (m_Texture)
+		{
+			m_Size.x = (float)m_Texture->GetWidth();
+			m_Size.y = (float)m_Texture->GetHeight();
+		}
+	}
+
+	void SetTexture(const std::string& Name);
+	void SetTexture(const std::string& Name, const TCHAR* FileName, const std::string& PathName = TEXTURE_PATH);
+	void SetTexFullPath(const std::string& Name, const TCHAR* FullPath);
+	void SetTexture(const std::string& Name, const std::vector<std::wstring>& vecFileName, const std::string& PathName = TEXTURE_PATH);
+	void SetTextureColorKey(unsigned char r, unsigned g, unsigned char b, int Index = 0);
 	
 public:
 	virtual bool Init();

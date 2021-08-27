@@ -7,3 +7,9 @@ enum EKeyState
 	KeyState_Up, 
 	KeyState_Max
 };
+
+enum class ETexture_Type
+{
+	Atlas,
+	Frame
+};

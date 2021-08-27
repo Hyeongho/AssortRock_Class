@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Animation\Animation.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
@@ -171,6 +172,8 @@
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation\Animation.h" />
+    <ClInclude Include="Animation\AnimationInfo.h" />
     <ClInclude Include="Flag.h" />
     <ClInclude Include="GameInfo.h" />
     <ClInclude Include="GameManager.h" />

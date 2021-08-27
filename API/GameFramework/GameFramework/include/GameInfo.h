@@ -19,6 +19,8 @@
 #include "Math.h"
 #include "Flag.h"
 
+#pragma comment(lib, "msimg32.lib")
+
 #define KEYCOUNT_MAX 256
 
 #define ROOT_PATH "RootPath"
