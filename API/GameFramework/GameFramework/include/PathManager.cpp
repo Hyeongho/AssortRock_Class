@@ -21,8 +21,6 @@ bool CPathManager::Init()
 {
 	// RootPath의 경로를 얻어온다.
 	// RootPath는 Bin폴더 까지의 전체 경로를 말한다.
-	
-
 	TCHAR Path[MAX_PATH] = {};
 
 	// GetModuleFileName: 현재 실행파일이 있는 경로 + 실행파일이름.exe 로 전체경로를 얻어오게 된다
@@ -38,7 +36,7 @@ bool CPathManager::Init()
 	{
 		if (Path[i] == '\\')
 		{
-			memset(&Path[i + 1], 0, sizeof(TCHAR) * (MAX_PATH - i - 1));
+			memset(&Path[i + 1], 0, sizeof(TCHAR) * (Length - i - 1));
 			break;
 		}
 	}

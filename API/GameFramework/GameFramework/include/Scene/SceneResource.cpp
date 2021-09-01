@@ -8,22 +8,36 @@ CSceneResource::CSceneResource()
 CSceneResource::~CSceneResource()
 {
 	{
-		auto iter = m_mapTexture.begin();
-		auto iterEnd = m_mapTexture.end();
+		auto iter = m_mapAnimationSequence.begin();
+		auto iterEnd = m_mapAnimationSequence.end();
 
-		for (; iter != iterEnd; iter++)
+		for (; iter != iterEnd;)
 		{
-			CResourceManager::GetInst()->ResourceTexture(iter->first);
+			std::string	Name = iter->first;
+
+			// erase를 하면 SharedPtr이므로 자동으로 객체가 제거되며 카운트가
+			// 1 감소한다. erase는 지운 다음 iterator를 반환하므로 ++을 안해줘도
+			// 된다.
+			iter = m_mapAnimationSequence.erase(iter);
+
+			CResourceManager::GetInst()->ReleaseAnimationSequence(Name);
 		}
 	}
 
 	{
-		auto iter = m_mapAnimationSequence.begin();
-		auto iterEnd = m_mapAnimationSequence.end();
+		auto iter = m_mapTexture.begin();
+		auto iterEnd = m_mapTexture.end();
 
-		for (; iter != iterEnd; iter++)
+		for (; iter != iterEnd;)
 		{
-			CResourceManager::GetInst()->ResourceAnimationSequence(iter->first);
+			std::string	Name = iter->first;
+
+			// erase를 하면 SharedPtr이므로 자동으로 객체가 제거되며 카운트가
+			// 1 감소한다. erase는 지운 다음 iterator를 반환하므로 ++을 안해줘도
+			// 된다.
+			iter = m_mapTexture.erase(iter);
+
+			CResourceManager::GetInst()->ReleaseTexture(Name);
 		}
 	}
 }
@@ -85,7 +99,7 @@ bool CSceneResource::LoadTexture(const std::string& Name, const std::vector<std:
 	return true;
 }
 
-void CSceneResource::SetTextureColorKey(const std::string& Name, const char r, const char g, const char b, int Index)
+void CSceneResource::SetTextureColorKey(const std::string& Name, const unsigned char r, const unsigned char g, const unsigned char b, int Index)
 {
 	CResourceManager::GetInst()->SetTextureColorKey(Name, r, g, b, Index);
 }

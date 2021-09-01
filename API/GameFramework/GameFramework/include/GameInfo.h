@@ -49,3 +49,18 @@ struct AnimationFrameData
 	Vector2 StartPos;
 	Vector2 Size;
 };
+
+struct CharacterInfo
+{
+	int Attack;
+	int Armor;
+	int HP;
+	int HPMax;
+	int MP;
+	int MPMax;
+	int Level;
+	int Exp;
+	int Gold;
+	float AttackSpeed;
+	float AttackDistance;
+};

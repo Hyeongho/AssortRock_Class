@@ -1,5 +1,5 @@
 #pragma once
-#include "../GameInfo.h"
+
 #include "../Ref.h"
 
 struct TextureInfo
@@ -57,7 +57,7 @@ public:
         return (unsigned int)m_vecTextureInfo[idx]->BmpInfo.bmHeight;
     }
 
-    void SetColorKey(const char r, const char g, const char b, int index = 0)
+    void SetColorKey(const unsigned char r, const unsigned char g, const unsigned char b, int index = 0)
     {
         m_vecTextureInfo[index]->ColorKeyEnable = true;
         m_vecTextureInfo[index]->ColorKey = RGB(r, g, b);

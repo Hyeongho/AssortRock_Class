@@ -8,6 +8,8 @@ CResourceManager::CResourceManager()
 
 CResourceManager::~CResourceManager()
 {
+	m_mapAnimationSequence.clear();
+	m_mapTexture.clear();
 }
 
 bool CResourceManager::Init()
@@ -81,7 +83,7 @@ bool CResourceManager::LoadTexture(const std::string& Name, const std::vector<st
 	return true;
 }
 
-void CResourceManager::SetTextureColorKey(const std::string& Name, const char r, const char g, const char b, int Index)
+void CResourceManager::SetTextureColorKey(const std::string& Name, const unsigned char r, const unsigned char g, const unsigned char b, int Index)
 {
 	CTexture* Texture = FindTexture(Name);
 
@@ -93,7 +95,7 @@ void CResourceManager::SetTextureColorKey(const std::string& Name, const char r,
 	Texture->SetColorKey(r, g, b, Index);
 }
 
-void CResourceManager::ResourceTexture(const std::string& Name)
+void CResourceManager::ReleaseTexture(const std::string& Name)
 {
 	auto iter = m_mapTexture.find(Name);
 
@@ -221,7 +223,7 @@ void CResourceManager::AddAnimationFrameData(const std::string& SequenceName, fl
 	Sequence->AddFrameData(PosX, PosY, SizeX, SizeY);
 }
 
-void CResourceManager::ResourceAnimationSequence(const std::string& Name)
+void CResourceManager::ReleaseAnimationSequence(const std::string& Name)
 {
 	auto iter = m_mapAnimationSequence.find(Name);
 

@@ -17,6 +17,13 @@ protected:
 	float m_Skill1Time;
 	std::list<CSharedPtr<CBullet>> m_Skill1BulletList;
 
+public: 
+	void SetAttackSpeed(float Speed)
+	{
+		CCharacter::SetAttackSpeed(Speed);
+ 		SetAnimationPlayScale("LucidNunNaRightAttack", Speed);
+	}
+
 public:
 	virtual bool Init();
 	virtual void Update(float DeltaTime);
@@ -34,5 +41,12 @@ public:
 	void Pause(float DeltaTime);
 	void Resume(float DeltaTime);
 	void Skill1(float DeltaTime);
+
+public:
+	void AttackEnd();
+	void Fire();
+
+	void SkillEnd();
+	void Skill1Enable();
 };
 

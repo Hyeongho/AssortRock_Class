@@ -2,7 +2,6 @@
 #include "../GameManager.h"
 #include "../Scene/Scene.h"
 #include "../Scene/SceneResource.h"
-#include "../Animation/Animation.h"
 #include "../Resource/AnimationSequence.h"
 
 CGameObject::CGameObject() : m_MoveSpeed(200.f), m_TimeScale(1.f), m_Animation(nullptr)
@@ -88,6 +87,11 @@ void CGameObject::ChangeAnimation(const std::string& Name)
 	}
 
 	m_Animation->ChangeAnimation(Name);
+}
+
+bool CGameObject::CheckCurrentAnimation(const std::string& Name)
+{
+	return m_Animation->CheckCurrentAnimation(Name);
 }
 
 void CGameObject::SetAnimationReverse(const std::string& Name, bool Reverse)

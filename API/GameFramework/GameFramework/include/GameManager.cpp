@@ -24,6 +24,12 @@ CGameManager::~CGameManager()
 
     SAFE_DELETE(m_Timer);
 
+    SelectObject(m_hBackDC, m_hBackBmp);
+
+    DeleteObject(m_hBackBmp);
+
+    DeleteDC(m_hBackDC);
+
     ReleaseDC(m_hWnd, m_hDC);
 }
 
@@ -73,6 +79,13 @@ bool CGameManager::Init(HINSTANCE hInst)
 
     // 타이머를 생성한다.
     m_Timer = new CTimer;
+
+    // 백버퍼 생성
+    m_hBackDC = CreateCompatibleDC(m_hDC);
+
+    m_hBackBmp = CreateCompatibleBitmap(m_hDC, m_RS.Width, m_RS.Height);
+
+    m_hPrevBackBmp = (HBITMAP)SelectObject(m_hBackDC, m_hBackBmp);
 
 	return true;
 }
@@ -149,7 +162,12 @@ bool CGameManager::Collision(float DeltaTime)
 
 void CGameManager::Render(float DeltaTime)
 {
-    CSceneManager::GetInst()->Render(m_hDC);
+    // 임시로 화면을 지우기 위한 Rect를 그려준다.
+    Rectangle(m_hBackDC, -1, -1, m_RS.Width + 1, m_RS.Height + 1);
+
+    CSceneManager::GetInst()->Render(m_hBackDC);
+
+    BitBlt(m_hDC, 0, 0, m_RS.Width, m_RS.Height, m_hBackDC, 0, 0, SRCCOPY);
 }
 
 ATOM CGameManager::Register()

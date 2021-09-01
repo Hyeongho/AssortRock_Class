@@ -46,7 +46,6 @@ public:
 
 	static void DestroyInst()
 	{
-		CPathManager(m_Inst);
+		SAFE_DELETE(m_Inst);
 	}
 };
-

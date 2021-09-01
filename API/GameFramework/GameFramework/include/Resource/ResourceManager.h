@@ -20,9 +20,9 @@ public:
 	bool LoadTexture(const std::string& Name, const TCHAR* FileName, const std::string& PathName = TEXTURE_PATH);
 	bool LoadTextureFullPath(const std::string& Name, const TCHAR* FullPath);
 	bool LoadTexture(const std::string& Name, const std::vector<std::wstring>& vecFileName, const std::string& PathName = TEXTURE_PATH);
-	void SetTextureColorKey(const std::string& Name, const char r, const char g, const char b, int Index = 0);
+	void SetTextureColorKey(const std::string& Name, const unsigned char r, const unsigned char g, const unsigned char b, int Index = 0);
 
-	void ResourceTexture(const std::string& Name);
+	void ReleaseTexture(const std::string& Name);
 
 	CTexture* FindTexture(const std::string& Name);
 
@@ -34,7 +34,7 @@ public:
 	void AddAnimationFrameData(const std::string& SequenceName, const Vector2& StartPos, const Vector2& Size);
 	void AddAnimationFrameData(const std::string& SequenceName, float PosX, float PosY, float SizeX, float SizeY);
 
-	void ResourceAnimationSequence(const std::string& Name);
+	void ReleaseAnimationSequence(const std::string& Name);
 
 	CAnimationSequence* FindAnimationSequence(const std::string& Name); 
 
@@ -54,6 +54,6 @@ public:
 
 	static void DestroyInst()
 	{
-		CResourceManager(m_Inst);
+		SAFE_DELETE(m_Inst);
 	}
 };

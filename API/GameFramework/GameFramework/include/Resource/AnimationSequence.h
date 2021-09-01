@@ -11,17 +11,11 @@ private:
 	~CAnimationSequence();
 
 private:
-	std::string m_Name;
 	ETexture_Type m_TextureType;
 	CSharedPtr<CTexture> m_Texture;
 	std::vector<AnimationFrameData> m_vecFrameData;
 
 public:
-	const std::string& GetName() const
-	{
-		return m_Name;
-	}
-
 	CTexture* GetTexture()
 	{
 		return m_Texture;

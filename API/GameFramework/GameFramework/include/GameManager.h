@@ -12,6 +12,9 @@ private:
 	HINSTANCE m_hInst;
 	HWND m_hWnd;
 	HDC m_hDC;
+	HDC m_hBackDC;
+	HBITMAP m_hBackBmp;
+	HBITMAP m_hPrevBackBmp;
 	Resolution m_RS;
 
 	class CTimer* m_Timer;

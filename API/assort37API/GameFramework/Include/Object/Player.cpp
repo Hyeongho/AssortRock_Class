@@ -31,8 +31,15 @@ bool CPlayer::Init()
 	//SetTexture("Teemo", TEXT("teemo.bmp"));
 	CreateAnimation();
 	AddAnimation("LucidNunNaRightIdle");
-	AddAnimation("LucidNunNaRightWalk");
-	AddAnimation("LucidNunNaRightAttack", false, 0.2f);
+	AddAnimation("LucidNunNaRightWalk", true, 0.6f);
+	AddAnimation("LucidNunNaRightAttack", false, 0.5f);
+	AddAnimation("LucidNunNaRightSkill1", false, 0.5f);
+
+	AddAnimationNotify<CPlayer>("LucidNunNaRightAttack", 2, this, &CPlayer::Fire);
+	SetAnimationEndNotify<CPlayer>("LucidNunNaRightAttack", this, &CPlayer::AttackEnd);
+
+	AddAnimationNotify<CPlayer>("LucidNunNaRightSkill1", 2, this, &CPlayer::Skill1Enable);
+	SetAnimationEndNotify<CPlayer>("LucidNunNaRightSkill1", this, &CPlayer::Skill1End);
 
 
 
@@ -68,6 +75,9 @@ void CPlayer::Update(float DeltaTime)
 {
 	CCharacter::Update(DeltaTime);
 
+	if (GetAsyncKeyState(VK_F1) & 0x8000)
+		SetAttackSpeed(0.5f);
+
 	if (m_Skill1Enable)
 	{
 		m_Skill1Time += DeltaTime;
@@ -96,6 +106,14 @@ void CPlayer::Update(float DeltaTime)
 void CPlayer::PostUpdate(float DeltaTime)
 {
 	CCharacter::PostUpdate(DeltaTime);
+
+	// 현재 애니메이션이 Walk 상태에서 속도가 0이 되었다면 이전까지 움직이다가
+	// 지금 멈췄다는 것이다.
+	if (CheckCurrentAnimation("LucidNunNaRightWalk") &&
+		m_Velocity.Length() == 0.f)
+	{
+		ChangeAnimation("LucidNunNaRightIdle");
+	}
 }
 
 void CPlayer::Collision(float DeltaTime)
@@ -117,30 +135,32 @@ void CPlayer::MoveUp(float DeltaTime)
 {
 	//m_Pos.y -= 200.f * DeltaTime;
 	Move(Vector2(0.f, -1.f));
+	ChangeAnimation("LucidNunNaRightWalk");
 }
 
 void CPlayer::MoveDown(float DeltaTime)
 {
 	Move(Vector2(0.f, 1.f));
+	ChangeAnimation("LucidNunNaRightWalk");
 }
 
 void CPlayer::MoveLeft(float DeltaTime)
 {
 	Move(Vector2(-1.f, 0.f));
+	ChangeAnimation("LucidNunNaRightWalk");
 }
 
 void CPlayer::MoveRight(float DeltaTime)
 {
 	Move(Vector2(1.f, 0.f));
+	ChangeAnimation("LucidNunNaRightWalk");
 }
 
 void CPlayer::BulleFire(float DeltaTime)
 {
-	CSharedPtr<CBullet> Bullet = m_Scene->CreateObject<CBullet>("Bullet",
-		Vector2(m_Pos + Vector2(75.f, 0.f)),
-		Vector2(50.f, 50.f));
+	ChangeAnimation("LucidNunNaRightAttack");
 
-	Bullet->SetPivot(0.5f, 0.5f);
+	
 
 	/*if (m_Skill1Enable)
 	{
@@ -160,6 +180,30 @@ void CPlayer::Resume(float DeltaTime)
 }
 
 void CPlayer::Skill1(float DeltaTime)
+{
+	ChangeAnimation("LucidNunNaRightSkill1");
+}
+
+void CPlayer::AttackEnd()
+{
+	ChangeAnimation("LucidNunNaRightIdle");
+}
+
+void CPlayer::Fire()
+{
+	CSharedPtr<CBullet> Bullet = m_Scene->CreateObject<CBullet>("Bullet",
+		Vector2(m_Pos + Vector2(75.f, 0.f)),
+		Vector2(50.f, 50.f));
+
+	Bullet->SetPivot(0.5f, 0.5f);
+}
+
+void CPlayer::Skill1End()
+{
+	ChangeAnimation("LucidNunNaRightIdle");
+}
+
+void CPlayer::Skill1Enable()
 {
 	CGameManager::GetInst()->SetTimeScale(0.01f);
 	SetTimeScale(100.f);

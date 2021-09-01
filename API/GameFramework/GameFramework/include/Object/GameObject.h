@@ -2,6 +2,7 @@
 
 #include "../Ref.h"
 #include "../Resource/Texture.h"
+#include "../Animation/Animation.h"
 
 class CGameObject : public CRef
 {
@@ -27,7 +28,7 @@ protected:
 	Vector2 m_ImageStart;
 
 protected:
-	class CAnimation* m_Animation;
+	CAnimation* m_Animation;
 
 public:
 	void CreateAnimation();
@@ -36,6 +37,7 @@ public:
 	void SetAnimationPlayScale(const std::string& Name, float PlayScale);
 	void SetCurrentAnimation(const std::string& Name);
 	void ChangeAnimation(const std::string& Name);
+	bool CheckCurrentAnimation(const std::string& Name);
 	void SetAnimationReverse(const std::string& Name, bool Reverse);
 	void SetAnimationLoop(const std::string& Name, bool Loop);
 
@@ -155,4 +157,17 @@ public:
 	virtual void Collision(float DeltaTime);
 	virtual void Render(HDC hDC);
 	virtual CGameObject* Clone();
+
+public:
+	template <typename T>
+	void SetAnimationEndNotify(const std::string& SequenceName, T* Obj, void (T::* Func)())
+	{
+		m_Animation->SetEndNotify<T>(SequenceName, Obj, Func);
+	}
+
+	template <typename T>
+	void AddAnimationNotify(const std::string& SequenceName, int Frame, T* Obj, void (T::* Func)())
+	{
+		m_Animation->AddNotify<T>(SequenceName, Frame, Obj, Func);
+	}
 };

@@ -148,11 +148,6 @@ bool CInput::Init()
 	return true;
 }
 
-int CInput::Run()
-{
-	return 0;
-}
-
 void CInput::Update(float DeltaTime)
 {
 	// 키상태를 업데이트 해준다.

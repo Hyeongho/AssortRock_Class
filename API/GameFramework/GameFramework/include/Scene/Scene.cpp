@@ -8,6 +8,8 @@ CScene::CScene()
 
 CScene::~CScene()
 {
+	m_ObjList.clear();
+
 	SAFE_DELETE(m_Resource);
 }
 

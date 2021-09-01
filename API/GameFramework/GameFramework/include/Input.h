@@ -56,7 +56,6 @@ private:
 
 public:
 	bool Init();
-	int Run();
 	void Update(float DeltaTime);
 
 private:
