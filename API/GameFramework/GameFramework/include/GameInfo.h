@@ -42,6 +42,11 @@ struct RectInfo
 	float Top;
 	float Right;
 	float Bottom;
+
+	RectInfo() : Left(0.f), Top(0.f), Right(0.f), Bottom(0.f)
+	{
+
+	}
 };
 
 struct AnimationFrameData

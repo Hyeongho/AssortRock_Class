@@ -6,6 +6,7 @@
 #include "Input.h"
 #include "PathManager.h"
 #include "Resource/ResourceManager.h"
+#include "Collision/CollisionManager.h"
 
 CGameManager* CGameManager::m_Inst = nullptr;
 bool CGameManager::m_Loop = true;
@@ -22,6 +23,8 @@ CGameManager::~CGameManager()
 
 	CInput::DestroyInst();
 
+	CCollisionManager::DestroyInst();
+
 	CResourceManager::DestroyInst();
 	CPathManager::DestroyInst();
 
@@ -32,6 +35,9 @@ CGameManager::~CGameManager()
 	DeleteObject(m_hBackBmp);
 
 	DeleteDC(m_hBackDC);
+
+	DeleteObject(m_hGreenBrush);
+	DeleteObject(m_hRedBrush);
 
 	// GetDC를 이용해서 생성한 DC는 반드시 ReleaseDC를 해주어야 한다.
 	ReleaseDC(m_hWnd, m_hDC);
@@ -63,6 +69,10 @@ bool CGameManager::Init(HINSTANCE hInst)
 	if (!CResourceManager::GetInst()->Init())
 		return false;
 
+	// 충돌 관리자 초기화
+	if (!CCollisionManager::GetInst()->Init())
+		return false;
+
 	// 입력관리자 초기화
 	if (!CInput::GetInst()->Init())
 		return false;
@@ -82,6 +92,9 @@ bool CGameManager::Init(HINSTANCE hInst)
 	m_hBackBmp = CreateCompatibleBitmap(m_hDC, m_RS.Width, m_RS.Height);
 
 	m_hPrevBackBmp = (HBITMAP)SelectObject(m_hBackDC, m_hBackBmp);
+
+	m_hGreenBrush = CreateSolidBrush(RGB(0, 255, 0));
+	m_hRedBrush = CreateSolidBrush(RGB(255, 0, 0));
 
 	return true;
 }

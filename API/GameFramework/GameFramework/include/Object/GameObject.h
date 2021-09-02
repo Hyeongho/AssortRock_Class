@@ -3,6 +3,7 @@
 #include "../Ref.h"
 #include "../Resource/Texture.h"
 #include "../Animation/Animation.h"
+#include "../Collision/Collider.h"
 
 class CGameObject : public CRef
 {
@@ -20,12 +21,15 @@ protected:
 	Vector2 m_Size;
 	Vector2 m_Pivot;
 	Vector2 m_Velocitry;
+	Vector2 m_Offset;
 	float m_MoveSpeed;
 	float m_TimeScale;
 
 	CSharedPtr<CTexture> m_Texture;
 
 	Vector2 m_ImageStart;
+
+	std::list<CSharedPtr<CCollider>> m_ColliderList;
 
 protected:
 	CAnimation* m_Animation;
@@ -42,6 +46,11 @@ public:
 	void SetAnimationLoop(const std::string& Name, bool Loop);
 
 public:
+	Vector2 GetOffSet() const
+	{
+		return m_Offset;
+	}
+
 	Vector2 GetPos() const
 	{
 		return m_Pos;
@@ -74,6 +83,17 @@ public:
 
 public:
 	void SetScene(class CScene* Scene);
+
+	void SetOffset(float x, float y)
+	{
+		m_Offset.x = x;
+		m_Offset.y = y;
+	}
+
+	void SetOffset(const Vector2& Offset)
+	{
+		m_Offset = Offset;
+	}
 
 	void SetPos(float x, float y)
 	{
@@ -169,5 +189,26 @@ public:
 	void AddAnimationNotify(const std::string& SequenceName, int Frame, T* Obj, void (T::* Func)())
 	{
 		m_Animation->AddNotify<T>(SequenceName, Frame, Obj, Func);
+	}
+
+public:
+	template <typename T>
+	T* AddCollider(const std::string& Name)
+	{
+		T* Collider = new T;
+
+		Collider->SetName(Name);
+		Collider->SetOwner(this);
+		Collider->SetScene(m_Scene);
+
+		if (!Collider->Init())
+		{
+			SAFE_DELETE(Collider);
+			return nullptr;
+		}
+
+		m_ColliderList.push_back(Collider);
+
+		return Collider;
 	}
 };

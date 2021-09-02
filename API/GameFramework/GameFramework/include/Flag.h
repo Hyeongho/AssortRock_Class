@@ -13,3 +13,10 @@ enum class ETexture_Type
 	Atlas,
 	Frame
 };
+
+enum class ECollider_Type
+{
+	Box, 
+	Sphere, 
+	Point
+};

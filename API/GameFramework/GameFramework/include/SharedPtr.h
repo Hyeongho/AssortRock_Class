@@ -91,12 +91,12 @@ public:
 	}
 
 	// 변환연산자
-	operator T* ()
+	operator T* () const
 	{
 		return m_Ptr;
 	}
 
-	T* operator -> ()
+	T* operator -> () const
 	{
 		return m_Ptr;
 	}

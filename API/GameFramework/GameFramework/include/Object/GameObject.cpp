@@ -18,6 +18,16 @@ CGameObject::CGameObject(const CGameObject& obj)
 	}
 
 	m_Animation->m_Owner = this;
+
+	m_ColliderList.clear();
+
+	auto iter = obj.m_ColliderList.begin();
+	auto iterEnd = obj.m_ColliderList.end();
+
+	for (; iter != iterEnd; iter++)
+	{
+		m_ColliderList.push_back((*iter)->Clone());
+	}
 }
 
 CGameObject::~CGameObject()
@@ -207,10 +217,49 @@ void CGameObject::Update(float DeltaTime)
 	{
 		m_Animation->Update(DeltaTime);
 	}
+
+	auto iter = m_ColliderList.begin();
+	auto iterEnd = m_ColliderList.end();
+
+	for (; iter != iterEnd;)
+	{
+		if (!(*iter)->IsActive())
+		{
+			iter = m_ColliderList.erase(iter);
+			iterEnd = m_ColliderList.end();
+			continue;
+		}
+
+		else if ((*iter)->GetEnable())
+		{
+			(*iter)->Update(DeltaTime);
+		}
+	
+		iter++;
+	}
 }
 
 void CGameObject::PostUpdate(float DeltaTime)
 {
+	auto iter = m_ColliderList.begin();
+	auto iterEnd = m_ColliderList.end();
+
+	for (; iter != iterEnd;)
+	{
+		if (!(*iter)->IsActive())
+		{
+			iter = m_ColliderList.erase(iter);
+			iterEnd = m_ColliderList.end();
+			continue;
+		}
+
+		else if ((*iter)->GetEnable())
+		{
+			(*iter)->PostUpdate(DeltaTime);
+		}
+
+		iter++;
+	}
 }
 
 void CGameObject::Collision(float DeltaTime)
@@ -219,13 +268,13 @@ void CGameObject::Collision(float DeltaTime)
 
 void CGameObject::Render(HDC hDC)
 {
-	Vector2 LT = m_Pos - m_Pivot * m_Size;
-
 	if (m_Animation)
 	{
 		AnimationInfo* AnimInfo = m_Animation->m_CurrentAnimation;
 
 		const AnimationFrameData& FrameData = AnimInfo->Sequence->GetFrameData(AnimInfo->Frame);
+
+		Vector2 LT = m_Pos - m_Pivot * FrameData.Size + m_Offset;
 
 		if (AnimInfo->Sequence->GetTextureType() == ETexture_Type::Atlas)
 		{
@@ -240,6 +289,8 @@ void CGameObject::Render(HDC hDC)
 
 	else
 	{
+		Vector2 LT = m_Pos - m_Pivot * m_Size + m_Offset;
+
 		if (m_Texture)
 		{
 			// 이미지를 이용해서 출력한다.
@@ -250,6 +301,26 @@ void CGameObject::Render(HDC hDC)
 		{
 			Rectangle(hDC, (int)LT.x, (int)LT.y, (int)(LT.x + m_Size.x), (int)(LT.y + m_Size.y));
 		}
+	}
+
+	auto iter = m_ColliderList.begin();
+	auto iterEnd = m_ColliderList.end();
+
+	for (; iter != iterEnd;)
+	{
+		if (!(*iter)->IsActive())
+		{
+			iter = m_ColliderList.erase(iter);
+			iterEnd = m_ColliderList.end();
+			continue;
+		}
+
+		else if ((*iter)->GetEnable())
+		{
+			(*iter)->Render(hDC);
+		}
+
+		iter++;
 	}
 
 	m_PrevPos = m_Pos;

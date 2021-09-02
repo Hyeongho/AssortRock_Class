@@ -61,6 +61,9 @@
     <Filter Include="04. Resource\02. Animation">
       <UniqueIdentifier>{3e818422-0bd1-4511-9fe2-3cbb7281715d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="06. Collision">
+      <UniqueIdentifier>{3952a144-4b40-4f2b-8a44-7ffa41c4fbdd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -122,6 +125,15 @@
     </ClCompile>
     <ClCompile Include="Resource\AnimationSequence.cpp">
       <Filter>04. Resource\02. Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision\CollisionManager.cpp">
+      <Filter>06. Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision\Collider.cpp">
+      <Filter>06. Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision\ColliderBox.cpp">
+      <Filter>06. Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +208,15 @@
     </ClInclude>
     <ClInclude Include="Resource\AnimationSequence.h">
       <Filter>04. Resource\02. Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision\CollisionManager.h">
+      <Filter>06. Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision\Collider.h">
+      <Filter>06. Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision\ColliderBox.h">
+      <Filter>06. Collision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

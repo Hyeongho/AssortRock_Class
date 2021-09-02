@@ -22,7 +22,20 @@ private:
 
 	static bool m_Loop;
 
+	HBRUSH m_hGreenBrush;
+	HBRUSH m_hRedBrush;
+
 public:
+	HBRUSH GetGreenBrush() const
+	{
+		return m_hGreenBrush;
+	}
+
+	HBRUSH GetRedBrush() const
+	{
+		return m_hRedBrush;
+	}
+
 	HDC GetWindowDC() const
 	{
 		return m_hDC;

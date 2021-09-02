@@ -3,6 +3,7 @@
 #include "../Scene/Scene.h"
 #include "../Input.h"
 #include "../GameManager.h"
+#include "../Collision/ColliderBox.h"
 
 CPlayer::CPlayer()	:
 	m_Skill1Enable(false),
@@ -26,7 +27,7 @@ bool CPlayer::Init()
 	if (!CCharacter::Init())
 		return false;
 
-	SetPivot(0.5f, 0.5f);
+	SetPivot(0.5f, 1.f);
 
 	//SetTexture("Teemo", TEXT("teemo.bmp"));
 	CreateAnimation();
@@ -41,7 +42,17 @@ bool CPlayer::Init()
 	AddAnimationNotify<CPlayer>("LucidNunNaRightSkill1", 2, this, &CPlayer::Skill1Enable);
 	SetAnimationEndNotify<CPlayer>("LucidNunNaRightSkill1", this, &CPlayer::Skill1End);
 
+	/*CColliderBox* Body = AddCollider<CColliderBox>("Body");
+	Body->SetExtent(80.f, 75.f);
+	Body->SetOffset(0.f, -37.5f);*/
 
+	CColliderBox* Head = AddCollider<CColliderBox>("Head");
+	Head->SetExtent(40.f, 30.f);
+	Head->SetOffset(0.f, -60.f);
+
+	CColliderBox* Body = AddCollider<CColliderBox>("Body");
+	Body->SetExtent(80.f, 45.f);
+	Body->SetOffset(0.f, -22.5f);
 
 
 
@@ -101,6 +112,12 @@ void CPlayer::Update(float DeltaTime)
 			m_Skill1BulletList.clear();*/
 		}
 	}
+
+	if (CheckCurrentAnimation("LucidNunNaRightAttack"))
+		SetOffset(0.f, 20.f);
+
+	else
+		SetOffset(0.f, 0.f);
 }
 
 void CPlayer::PostUpdate(float DeltaTime)
@@ -158,9 +175,7 @@ void CPlayer::MoveRight(float DeltaTime)
 
 void CPlayer::BulleFire(float DeltaTime)
 {
-	ChangeAnimation("LucidNunNaRightAttack");
-
-	
+	ChangeAnimation("LucidNunNaRightAttack");	
 
 	/*if (m_Skill1Enable)
 	{

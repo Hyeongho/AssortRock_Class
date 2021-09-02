@@ -2,6 +2,7 @@
 #include "../Scene/Scene.h"
 #include "../Input.h"
 #include "../GameManager.h"
+#include "../Collision/ColliderBox.h"
 
 CPlayer::CPlayer() : m_Skill1Enable(false), m_Skill1Time(0.f)
 {
@@ -24,7 +25,7 @@ bool CPlayer::Init()
 		return false;
 	}
 
-	SetPivot(0.5f, 0.5f);
+	SetPivot(0.5f, 1.f);
 
 	//SetTexture("Teemo", TEXT("teemo.bmp"));
 
@@ -39,6 +40,18 @@ bool CPlayer::Init()
 
 	AddAnimationNotify<CPlayer>("LucidNunNaRightSkill1", 2, this, &CPlayer::Skill1Enable);
 	SetAnimationEndNotify<CPlayer>("LucidNunNaRightSkill1", this, &CPlayer::SkillEnd);
+
+	/*CColliderBox* Body = AddCollider<CColliderBox>("Body");
+	Body->SetExtent(80.f, 75.f);
+	Body->SetOffset(0.f, -37.f);*/
+
+	CColliderBox* Head = AddCollider<CColliderBox>("Head");
+	Head->SetExtent(40.f, 30.f);
+	Head->SetOffset(0.f, -60.f);
+
+	CColliderBox* Body = AddCollider<CColliderBox>("Body");
+	Body->SetExtent(80.f, 45.f);
+	Body->SetOffset(0.f, -22.5f);
 
 	CInput::GetInst()->SetCallback<CPlayer>("MoveUp", KeyState_Push, this, &CPlayer::MoveUp);
 	CInput::GetInst()->SetCallback<CPlayer>("MoveDown", KeyState_Push, this, &CPlayer::MoveDown);
@@ -85,6 +98,16 @@ void CPlayer::Update(float DeltaTime)
 
 			m_Skill1BulletList.clear();*/
 		}
+	}
+
+	if (CheckCurrentAnimation("LucidNunNaRightAttack"))
+	{
+		SetOffset(0.f, 20.f);
+	}
+
+	else
+	{
+		SetOffset(0.f, 0.f);
 	}
 }
 
