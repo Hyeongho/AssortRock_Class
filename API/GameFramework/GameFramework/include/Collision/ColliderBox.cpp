@@ -1,6 +1,7 @@
 #include "ColliderBox.h"
 #include "../Object/GameObject.h"
 #include "../GameManager.h"
+#include "Collision.h"
 
 CColliderBox::CColliderBox() : m_Width(100.f), m_Height(100.f)
 {
@@ -64,6 +65,17 @@ CColliderBox* CColliderBox::Clone()
 	return new CColliderBox(*this);
 }
 
-void CColliderBox::Collision(CCollider* Dest)
+bool CColliderBox::Collision(CCollider* Dest)
 {
+	switch (Dest->GetColliderType())
+	{
+	case ECollider_Type::Box:
+		return CCollision::CollisionBoxToBox(this, (CColliderBox*)Dest);
+	case ECollider_Type::Sphere:
+		break;
+	case ECollider_Type::Point:
+		break;
+	}
+
+	return false;
 }

@@ -1,4 +1,5 @@
 #include "Bullet.h"
+#include "../Collision/ColliderBox.h"
 
 CBullet::CBullet()
 {
@@ -30,9 +31,14 @@ bool CBullet::Init()
 	SetSize(178.f, 164.f);
 	SetImageStart(178.f * 5, 0.f);
 	SetTextureColorKey(255, 0, 255);*/
+	SetPivot(0.5f, 0.5f);
 
 	CreateAnimation();
 	AddAnimation("Bullet", true, 1.f);
+
+	CColliderBox* Body = AddCollider<CColliderBox>("Body");
+	Body->SetExtent(50.f, 50.f);
+	Body->SetOffset(0.f, 0.f);
 
 	return true;
 }

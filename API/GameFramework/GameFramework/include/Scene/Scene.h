@@ -13,9 +13,12 @@ protected:
 
 private:
 	class CSceneResource* m_Resource;
+	class CSceneCollision* m_Collision;
 
 public:
 	class CSceneResource* GetSceneResource() const;
+	class CSceneCollision* GetSceneCollision() const;
+	
 
 private:
 	std::list<CSharedPtr<CGameObject>> m_ObjList;

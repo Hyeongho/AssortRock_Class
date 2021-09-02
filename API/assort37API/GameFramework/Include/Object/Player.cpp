@@ -49,10 +49,12 @@ bool CPlayer::Init()
 	CColliderBox* Head = AddCollider<CColliderBox>("Head");
 	Head->SetExtent(40.f, 30.f);
 	Head->SetOffset(0.f, -60.f);
+	Head->SetCollisionProfile("Player");
 
 	CColliderBox* Body = AddCollider<CColliderBox>("Body");
 	Body->SetExtent(80.f, 45.f);
 	Body->SetOffset(0.f, -22.5f);
+	Body->SetCollisionProfile("Player");
 
 
 
@@ -211,6 +213,11 @@ void CPlayer::Fire()
 		Vector2(50.f, 50.f));
 
 	Bullet->SetPivot(0.5f, 0.5f);
+
+	CCollider* Collider = Bullet->FindCollider("Body");
+
+	if (Collider)
+		Collider->SetCollisionProfile("PlayerAttack");
 }
 
 void CPlayer::Skill1End()

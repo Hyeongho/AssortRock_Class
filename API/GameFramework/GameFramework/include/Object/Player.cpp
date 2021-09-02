@@ -48,10 +48,12 @@ bool CPlayer::Init()
 	CColliderBox* Head = AddCollider<CColliderBox>("Head");
 	Head->SetExtent(40.f, 30.f);
 	Head->SetOffset(0.f, -60.f);
+	Head->SetCollisionProfile("Player");
 
 	CColliderBox* Body = AddCollider<CColliderBox>("Body");
 	Body->SetExtent(80.f, 45.f);
 	Body->SetOffset(0.f, -22.5f);
+	Body->SetCollisionProfile("Player");
 
 	CInput::GetInst()->SetCallback<CPlayer>("MoveUp", KeyState_Push, this, &CPlayer::MoveUp);
 	CInput::GetInst()->SetCallback<CPlayer>("MoveDown", KeyState_Push, this, &CPlayer::MoveDown);
@@ -197,6 +199,13 @@ void CPlayer::Fire()
 	CSharedPtr<CBullet> Bullet = m_Scene->CreateObject<CBullet>("Bullet", Vector2(m_Pos + Vector2(75, 0)), Vector2(50.f, 50.f));
 
 	Bullet->SetPivot(0.5f, 0.5f);
+
+	CCollider* Collider = Bullet->FindCollider("Body");
+
+	if (Collider)
+	{
+		Collider->SetCollisionProfile("PlayerAttack");
+	}
 }
 
 void CPlayer::SkillEnd()

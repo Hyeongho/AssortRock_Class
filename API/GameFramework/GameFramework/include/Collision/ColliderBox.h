@@ -22,12 +22,17 @@ public:
         m_Height = Height;
     }
 
+    RectInfo GetInfo() const
+    {
+        return m_Info;
+    }
+
 public:
     virtual bool Init();
     virtual void Update(float DeltaTime);
     virtual void PostUpdate(float DeltaTime);
     virtual void Render(HDC hDC);
     virtual CColliderBox* Clone();
-    virtual void Collision(CCollider* Dest);
+    virtual bool Collision(CCollider* Dest);
 };
 

@@ -20,3 +20,19 @@ enum class ECollider_Type
 	Sphere, 
 	Point
 };
+
+enum ECollision_Channel
+{
+	Channel_Object, 
+	Channel_Player, 
+	Channel_Monster, 
+	Channel_PlayerAttack, 
+	Channel_MonsterAttack, 
+	Channel_Max
+};
+
+enum class ECollision_State
+{
+	Ignore, 
+	Collision
+};

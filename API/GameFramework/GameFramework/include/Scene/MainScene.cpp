@@ -81,4 +81,13 @@ void CMainScene::LoadAnimationSequence()
 			GetSceneResource()->AddAnimationFrameData("Bullet", j * 92.f, i * 92.f, 92.f, 92.f);
 		}		
 	}
+
+	GetSceneResource()->CreateAnimationSequence("LucidNunNaLeftIdle", "LucidNunNaLeftIdle", TEXT("Player/Left/astand_Left.bmp"));
+
+	GetSceneResource()->SetTextureColorKey("LucidNunNaLeftIdle", 255, 0, 255);
+
+	for (int i = 0; i < 6; i++)
+	{
+		GetSceneResource()->AddAnimationFrameData("LucidNunNaLeftIdle", i * 82.f, 0.f, 82.f, 73.f);
+	}
 }

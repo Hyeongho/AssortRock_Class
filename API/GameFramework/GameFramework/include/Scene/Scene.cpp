@@ -1,9 +1,11 @@
 #include "Scene.h"
 #include "SceneResource.h"
+#include "SceneCollision.h"
 
 CScene::CScene()
 {
 	m_Resource = new CSceneResource;
+	m_Collision = new CSceneCollision;
 }
 
 CScene::~CScene()
@@ -11,11 +13,17 @@ CScene::~CScene()
 	m_ObjList.clear();
 
 	SAFE_DELETE(m_Resource);
+	SAFE_DELETE(m_Collision);
 }
 
 CSceneResource* CScene::GetSceneResource() const
 {
 	return m_Resource;
+}
+
+CSceneCollision* CScene::GetSceneCollision() const
+{
+	return m_Collision;
 }
 
 bool CScene::Init()
@@ -85,6 +93,8 @@ bool CScene::Collision(float DeltaTime)
 
 		iter++;
 	}
+
+	m_Collision->Collision(DeltaTime);
 
 	return false;
 }

@@ -31,6 +31,9 @@ protected:
 
 	std::list<CSharedPtr<CCollider>> m_ColliderList;
 
+public:
+	CCollider* FindCollider(const std::string& Name);
+
 protected:
 	CAnimation* m_Animation;
 

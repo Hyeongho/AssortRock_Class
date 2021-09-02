@@ -18,6 +18,7 @@ protected:
     ECollider_Type m_Type;
     Vector2 m_Offset;
     bool m_Enable;
+    CollisionProfile* m_Profile;
 
 public:
     void SetEnable(bool Enable)
@@ -66,12 +67,20 @@ public:
         return m_Type;
     }
 
+    CollisionProfile* GetProfile() const
+    {
+        return m_Profile;
+    }
+
+public:
+    void SetCollisionProfile(const std::string& Name);
+
 public:
     virtual bool Init();
     virtual void Update(float DeltaTime);
     virtual void PostUpdate(float DeltaTime);
     virtual void Render(HDC hDC);
     virtual CCollider* Clone();
-    virtual void Collision(CCollider* Dest) = 0;
+    virtual bool Collision(CCollider* Dest) = 0;
 };
 

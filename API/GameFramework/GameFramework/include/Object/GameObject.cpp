@@ -2,6 +2,7 @@
 #include "../GameManager.h"
 #include "../Scene/Scene.h"
 #include "../Scene/SceneResource.h"
+#include "../Scene/SceneCollision.h"
 #include "../Resource/AnimationSequence.h"
 
 CGameObject::CGameObject() : m_MoveSpeed(200.f), m_TimeScale(1.f), m_Animation(nullptr)
@@ -33,6 +34,22 @@ CGameObject::CGameObject(const CGameObject& obj)
 CGameObject::~CGameObject()
 {
 	SAFE_DELETE(m_Animation);
+}
+
+CCollider* CGameObject::FindCollider(const std::string& Name)
+{
+	auto iter = m_ColliderList.begin();
+	auto iterEnd = m_ColliderList.end();
+
+	for (; iter != iterEnd; iter++)
+	{
+		if ((*iter)->GetName() == Name)
+		{
+			return *iter;
+		}
+	}
+
+	return nullptr;
 }
 
 void CGameObject::CreateAnimation()
@@ -241,6 +258,15 @@ void CGameObject::Update(float DeltaTime)
 
 void CGameObject::PostUpdate(float DeltaTime)
 {
+	if (m_Animation)
+	{
+		AnimationInfo* AnimInfo = m_Animation->m_CurrentAnimation;
+
+		const AnimationFrameData& FrameData = AnimInfo->Sequence->GetFrameData(AnimInfo->Frame);
+
+		m_Size = FrameData.Size;
+	}
+
 	auto iter = m_ColliderList.begin();
 	auto iterEnd = m_ColliderList.end();
 
@@ -264,6 +290,13 @@ void CGameObject::PostUpdate(float DeltaTime)
 
 void CGameObject::Collision(float DeltaTime)
 {
+	auto iter = m_ColliderList.begin();
+	auto iterEnd = m_ColliderList.end();
+
+	for (; iter != iterEnd; iter++)
+	{
+		m_Scene->GetSceneCollision()->AddCollider(*iter);
+	}
 }
 
 void CGameObject::Render(HDC hDC)

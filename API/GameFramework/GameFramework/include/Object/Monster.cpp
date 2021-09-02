@@ -1,6 +1,7 @@
 #include "Monster.h"
 #include "Bullet.h"
 #include "../Scene/Scene.h"
+#include "../Collision/ColliderBox.h"
 
 CMonster::CMonster() : m_FireTime(0.f), m_FireTimeMax(1.f)
 {
@@ -23,6 +24,16 @@ bool CMonster::Init()
 		return false;
 	}
 
+	SetPivot(0.5f, 1.f);
+
+	CreateAnimation();
+	AddAnimation("LucidNunNaLeftIdle");
+
+	CColliderBox* Body = AddCollider<CColliderBox>("Body");
+	Body->SetExtent(82.f, 73.f);
+	Body->SetOffset(0.f, -36.5f);
+	Body->SetCollisionProfile("Monster");
+
 	return true;
 }
 
@@ -32,15 +43,15 @@ void CMonster::Update(float DeltaTime)
 
 	m_Pos += m_Dir * 300.f * DeltaTime;
 
-	if (m_Pos.y + m_Size.y >= 720.f)
+	if (m_Pos.y >= 720.f)
 	{
-		m_Pos.y = 720.f - m_Size.y;
+		m_Pos.y = 720.f;
 		m_Dir.y = -1.f;
 	}
 
-	else if (m_Pos.y <= 0.f)
+	else if (m_Pos.y - m_Size.y <= 0.f)
 	{
-		m_Pos.y = 0.f;
+		m_Pos.y = m_Size.y;
 		m_Dir.y = 1.f;
 	}
 	
@@ -54,8 +65,15 @@ void CMonster::Update(float DeltaTime)
 	{
 		m_FireTime -= m_FireTimeMax;
 
-		CSharedPtr<CBullet> Bullet = m_Scene->CreateObject<CBullet>("Bullet", Vector2(m_Pos + Vector2(-50.f, 25.f)), Vector2(50.f, 50.f));
+		CSharedPtr<CBullet> Bullet = m_Scene->CreateObject<CBullet>("Bullet", Vector2(m_Pos - Vector2(m_Size.x / 2.f + 25.f, m_Size.y / 2.f)), Vector2(50.f, 50.f));
 		Bullet->SetDir(-1.f, 0.f);
+
+		CCollider* Collider = Bullet->FindCollider("Body");
+
+		if (Collider)
+		{
+			Collider->SetCollisionProfile("MonsterAttack");
+		}
 	}
 }
 

@@ -69,3 +69,14 @@ struct CharacterInfo
 	float AttackSpeed;
 	float AttackDistance;
 };
+
+struct CollisionProfile
+{
+	std::string Name;
+	ECollision_Channel Channel;
+	bool CollisionEnable;
+
+	// Channel 수만큼을 저장한다. 현재 이 프로파일이 다른 프로파일과 충돌해야할지말지를 비교할 때
+	// 해당 프로파일이 사용하는 채널과 Ignore인지 Collision인지를 판단할때 사용한다.
+	std::vector< ECollision_State> vecState;
+};
