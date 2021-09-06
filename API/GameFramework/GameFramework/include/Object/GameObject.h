@@ -20,7 +20,7 @@ protected:
 	Vector2 m_Pos;
 	Vector2 m_Size;
 	Vector2 m_Pivot;
-	Vector2 m_Velocitry;
+	Vector2 m_Velocity;
 	Vector2 m_Offset;
 	float m_MoveSpeed;
 	float m_TimeScale;
@@ -71,7 +71,7 @@ public:
 
 	Vector2 GetVelocity() const
 	{
-		return m_Velocitry;
+		return m_Velocity;
 	}
 
 	float GetMoveSpeed() const
@@ -81,7 +81,7 @@ public:
 
 	float GetMoveSpeedFrame() const
 	{
-		return m_Velocitry.Length();
+		return m_Velocity.Length();
 	}
 
 public:
@@ -169,11 +169,12 @@ public:
 
 	void SetTexture(const std::string& Name);
 	void SetTexture(const std::string& Name, const TCHAR* FileName, const std::string& PathName = TEXTURE_PATH);
-	void SetTexFullPath(const std::string& Name, const TCHAR* FullPath);
+	void SetTextureFullPath(const std::string& Name, const TCHAR* FullPath);
 	void SetTexture(const std::string& Name, const std::vector<std::wstring>& vecFileName, const std::string& PathName = TEXTURE_PATH);
 	void SetTextureColorKey(unsigned char r, unsigned g, unsigned char b, int Index = 0);
 	
 public:
+	virtual void Start();
 	virtual bool Init();
 	virtual void Update(float DeltaTime);
 	virtual void PostUpdate(float DeltaTime);

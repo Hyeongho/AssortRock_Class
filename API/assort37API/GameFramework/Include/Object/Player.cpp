@@ -23,6 +23,11 @@ CPlayer::~CPlayer()
 {
 }
 
+void CPlayer::Start()
+{
+	CCharacter::Start();
+}
+
 bool CPlayer::Init()
 {
 	if (!CCharacter::Init())
@@ -73,7 +78,7 @@ bool CPlayer::Init()
 		this, &CPlayer::MoveRight);
 
 	CInput::GetInst()->SetCallback<CPlayer>("Fire", KeyState_Down,
-		this, &CPlayer::BulleFire);
+		this, &CPlayer::BulletFire);
 
 	CInput::GetInst()->SetCallback<CPlayer>("Pause", KeyState_Down,
 		this, &CPlayer::Pause);
@@ -177,7 +182,7 @@ void CPlayer::MoveRight(float DeltaTime)
 	ChangeAnimation("LucidNunNaRightWalk");
 }
 
-void CPlayer::BulleFire(float DeltaTime)
+void CPlayer::BulletFire(float DeltaTime)
 {
 	ChangeAnimation("LucidNunNaRightAttack");	
 
@@ -211,15 +216,9 @@ void CPlayer::AttackEnd()
 void CPlayer::Fire()
 {
 	CSharedPtr<CBullet> Bullet = m_Scene->CreateObject<CBullet>("Bullet",
+		"PlayerBullet",
 		Vector2(m_Pos + Vector2(75.f, 0.f)),
 		Vector2(50.f, 50.f));
-
-	Bullet->SetPivot(0.5f, 0.5f);
-
-	CCollider* Collider = Bullet->FindCollider("Body");
-
-	if (Collider)
-		Collider->SetCollisionProfile("PlayerAttack");
 }
 
 void CPlayer::Skill1End()

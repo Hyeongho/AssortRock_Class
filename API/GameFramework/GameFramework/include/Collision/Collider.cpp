@@ -5,7 +5,7 @@ CCollider::CCollider() : m_Scene(nullptr), m_Owner(nullptr), m_Enable(true), m_P
 {
 }
 
-CCollider::CCollider(const CCollider& collider) : CRef(collider), m_Scene(nullptr), m_Owner(nullptr)
+CCollider::CCollider(const CCollider& collider) : CRef(collider), m_Scene(nullptr), m_Owner(nullptr), m_Enable(true)
 {
 	m_Type = collider.m_Type;
 	m_Offset = collider.m_Offset;

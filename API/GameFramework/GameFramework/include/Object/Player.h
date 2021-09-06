@@ -25,6 +25,7 @@ public:
 	}
 
 public:
+	virtual void Start();
 	virtual bool Init();
 	virtual void Update(float DeltaTime);
 	virtual void PostUpdate(float DeltaTime);
@@ -37,7 +38,7 @@ public:
 	void MoveDown(float DeltaTime);
 	void MoveLeft(float DeltaTime);
 	void MoveRight(float DeltaTime);
-	void BulleFire(float DeltaTime);
+	void BulletFire(float DeltaTime);
 	void Pause(float DeltaTime);
 	void Resume(float DeltaTime);
 	void Skill1(float DeltaTime);

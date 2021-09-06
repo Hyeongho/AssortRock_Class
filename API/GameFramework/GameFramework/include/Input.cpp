@@ -128,8 +128,10 @@ KeyInfo* CInput::FindKeyInfo(const std::string& Name)
 	return iter->second;
 }
 
-bool CInput::Init()
+bool CInput::Init(HWND hWnd)
 {
+	m_hWnd = hWnd;
+
 	// 게임에서 사용하는 키를 설정한다.
 	CreateKey("MoveUp", 'W');
 	CreateKey("MoveDown", 'S');
@@ -153,8 +155,30 @@ void CInput::Update(float DeltaTime)
 	// 키상태를 업데이트 해준다.
 	UpdateKeyState();
 
+	// 마우스 업데이트
+	UpdateMouse(DeltaTime);
+
 	// 위에서 업데이트를 해준 상태를 이용해서 실제 키 정보를 업데이트한다.
 	UpdateKeyInfo(DeltaTime);
+}
+
+void CInput::UpdateMouse(float DeltaTime)
+{
+	POINT ptMouse;
+
+	// 아래 함수는 마우스의 위치를 스크린좌표 기준으로 구해주고 있다.
+	GetCursorPos(&ptMouse);
+
+	// 스크린 좌표를 클라이언트 좌표로 변환한다.
+	ScreenToClient(m_hWnd, &ptMouse);
+
+	Vector2 Pos;
+	Pos.x = (float)ptMouse.x;
+	Pos.y = (float)ptMouse.y;
+
+	m_MouseMove = Pos - m_MousePos;
+
+	m_MousePos = Pos;
 }
 
 void CInput::UpdateKeyState()

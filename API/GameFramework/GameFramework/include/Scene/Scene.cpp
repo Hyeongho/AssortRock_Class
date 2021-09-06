@@ -12,6 +12,8 @@ CScene::~CScene()
 {
 	m_ObjList.clear();
 
+	m_mapPrototype.clear();
+
 	SAFE_DELETE(m_Resource);
 	SAFE_DELETE(m_Collision);
 }
@@ -135,4 +137,16 @@ bool CScene::Render(HDC hDC)
 	}
 
 	return false;
+}
+
+CGameObject* CScene::FindPrototype(const std::string& Name)
+{
+	auto iter = m_mapPrototype.find(Name);
+
+	if (iter == m_mapPrototype.end())
+	{
+		return nullptr;
+	}
+
+	return iter->second;
 }

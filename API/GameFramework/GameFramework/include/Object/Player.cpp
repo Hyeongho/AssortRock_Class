@@ -19,6 +19,11 @@ CPlayer::~CPlayer()
 {
 }
 
+void CPlayer::Start()
+{
+	CCharacter::Start();
+}
+
 bool CPlayer::Init()
 {
 	if (!CCharacter::Init())
@@ -60,7 +65,7 @@ bool CPlayer::Init()
 	CInput::GetInst()->SetCallback<CPlayer>("MoveDown", KeyState_Push, this, &CPlayer::MoveDown);
 	CInput::GetInst()->SetCallback<CPlayer>("MoveLeft", KeyState_Push, this, &CPlayer::MoveLeft);
 	CInput::GetInst()->SetCallback<CPlayer>("MoveRight", KeyState_Push, this, &CPlayer::MoveRight);
-	CInput::GetInst()->SetCallback<CPlayer>("Fire", KeyState_Down, this, &CPlayer::BulleFire);
+	CInput::GetInst()->SetCallback<CPlayer>("Fire", KeyState_Down, this, &CPlayer::BulletFire);
 
 	CInput::GetInst()->SetCallback<CPlayer>("Pause", KeyState_Down, this, &CPlayer::Pause);
 	CInput::GetInst()->SetCallback<CPlayer>("Resume", KeyState_Down, this, &CPlayer::Resume);
@@ -119,7 +124,7 @@ void CPlayer::PostUpdate(float DeltaTime)
 	CCharacter::PostUpdate(DeltaTime);
 
 	// 현재 애니메이션이 Walk 상태에서 속도가 0이 되었다면 이전까지 움직이다가 지금 멈췄다는 것이다.
-	if (CheckCurrentAnimation("LucidNunNaRightWalk") && m_Velocitry.Length() == 0.f)
+	if (CheckCurrentAnimation("LucidNunNaRightWalk") && m_Velocity.Length() == 0.f)
 	{
 		ChangeAnimation("LucidNunNaRightIdle");
 	}
@@ -164,7 +169,7 @@ void CPlayer::MoveRight(float DeltaTime)
 	ChangeAnimation("LucidNunNaRightWalk");
 }
 
-void CPlayer::BulleFire(float DeltaTime)
+void CPlayer::BulletFire(float DeltaTime)
 {
 	ChangeAnimation("LucidNunNaRightAttack");
 
@@ -197,16 +202,16 @@ void CPlayer::AttackEnd()
 
 void CPlayer::Fire()
 {
-	CSharedPtr<CBullet> Bullet = m_Scene->CreateObject<CBullet>("Bullet", Vector2(m_Pos + Vector2(75, 0)), Vector2(50.f, 50.f));
+	CSharedPtr<CBullet> Bullet = m_Scene->CreateObject<CBullet>("Bullet", "PlayerBullet", Vector2(m_Pos + Vector2(75, 0)), Vector2(50.f, 50.f));
 
-	Bullet->SetPivot(0.5f, 0.5f);
+	/*Bullet->SetPivot(0.5f, 0.5f);
 
 	CCollider* Collider = Bullet->FindCollider("Body");
 
 	if (Collider)
 	{
 		Collider->SetCollisionProfile("PlayerAttack");
-	}
+	}*/
 }
 
 void CPlayer::SkillEnd()

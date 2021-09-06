@@ -16,6 +16,13 @@ CEffectHit::~CEffectHit()
 {
 }
 
+void CEffectHit::Start()
+{
+	CGameObject::Start();
+
+	SetAnimationEndNotify<CEffectHit>("HitRight", this, &CEffectHit::AnimationFinish);
+}
+
 bool CEffectHit::Init()
 {
 	if (!CGameObject::Init())
@@ -27,8 +34,6 @@ bool CEffectHit::Init()
 
 	CreateAnimation();
 	AddAnimation("HitRight", false, 0.2f);
-
-	SetAnimationEndNotify<CEffectHit>("HitRight", this, &CEffectHit::AnimationFinish);
 
 	return true;
 }

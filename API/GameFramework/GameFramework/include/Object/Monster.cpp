@@ -11,10 +11,19 @@ CMonster::CMonster() : m_FireTime(0.f), m_FireTimeMax(1.f)
 
 CMonster::CMonster(const CMonster& obj) : CCharacter(obj)
 {
+	m_Dir = obj.m_Dir;
+	m_FireTime = obj.m_FireTime;
+	m_FireTimeMax = obj.m_FireTimeMax;
+	m_Count = obj.m_Count;
 }
 
 CMonster::~CMonster()
 {
+}
+
+void CMonster::Start()
+{
+	CCharacter::Start();
 }
 
 bool CMonster::Init()
@@ -67,7 +76,7 @@ void CMonster::Update(float DeltaTime)
 
 		m_Count++;
 
-		CSharedPtr<CBullet> Bullet = m_Scene->CreateObject<CBullet>("Bullet", Vector2(m_Pos - Vector2(m_Size.x / 2.f + 25.f, m_Size.y / 2.f)), Vector2(50.f, 50.f));
+		CSharedPtr<CBullet> Bullet = m_Scene->CreateObject<CBullet>("Bullet", "MonsterBullet", Vector2(m_Pos - Vector2(m_Size.x / 2.f + 25.f, m_Size.y / 2.f)), Vector2(50.f, 50.f));
 
 		if (m_Count % 3 != 0)
 		{

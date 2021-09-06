@@ -45,6 +45,22 @@ private:
 	bool m_Alt;
 	bool m_Shift;
 
+	Vector2 m_MousePos;
+	Vector2 m_MouseMove;
+
+	HWND m_hWnd;
+
+public:
+	Vector2 GetMousePos()
+	{
+		return m_MousePos;
+	}
+
+	Vector2 GetMouseMove()
+	{
+		return m_MouseMove;
+	}
+
 public:
 	bool CreateKey(const std::string& Name, int Key);
 	bool SetCtrlKey(const std::string& Name, bool State);
@@ -55,10 +71,11 @@ private:
 	KeyInfo* FindKeyInfo(const std::string& Name);
 
 public:
-	bool Init();
+	bool Init(HWND hWnd);
 	void Update(float DeltaTime);
 
 private:
+	void UpdateMouse(float DeltaTime);
 	void UpdateKeyState();
 	void UpdateKeyInfo(float DeltaTime);
 

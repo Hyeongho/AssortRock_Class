@@ -79,7 +79,7 @@ bool CGameManager::Init(HINSTANCE hInst)
     }
 
     // 입력관리자 초기화
-    if (!CInput::GetInst()->Init())
+    if (!CInput::GetInst()->Init(m_hWnd))
     {
         return false;
     }

@@ -3,6 +3,7 @@
 #include "../Object/Bullet.h"
 #include "../Object/Monster.h"
 #include "SceneResource.h"
+#include "../Object/EffectHit.h"
 
 CMainScene::CMainScene()
 {
@@ -15,6 +16,26 @@ CMainScene::~CMainScene()
 bool CMainScene::Init()
 {
 	LoadAnimationSequence();
+
+	CEffectHit* EffectPrototype = CreatePrototype<CEffectHit>("HitEffect");
+
+	CBullet* PlayerBullet = CreatePrototype<CBullet>("PlayerBullet");
+
+	CCollider* Collider = PlayerBullet->FindCollider("Body");
+
+	if (Collider)
+	{
+		Collider->SetCollisionProfile("PlayerAttack");
+	}
+	 
+	CBullet* MonsterBullet = CreatePrototype<CBullet>("MonsterBullet");
+
+	Collider = MonsterBullet->FindCollider("Body");
+
+	if (Collider)
+	{
+		Collider->SetCollisionProfile("MonsterAttack");
+	}
 
 	CPlayer* Player = CreateObject<CPlayer>("Player");
 

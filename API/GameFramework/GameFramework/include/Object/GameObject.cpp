@@ -5,30 +5,46 @@
 #include "../Scene/SceneCollision.h"
 #include "../Resource/AnimationSequence.h"
 
-CGameObject::CGameObject() : m_MoveSpeed(200.f), m_TimeScale(1.f), m_Animation(nullptr)
+CGameObject::CGameObject() : m_Scene(nullptr), m_MoveSpeed(200.f), m_TimeScale(1.f), m_Animation(nullptr)
 {
 }
 
-CGameObject::CGameObject(const CGameObject& obj)
+CGameObject::CGameObject(const CGameObject& obj) : CRef(obj)
 {
-	*this = obj;
+	m_Scene = obj.m_Scene;
 
 	if (obj.m_Animation)
 	{
 		m_Animation = obj.m_Animation->Clone();
-	}
+	}	
 
 	m_Animation->m_Owner = this;
 
 	m_ColliderList.clear();
 
-	auto iter = obj.m_ColliderList.begin();
-	auto iterEnd = obj.m_ColliderList.end();
+	auto	iter = obj.m_ColliderList.begin();
+	auto	iterEnd = obj.m_ColliderList.end();
 
-	for (; iter != iterEnd; iter++)
+	for (; iter != iterEnd; ++iter)
 	{
-		m_ColliderList.push_back((*iter)->Clone());
+		CCollider* Collider = (*iter)->Clone();
+
+		Collider->SetOwner(this);
+		Collider->SetScene(m_Scene);
+
+		m_ColliderList.push_back(Collider);
 	}
+
+	m_PrevPos = obj.m_PrevPos;
+	m_Pos = obj.m_Pos;
+	m_Size = obj.m_Size;
+	m_Pivot = obj.m_Pivot;
+	m_Velocity = obj.m_Velocity;
+	m_Offset = obj.m_Offset;
+	m_MoveSpeed = obj.m_MoveSpeed;
+	m_TimeScale = obj.m_TimeScale;
+	m_Texture = obj.m_Texture;
+	m_ImageStart = obj.m_ImageStart;
 }
 
 CGameObject::~CGameObject()
@@ -162,14 +178,14 @@ void CGameObject::SetScene(CScene* Scene)
 void CGameObject::Move(const Vector2& Dir)
 {
 	Vector2 CurrentMove = Dir * m_MoveSpeed * CGameManager::GetInst()->GetDeltaTime() * m_TimeScale;
-	m_Velocitry += CurrentMove;
+	m_Velocity += CurrentMove;
 	m_Pos += CurrentMove;
 }
 
 void CGameObject::Move(const Vector2& Dir, float Speed)
 {
 	Vector2 CurrentMove = Dir * Speed * CGameManager::GetInst()->GetDeltaTime() * m_TimeScale;
-	m_Velocitry += CurrentMove;
+	m_Velocity += CurrentMove;
 	m_Pos += CurrentMove;
 }
 
@@ -197,7 +213,7 @@ void CGameObject::SetTexture(const std::string& Name, const TCHAR* FileName, con
 	}
 }
 
-void CGameObject::SetTexFullPath(const std::string& Name, const TCHAR* FullPath)
+void CGameObject::SetTextureFullPath(const std::string& Name, const TCHAR* FullPath)
 {
 	m_Scene->GetSceneResource()->LoadTextureFullPath(Name, FullPath);
 
@@ -229,6 +245,11 @@ void CGameObject::SetTextureColorKey(unsigned char r, unsigned g, unsigned char 
 	{
 		m_Texture->SetColorKey(r, g, b, Index);
 	}
+}
+
+void CGameObject::Start()
+{
+
 }
 
 bool CGameObject::Init()
@@ -365,7 +386,7 @@ void CGameObject::Render(HDC hDC)
 	}
 
 	m_PrevPos = m_Pos;
-	m_Velocitry = Vector2(0.f, 0.f);
+	m_Velocity = Vector2(0.f, 0.f);
 }
 
 CGameObject* CGameObject::Clone()

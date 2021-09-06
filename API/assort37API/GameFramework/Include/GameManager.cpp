@@ -76,7 +76,7 @@ bool CGameManager::Init(HINSTANCE hInst)
 		return false;
 
 	// 입력관리자 초기화
-	if (!CInput::GetInst()->Init())
+	if (!CInput::GetInst()->Init(m_hWnd))
 		return false;
 
 	// 장면관리자 초기화

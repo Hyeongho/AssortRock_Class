@@ -1,15 +1,21 @@
 #include "Character.h"
 
-CCharacter::CCharacter()
+CCharacter::CCharacter() : m_CharacterInfo{}
 {
 }
 
 CCharacter::CCharacter(const CCharacter& obj) : CGameObject(obj)
 {
+	m_CharacterInfo = obj.m_CharacterInfo;
 }
 
 CCharacter::~CCharacter()
 {
+}
+
+void CCharacter::Start()
+{
+	CGameObject::Start();
 }
 
 bool CCharacter::Init()

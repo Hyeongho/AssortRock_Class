@@ -17,12 +17,22 @@ CBullet::CBullet()
 CBullet::CBullet(const CBullet& obj) : CGameObject(obj)
 {
 	m_Dir = obj.m_Dir;
+	m_Distance = obj.m_Distance;
 }
 
 CBullet::~CBullet()
 {
 }
 
+void CBullet::Start()
+{
+	CGameObject::Start();
+
+	CCollider* Body = FindCollider("Body");
+
+	Body->SetCollisionBeginFunction<CBullet>(this, &CBullet::CollisionBegin);
+}
+ 
 bool CBullet::Init()
 {
 	if (!CGameObject::Init())
@@ -42,7 +52,6 @@ bool CBullet::Init()
 	CColliderSphere* Body = AddCollider<CColliderSphere>("Body");
 	Body->SetRadius(25.f);
 	Body->SetOffset(0.f, 0.f);
-	Body->SetCollisionBeginFunction<CBullet>(this, &CBullet::CollisionBegin);
 
 	return true;
 }
@@ -81,11 +90,12 @@ void CBullet::Render(HDC hDC)
 
 CBullet* CBullet::Clone()
 {
-	return new CBullet(*this);
+ 	return new CBullet(*this);
 }
 
 void CBullet::CollisionBegin(CCollider* Src, CCollider* Dest, float DeltaTime)
 {
 	Destroy();
- 	CEffectHit* Hit = m_Scene->CreateObject<CEffectHit>("HitEffect", m_Pos, Vector2(178.f, 164.f));
+
+ 	CEffectHit* Hit = m_Scene->CreateObject<CEffectHit>("HitEffect", "HitEffect", m_Pos, Vector2(178.f, 164.f));
 }

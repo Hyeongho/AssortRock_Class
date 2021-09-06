@@ -82,7 +82,8 @@ bool CColliderSphere::Collision(CCollider* Dest)
 	switch (Dest->GetColliderType())
 	{
 	case ECollider_Type::Box:
-		return CCollision::CollisionSphereToBox(this, (CColliderBox*)Dest);
+		//return CCollision::CollisionSphereToBox(this, (CColliderBox*)Dest);
+		return CCollision::CollisionBoxToSphere((CColliderBox*)Dest, this);
 	case ECollider_Type::Sphere:
 		return CCollision::CollisionSphereToSphere(this, (CColliderSphere*)Dest);
 	case ECollider_Type::Point:
