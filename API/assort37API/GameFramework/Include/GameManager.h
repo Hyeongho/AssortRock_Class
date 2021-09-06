@@ -21,8 +21,20 @@ private:
 	float		m_TimeScale;
 	HBRUSH		m_hGreenBrush;
 	HBRUSH		m_hRedBrush;
+	HPEN		m_hGreenPen;
+	HPEN		m_hRedPen;
 
 public:
+	HPEN GetGreenPen()	const
+	{
+		return m_hGreenPen;
+	}
+
+	HPEN GetRedPen()	const
+	{
+		return m_hRedPen;
+	}
+
 	HBRUSH GetGreenBrush()	const
 	{
 		return m_hGreenBrush;

@@ -21,6 +21,12 @@ public:
 		m_Dir.y = y;
 	}
 
+	void SetDir(float Angle)
+	{
+		m_Dir.x = cosf(DegreeToRadian(Angle));
+		m_Dir.y = sinf(DegreeToRadian(Angle));
+	}
+
 	void SetDistance(float Distance)
 	{
 		m_Distance = Distance;
@@ -33,5 +39,8 @@ public:
 	virtual void Collision(float DeltaTime);
 	virtual void Render(HDC hDC);
 	virtual CBullet* Clone();
+
+public:
+	void CollisionBegin(class CCollider* Src, class CCollider* Dest, float DeltaTime);
 };
 

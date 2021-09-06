@@ -53,12 +53,26 @@ void CSceneCollision::Collision(float DeltaTime)
 
 			if (Src->Collision(Dest))
 			{
-				//MessageBox(0, TEXT("충돌"), TEXT("충돌"), MB_OK);
+				// 이전에 충돌되고 있었는지를 판단한다.
+				if (!Src->CheckCollisionList(Dest))
+				{
+					// 서로 상대방을 충돌목록에 지정한다.
+					Src->AddCollisionList(Dest);
+					Dest->AddCollisionList(Src);
+
+					Src->CallCollisionBegin(Dest, DeltaTime);
+					Dest->CallCollisionBegin(Src, DeltaTime);
+				}
 			}
 
-			else
+			// 충돌이 안되었을 경우 이전에 충돌하던 물체인지를 판단한다.
+			else if (Src->CheckCollisionList(Dest))
 			{
+				Src->DeleteCollisionList(Dest);
+				Dest->DeleteCollisionList(Src);
 
+				Src->CallCollisionEnd(Dest, DeltaTime);
+				Dest->CallCollisionEnd(Src, DeltaTime);
 			}
 		}
 	}

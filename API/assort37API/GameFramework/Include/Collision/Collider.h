@@ -19,6 +19,10 @@ protected:
 	Vector2	m_Offset;
 	bool	m_Enable;
 	CollisionProfile* m_Profile;
+	std::function<void(CCollider*, CCollider*, float)>	m_BeginFunction;
+	std::function<void(CCollider*, CCollider*, float)>	m_EndFunction;
+
+	std::list<CSharedPtr<CCollider>>	m_CollisionList;
 
 public:
 	void SetEnable(bool Enable)
@@ -74,6 +78,12 @@ public:
 
 public:
 	void SetCollisionProfile(const std::string& Name);
+	void AddCollisionList(CCollider* Collider);
+	bool CheckCollisionList(CCollider* Collider);
+	void DeleteCollisionList(CCollider* Collider);
+	void ClearCollisionList();
+	void CallCollisionBegin(CCollider* Dest, float DeltaTime);
+	void CallCollisionEnd(CCollider* Dest, float DeltaTime);
 
 public:
 	virtual bool Init();
@@ -82,5 +92,18 @@ public:
 	virtual void Render(HDC hDC);
 	virtual CCollider* Clone();
 	virtual bool Collision(CCollider* Dest) = 0;
+
+public:
+	template <typename T>
+	void SetCollisionBeginFunction(T* Obj, void(T::* Func)(CCollider*, CCollider*, float))
+	{
+		m_BeginFunction = std::bind(Func, Obj, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+	}
+
+	template <typename T>
+	void SetCollisionEndFunction(T* Obj, void(T::* Func)(CCollider*, CCollider*, float))
+	{
+		m_EndFunction = std::bind(Func, Obj, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+	}
 };
 

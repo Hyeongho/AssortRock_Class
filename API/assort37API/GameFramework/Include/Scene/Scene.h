@@ -23,6 +23,9 @@ private:
 	std::list<CSharedPtr<CGameObject>>	m_ObjList;
 
 public:
+	CGameObject* FindObject(const std::string& Name);
+
+public:
 	virtual bool Init();
 	virtual bool Update(float DeltaTime);
 	virtual bool PostUpdate(float DeltaTime);

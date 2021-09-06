@@ -54,6 +54,12 @@ struct RectInfo
 	}
 };
 
+struct SphereInfo
+{
+	Vector2	Center;
+	float	Radius;
+};
+
 struct AnimationFrameData
 {
 	Vector2	StartPos;

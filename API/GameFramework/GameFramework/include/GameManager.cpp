@@ -36,6 +36,9 @@ CGameManager::~CGameManager()
     DeleteObject(m_hGreenBrush);
     DeleteObject(m_hRedBrush);
 
+    DeleteObject(m_hGreenPen);
+    DeleteObject(m_hRedPen);
+
     ReleaseDC(m_hWnd, m_hDC);
 }
 
@@ -101,6 +104,9 @@ bool CGameManager::Init(HINSTANCE hInst)
 
     m_hGreenBrush = CreateSolidBrush(RGB(0, 255, 0));
     m_hRedBrush = CreateSolidBrush(RGB(255, 0, 0));
+
+    m_hGreenPen = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
+    m_hRedPen = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
 
 	return true;
 }

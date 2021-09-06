@@ -1,5 +1,5 @@
 ﻿  ColliderBox.cpp
-  Player.cpp
-  SceneCollision.cpp
+  ColliderSphere.cpp
+  Collision.cpp
   코드를 생성하고 있습니다...
   GameFramework.vcxproj -> E:\C++클라\AssortRock_Class\API\GameFramework\GameFramework\Bin\GameFramework_Debug.exe

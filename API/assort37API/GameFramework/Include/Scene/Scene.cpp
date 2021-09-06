@@ -27,6 +27,20 @@ CSceneCollision* CScene::GetSceneCollision() const
 	return m_Collision;
 }
 
+CGameObject* CScene::FindObject(const std::string& Name)
+{
+	auto	iter = m_ObjList.begin();
+	auto	iterEnd = m_ObjList.end();
+
+	for (; iter != iterEnd; ++iter)
+	{
+		if ((*iter)->GetName() == Name)
+			return *iter;
+	}
+
+	return nullptr;
+}
+
 bool CScene::Init()
 {
 	return true;

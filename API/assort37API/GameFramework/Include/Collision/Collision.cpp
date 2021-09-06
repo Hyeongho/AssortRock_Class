@@ -1,6 +1,7 @@
 
 #include "Collision.h"
 #include "ColliderBox.h"
+#include "ColliderSphere.h"
 
 bool CCollision::CollisionBoxToBox(CColliderBox* Src, CColliderBox* Dest)
 {
@@ -27,4 +28,21 @@ bool CCollision::CollisionBoxToBox(const RectInfo& Src, const RectInfo& Dest)
 		return false;
 
 	return true;
+}
+
+bool CCollision::CollisionSphereTosphere(CColliderSphere* Src, CColliderSphere* Dest)
+{
+	if (CollisionSphereTosphere(Src->GetInfo(), Dest->GetInfo()))
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool CCollision::CollisionSphereTosphere(const SphereInfo& Src, const SphereInfo& Dest)
+{
+	float	Dist = Distance(Src.Center, Dest.Center);
+
+	return Dist <= Src.Radius + Dest.Radius;
 }

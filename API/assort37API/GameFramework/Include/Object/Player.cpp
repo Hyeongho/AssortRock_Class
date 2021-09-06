@@ -4,6 +4,7 @@
 #include "../Input.h"
 #include "../GameManager.h"
 #include "../Collision/ColliderBox.h"
+#include "../Collision/ColliderSphere.h"
 
 CPlayer::CPlayer()	:
 	m_Skill1Enable(false),
@@ -46,8 +47,9 @@ bool CPlayer::Init()
 	Body->SetExtent(80.f, 75.f);
 	Body->SetOffset(0.f, -37.5f);*/
 
-	CColliderBox* Head = AddCollider<CColliderBox>("Head");
-	Head->SetExtent(40.f, 30.f);
+	CColliderSphere* Head = AddCollider<CColliderSphere>("Head");
+	//Head->SetExtent(40.f, 30.f);
+	Head->SetRadius(20.f);
 	Head->SetOffset(0.f, -60.f);
 	Head->SetCollisionProfile("Player");
 

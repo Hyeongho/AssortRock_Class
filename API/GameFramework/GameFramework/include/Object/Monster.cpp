@@ -65,8 +65,22 @@ void CMonster::Update(float DeltaTime)
 	{
 		m_FireTime -= m_FireTimeMax;
 
+		m_Count++;
+
 		CSharedPtr<CBullet> Bullet = m_Scene->CreateObject<CBullet>("Bullet", Vector2(m_Pos - Vector2(m_Size.x / 2.f + 25.f, m_Size.y / 2.f)), Vector2(50.f, 50.f));
-		Bullet->SetDir(-1.f, 0.f);
+
+		if (m_Count % 3 != 0)
+		{
+			Bullet->SetDir(-1.f, 0.f);
+		}
+
+		else
+		{
+			CGameObject* Player = m_Scene->FindObject("Player");
+
+			float Angle = GetAngle(Bullet->GetPos(), Player->GetPos());
+			Bullet->SetDir(Angle);
+		}
 
 		CCollider* Collider = Bullet->FindCollider("Body");
 

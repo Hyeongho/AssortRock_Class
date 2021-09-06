@@ -3,6 +3,7 @@
 #include "../Input.h"
 #include "../GameManager.h"
 #include "../Collision/ColliderBox.h"
+#include "../Collision/ColliderSphere.h"
 
 CPlayer::CPlayer() : m_Skill1Enable(false), m_Skill1Time(0.f)
 {
@@ -45,9 +46,9 @@ bool CPlayer::Init()
 	Body->SetExtent(80.f, 75.f);
 	Body->SetOffset(0.f, -37.f);*/
 
-	CColliderBox* Head = AddCollider<CColliderBox>("Head");
-	Head->SetExtent(40.f, 30.f);
-	Head->SetOffset(0.f, -60.f);
+	CColliderSphere* Head = AddCollider<CColliderSphere>("Head");
+	Head->SetRadius(20.f);
+	Head->SetOffset(0.f, -50.f);
 	Head->SetCollisionProfile("Player");
 
 	CColliderBox* Body = AddCollider<CColliderBox>("Body");

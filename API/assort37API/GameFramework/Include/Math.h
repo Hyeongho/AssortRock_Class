@@ -3,6 +3,11 @@
 #include <Windows.h>
 #include <math.h>
 
+#define	PI	3.141592f
+
+float RadianToDegree(float Radian);
+float DegreeToRadian(float Degree);
+
 struct Vector2
 {
 	float	x;
@@ -292,7 +297,5 @@ public:
 	}
 };
 
-class CMath
-{
-};
-
+float Distance(const Vector2& Src, const Vector2& Dest);
+float GetAngle(const Vector2& Src, const Vector2& Dest);

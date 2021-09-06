@@ -61,7 +61,7 @@ void CMainScene::LoadAnimationSequence()
 		GetSceneResource()->AddAnimationFrameData("LucidNunNaRightSkill1", i * 70.f, 0.f, 70.f, 81.f);
 	}
 
-	GetSceneResource()->CreateAnimationSequence("HitRight", "HitRight", TEXT("Hit2.bmp"));
+	GetSceneResource()->CreateAnimationSequence("HitRight", "HitRight", TEXT("Hit.bmp"));
 
 	GetSceneResource()->SetTextureColorKey("HitRight", 255, 0, 255);
 

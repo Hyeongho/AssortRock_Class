@@ -1,4 +1,5 @@
 #include "ColliderBox.h"
+#include "ColliderSphere.h"
 #include "../Object/GameObject.h"
 #include "../GameManager.h"
 #include "Collision.h"
@@ -53,6 +54,11 @@ void CColliderBox::Render(HDC hDC)
 #ifdef _DEBUG
 	HBRUSH Brush = CGameManager::GetInst()->GetGreenBrush();
 
+	if (!m_CollisionList.empty())
+	{
+		Brush = CGameManager::GetInst()->GetRedBrush();
+	}
+
 	RECT rc = { (long)m_Info.Left, (long)m_Info.Top , (long)m_Info.Right , (long)m_Info.Bottom };
 
 	FrameRect(hDC, &rc, Brush);
@@ -72,7 +78,7 @@ bool CColliderBox::Collision(CCollider* Dest)
 	case ECollider_Type::Box:
 		return CCollision::CollisionBoxToBox(this, (CColliderBox*)Dest);
 	case ECollider_Type::Sphere:
-		break;
+		return CCollision::CollisionBoxToSphere(this, (CColliderSphere*)Dest);
 	case ECollider_Type::Point:
 		break;
 	}

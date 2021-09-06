@@ -14,11 +14,83 @@ CCollider::CCollider(const CCollider& collider) : CRef(collider), m_Scene(nullpt
 
 CCollider::~CCollider()
 {
+	auto iter = m_CollisionList.begin();
+	auto iterEnd = m_CollisionList.end();
+
+	for (; iter != iterEnd; iter++)
+	{
+		(*iter)->DeleteCollisionList(this);
+	}
 }
 
 void CCollider::SetCollisionProfile(const std::string& Name)
 {
 	m_Profile = CCollisionManager::GetInst()->FindProfile(Name);
+}
+
+void CCollider::AddCollisionList(CCollider* Collider)
+{
+	m_CollisionList.push_back(Collider);
+}
+
+bool CCollider::CheckCollisionList(CCollider* Collider)
+{
+	auto iter = m_CollisionList.begin();
+	auto iterEnd = m_CollisionList.end();
+
+	for (; iter != iterEnd; iter++)
+	{
+		if (*iter == Collider)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+void CCollider::DeleteCollisionList(CCollider* Collider)
+{
+	auto iter = m_CollisionList.begin();
+	auto iterEnd = m_CollisionList.end();
+
+	for (; iter != iterEnd; iter++)
+	{
+		if (*iter == Collider)
+		{
+			m_CollisionList.erase(iter);
+			return;
+		}
+	}
+}
+
+void CCollider::ClearCollisionList()
+{
+	auto iter = m_CollisionList.begin();
+	auto iterEnd = m_CollisionList.end();
+
+	for (; iter != iterEnd; iter++)
+	{
+		(*iter)->DeleteCollisionList(this);
+	}
+
+	m_CollisionList.clear();
+}
+
+void CCollider::CallCollisionBegin(CCollider* Dest, float DeltaTime)
+{
+	if (m_BeginFunction)
+	{
+		m_BeginFunction(this, Dest, DeltaTime);
+	}
+}
+
+void CCollider::CallCollisionEnd(CCollider* Dest, float DeltaTime)
+{
+	if (m_EndFunction)
+	{
+		m_EndFunction(this, Dest, DeltaTime);
+	}
 }
 
 bool CCollider::Init()

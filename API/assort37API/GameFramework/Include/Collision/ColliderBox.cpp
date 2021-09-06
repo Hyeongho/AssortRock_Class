@@ -55,6 +55,9 @@ void CColliderBox::Render(HDC hDC)
 #ifdef _DEBUG
 	HBRUSH	Brush = CGameManager::GetInst()->GetGreenBrush();
 
+	if(!m_CollisionList.empty())
+		Brush = CGameManager::GetInst()->GetRedBrush();
+
 	RECT	rc = { (long)m_Info.Left, (long)m_Info.Top, 
 		(long)m_Info.Right, (long)m_Info.Bottom };
 

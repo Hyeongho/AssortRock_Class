@@ -1,5 +1,8 @@
 #include "Bullet.h"
 #include "../Collision/ColliderBox.h"
+#include "../Collision/ColliderSphere.h"
+#include "EffectHit.h"
+#include "../Scene/Scene.h"
 
 CBullet::CBullet()
 {
@@ -36,9 +39,10 @@ bool CBullet::Init()
 	CreateAnimation();
 	AddAnimation("Bullet", true, 1.f);
 
-	CColliderBox* Body = AddCollider<CColliderBox>("Body");
-	Body->SetExtent(50.f, 50.f);
+	CColliderSphere* Body = AddCollider<CColliderSphere>("Body");
+	Body->SetRadius(25.f);
 	Body->SetOffset(0.f, 0.f);
+	Body->SetCollisionBeginFunction<CBullet>(this, &CBullet::CollisionBegin);
 
 	return true;
 }
@@ -78,4 +82,10 @@ void CBullet::Render(HDC hDC)
 CBullet* CBullet::Clone()
 {
 	return new CBullet(*this);
+}
+
+void CBullet::CollisionBegin(CCollider* Src, CCollider* Dest, float DeltaTime)
+{
+	Destroy();
+ 	CEffectHit* Hit = m_Scene->CreateObject<CEffectHit>("HitEffect", m_Pos, Vector2(178.f, 164.f));
 }

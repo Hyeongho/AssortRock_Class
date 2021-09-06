@@ -154,6 +154,7 @@
     <ClCompile Include="Animation\Animation.cpp" />
     <ClCompile Include="Collision\Collider.cpp" />
     <ClCompile Include="Collision\ColliderBox.cpp" />
+    <ClCompile Include="Collision\ColliderSphere.cpp" />
     <ClCompile Include="Collision\Collision.cpp" />
     <ClCompile Include="Collision\CollisionManager.cpp" />
     <ClCompile Include="GameManager.cpp" />
@@ -162,6 +163,7 @@
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Object\Bullet.cpp" />
     <ClCompile Include="Object\Character.cpp" />
+    <ClCompile Include="Object\EffectHit.cpp" />
     <ClCompile Include="Object\GameObject.cpp" />
     <ClCompile Include="Object\Monster.cpp" />
     <ClCompile Include="Object\Player.cpp" />
@@ -182,6 +184,7 @@
     <ClInclude Include="Animation\AnimationInfo.h" />
     <ClInclude Include="Collision\Collider.h" />
     <ClInclude Include="Collision\ColliderBox.h" />
+    <ClInclude Include="Collision\ColliderSphere.h" />
     <ClInclude Include="Collision\Collision.h" />
     <ClInclude Include="Collision\CollisionManager.h" />
     <ClInclude Include="Flag.h" />
@@ -191,6 +194,7 @@
     <ClInclude Include="Math.h" />
     <ClInclude Include="Object\Bullet.h" />
     <ClInclude Include="Object\Character.h" />
+    <ClInclude Include="Object\EffectHit.h" />
     <ClInclude Include="Object\GameObject.h" />
     <ClInclude Include="Object\Monster.h" />
     <ClInclude Include="Object\Player.h" />
