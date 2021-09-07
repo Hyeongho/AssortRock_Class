@@ -3,6 +3,8 @@
 #include "../Object/GameObject.h"
 #include "../GameManager.h"
 #include "Collision.h"
+#include "../Scene/Scene.h"
+#include "../Scene/Camera.h"
 
 CColliderBox::CColliderBox() : m_Width(100.f), m_Height(100.f)
 {
@@ -59,7 +61,16 @@ void CColliderBox::Render(HDC hDC)
 		Brush = CGameManager::GetInst()->GetRedBrush();
 	}
 
-	RECT rc = { (long)m_Info.Left, (long)m_Info.Top , (long)m_Info.Right , (long)m_Info.Bottom };
+	CCamera* Camera = m_Scene->GetCamera();
+
+	RectInfo RenderInfo = m_Info;
+
+	RenderInfo.Left -= Camera->GetPos().x;
+	RenderInfo.Right -= Camera->GetPos().x;
+	RenderInfo.Top -= Camera->GetPos().y;
+	RenderInfo.Bottom -= Camera->GetPos().y;
+
+	RECT rc = { (long)RenderInfo.Left, (long)RenderInfo.Top , (long)RenderInfo.Right , (long)RenderInfo.Bottom };
 
 	FrameRect(hDC, &rc, Brush);
 #endif // _DEBUG

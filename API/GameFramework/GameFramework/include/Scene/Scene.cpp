@@ -1,15 +1,26 @@
 #include "Scene.h"
 #include "SceneResource.h"
 #include "SceneCollision.h"
+#include "Camera.h"
 
 CScene::CScene()
 {
 	m_Resource = new CSceneResource;
 	m_Collision = new CSceneCollision;
+	m_RenderCount = 0;
+	m_RenderCapacity = 100;
+	m_RenderArray = new CGameObject * [m_RenderCapacity];
+
+	m_Camera = new CCamera;
+
+	m_Camera->Init();
 }
 
 CScene::~CScene()
 {
+	SAFE_DELETE(m_Camera);
+	SAFE_DELETE_ARRAY(m_RenderArray);
+
 	m_ObjList.clear();
 
 	m_mapPrototype.clear();
@@ -28,6 +39,11 @@ CSceneCollision* CScene::GetSceneCollision() const
 	return m_Collision;
 }
 
+CCamera* CScene::GetCamera() const
+{
+	return m_Camera;
+}
+
 CGameObject* CScene::FindObject(const std::string& Name)
 {
 	auto iter = m_ObjList.begin();
@@ -44,6 +60,32 @@ CGameObject* CScene::FindObject(const std::string& Name)
 	return nullptr;
 }
 
+void CScene::SetPlayer(const std::string& Name)
+{
+	CGameObject* Player = FindObject(Name);
+
+	SetPlayer(Player);
+
+}
+
+void CScene::SetPlayer(CGameObject* Player)
+{
+	m_Player = Player;
+
+	auto iter = m_ObjList.begin();
+	auto iterEnd = m_ObjList.end();
+
+	for (; iter != iterEnd; iter++)
+	{
+		if (*iter == Player)
+		{
+			m_ObjList.erase(iter);
+
+			break;
+		}
+	}
+}
+
 bool CScene::Init()
 {
 	return true;
@@ -51,65 +93,137 @@ bool CScene::Init()
 
 bool CScene::Update(float DeltaTime)
 {
-	std::list<CSharedPtr<CGameObject>>::iterator iter = m_ObjList.begin();
-	std::list<CSharedPtr<CGameObject>>::iterator iterEnd = m_ObjList.end();
+	m_Player->Update(DeltaTime);
 
-	for (; iter != iterEnd;)
 	{
-		if (!(*iter)->IsActive())
+		auto iter = m_ObjList.begin();
+		auto iterEnd = m_ObjList.end();
+
+		for (; iter != iterEnd;)
 		{
-			iter = m_ObjList.erase(iter);
-			iterEnd = m_ObjList.end();
-			continue;
+			if (!(*iter)->IsActive())
+			{
+				iter = m_ObjList.erase(iter);
+				iterEnd = m_ObjList.end();
+				continue;
+			}
+
+			(*iter)->Update(DeltaTime * (*iter)->m_TimeScale);
+
+			iter++;
 		}
+	}
 
-		(*iter)->Update(DeltaTime * (*iter)->m_TimeScale);
+	{
+		auto iter = m_UIList.begin();
+		auto iterEnd = m_UIList.end();
 
-		iter++;
+		for (; iter != iterEnd;)
+		{
+			if (!(*iter)->IsActive())
+			{
+				iter = m_UIList.erase(iter);
+				iterEnd = m_UIList.end();
+				continue;
+			}
+
+			(*iter)->Update(DeltaTime);
+
+			iter++;
+		}
 	}
 
 	return false;
+	
 }
 
 bool CScene::PostUpdate(float DeltaTime)
 {
-	std::list<CSharedPtr<CGameObject>>::iterator iter = m_ObjList.begin();
-	std::list<CSharedPtr<CGameObject>>::iterator iterEnd = m_ObjList.end();
+	m_Player->PostUpdate(DeltaTime);
 
-	for (; iter != iterEnd;)
 	{
-		if (!(*iter)->IsActive())
+		std::list<CSharedPtr<CGameObject>>::iterator iter = m_ObjList.begin();
+		std::list<CSharedPtr<CGameObject>>::iterator iterEnd = m_ObjList.end();
+
+		for (; iter != iterEnd;)
 		{
-			iter = m_ObjList.erase(iter);
-			iterEnd = m_ObjList.end();
-			continue;
+			if (!(*iter)->IsActive())
+			{
+				iter = m_ObjList.erase(iter);
+				iterEnd = m_ObjList.end();
+				continue;
+			}
+
+			(*iter)->PostUpdate(DeltaTime * (*iter)->m_TimeScale);
+
+			iter++;
 		}
-
-		(*iter)->PostUpdate(DeltaTime * (*iter)->m_TimeScale);
-
-		iter++;
 	}
+	
+	{
+		auto iter = m_UIList.begin();
+		auto iterEnd = m_UIList.end();
+
+		for (; iter != iterEnd;)
+		{
+			if (!(*iter)->IsActive())
+			{
+				iter = m_UIList.erase(iter);
+				iterEnd = m_UIList.end();
+				continue;
+			}
+
+			(*iter)->PostUpdate(DeltaTime);
+
+			iter++;
+		}
+	}
+
+	m_Camera->Update(DeltaTime);
 
 	return false;
 }
 
 bool CScene::Collision(float DeltaTime)
 {
-	std::list<CSharedPtr<CGameObject>>::iterator iter = m_ObjList.begin();
-	std::list<CSharedPtr<CGameObject>>::iterator iterEnd = m_ObjList.end();
+	m_Player->Collision(DeltaTime);
 
-	for (; iter != iterEnd;)
 	{
-		if (!(*iter)->IsActive())
+		std::list<CSharedPtr<CGameObject>>::iterator iter = m_ObjList.begin();
+		std::list<CSharedPtr<CGameObject>>::iterator iterEnd = m_ObjList.end();
+
+		for (; iter != iterEnd;)
 		{
-			iter = m_ObjList.erase(iter);
-			iterEnd = m_ObjList.end();
-			continue;
+			if (!(*iter)->IsActive())
+			{
+				iter = m_ObjList.erase(iter);
+				iterEnd = m_ObjList.end();
+				continue;
+			}
+
+			(*iter)->Collision(DeltaTime * (*iter)->m_TimeScale);
+
+			iter++;
 		}
+	}
 
-		(*iter)->Collision(DeltaTime * (*iter)->m_TimeScale);
+	{
+		auto iter = m_UIList.begin();
+		auto iterEnd = m_UIList.end();
 
-		iter++;
+		for (; iter != iterEnd;)
+		{
+			if (!(*iter)->IsActive())
+			{
+				iter = m_UIList.erase(iter);
+				iterEnd = m_UIList.end();
+				continue;
+			}
+
+			(*iter)->Collision(DeltaTime);
+
+			iter++;
+		}
 	}
 
 	m_Collision->Collision(DeltaTime);
@@ -119,21 +233,102 @@ bool CScene::Collision(float DeltaTime)
 
 bool CScene::Render(HDC hDC)
 {
-	std::list<CSharedPtr<CGameObject>>::iterator iter = m_ObjList.begin();
-	std::list<CSharedPtr<CGameObject>>::iterator iterEnd = m_ObjList.end();
+	m_Player->PrevRender();
 
-	for (; iter != iterEnd;)
 	{
-		if (!(*iter)->IsActive())
+		std::list<CSharedPtr<CGameObject>>::iterator iter = m_ObjList.begin();
+		std::list<CSharedPtr<CGameObject>>::iterator iterEnd = m_ObjList.end();
+
+		for (; iter != iterEnd;)
 		{
-			iter = m_ObjList.erase(iter);
-			iterEnd = m_ObjList.end();
-			continue;
+			if (!(*iter)->IsActive())
+			{
+				iter = m_ObjList.erase(iter);
+				iterEnd = m_ObjList.end();
+				continue;
+			}
+
+			(*iter)->PrevRender();
+
+			if (!(*iter)->IsCull())
+			{
+				if (m_RenderCount == m_RenderCapacity)
+				{
+					m_RenderCapacity *= 2;
+
+					CGameObject** Array = new CGameObject * [m_RenderCapacity];
+
+					memcpy(Array, m_RenderArray, sizeof(CGameObject*) * m_RenderCount);
+
+					delete[] m_RenderArray;
+
+					m_RenderArray = Array;
+				}
+
+				m_RenderArray[m_RenderCount] = *iter;
+				m_RenderCount++;
+			}
+
+			iter++;
 		}
+	}
 
-		(*iter)->Render(hDC);
+	if (m_RenderCount == m_RenderCapacity)
+	{
+		m_RenderCapacity *= 2;
 
-		iter++;
+		CGameObject** Array = new CGameObject * [m_RenderCapacity];
+
+		memcpy(Array, m_RenderArray, sizeof(CGameObject*) * m_RenderCount);
+
+		delete[] m_RenderArray;
+
+		m_RenderArray = Array;
+	}
+
+	m_RenderArray[m_RenderCount] = m_Player;
+	m_RenderCount++;
+
+	{
+		m_RenderCount = 0;
+
+		// 출력 전에 리스트를 정렬한다.
+
+		std::list<CSharedPtr<CGameObject>>::iterator iter = m_ObjList.begin();
+		std::list<CSharedPtr<CGameObject>>::iterator iterEnd = m_ObjList.end();
+
+		for (; iter != iterEnd;)
+		{
+			if (!(*iter)->IsActive())
+			{
+				iter = m_ObjList.erase(iter);
+				iterEnd = m_ObjList.end();
+				continue;
+			}
+
+			(*iter)->Render(hDC);
+
+			iter++;
+		}
+	}
+
+	{
+		auto iter = m_UIList.begin();
+		auto iterEnd = m_UIList.end();
+
+		for (; iter != iterEnd;)
+		{
+			if (!(*iter)->IsActive())
+			{
+				iter = m_UIList.erase(iter);
+				iterEnd = m_UIList.end();
+				continue;
+			}
+
+			(*iter)->Render(hDC);
+
+			iter++;
+		}
 	}
 
 	return false;

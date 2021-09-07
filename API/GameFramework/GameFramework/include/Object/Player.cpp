@@ -203,15 +203,6 @@ void CPlayer::AttackEnd()
 void CPlayer::Fire()
 {
 	CSharedPtr<CBullet> Bullet = m_Scene->CreateObject<CBullet>("Bullet", "PlayerBullet", Vector2(m_Pos + Vector2(75, 0)), Vector2(50.f, 50.f));
-
-	/*Bullet->SetPivot(0.5f, 0.5f);
-
-	CCollider* Collider = Bullet->FindCollider("Body");
-
-	if (Collider)
-	{
-		Collider->SetCollisionProfile("PlayerAttack");
-	}*/
 }
 
 void CPlayer::SkillEnd()

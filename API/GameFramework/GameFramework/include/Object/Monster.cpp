@@ -85,17 +85,11 @@ void CMonster::Update(float DeltaTime)
 
 		else
 		{
-			CGameObject* Player = m_Scene->FindObject("Player");
+			//CGameObject* Player = m_Scene->FindObject("Player");
+			CGameObject* Player = m_Scene->GetPlayer();
 
 			float Angle = GetAngle(Bullet->GetPos(), Player->GetPos());
 			Bullet->SetDir(Angle);
-		}
-
-		CCollider* Collider = Bullet->FindCollider("Body");
-
-		if (Collider)
-		{
-			Collider->SetCollisionProfile("MonsterAttack");
 		}
 	}
 }

@@ -70,6 +70,15 @@
     <Filter Include="03. Object\03. Effect">
       <UniqueIdentifier>{6b742a65-99f0-46c6-a4ce-a368f8e0b6ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="07. UI">
+      <UniqueIdentifier>{028b38b1-356e-4f4b-bcae-f44d1e70c605}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. UI\01. Widget">
+      <UniqueIdentifier>{f1acdec7-489d-4852-913d-13640444b7ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scene\03. Camera">
+      <UniqueIdentifier>{624be057-993e-43d2-a2fc-2cf02337a47e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -152,6 +161,18 @@
     </ClCompile>
     <ClCompile Include="Object\EffectHit.cpp">
       <Filter>03. Object\03. Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UIWindow.cpp">
+      <Filter>07. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UIWidget.cpp">
+      <Filter>07. UI\01. Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UIImage.cpp">
+      <Filter>07. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Camera.cpp">
+      <Filter>02. Scene\03. Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -247,6 +268,18 @@
     </ClInclude>
     <ClInclude Include="Object\EffectHit.h">
       <Filter>03. Object\03. Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UIWindow.h">
+      <Filter>07. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UIWidget.h">
+      <Filter>07. UI\01. Widget</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UIImage.h">
+      <Filter>07. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Camera.h">
+      <Filter>02. Scene\03. Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

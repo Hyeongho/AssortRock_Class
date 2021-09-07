@@ -18,6 +18,7 @@ protected:
 	class CScene* m_Scene;
 	Vector2 m_PrevPos;
 	Vector2 m_Pos;
+	Vector2 m_RenderPos;
 	Vector2 m_Size;
 	Vector2 m_Pivot;
 	Vector2 m_Velocity;
@@ -30,6 +31,14 @@ protected:
 	Vector2 m_ImageStart;
 
 	std::list<CSharedPtr<CCollider>> m_ColliderList;
+
+	bool m_CameraCull;
+
+public:
+	bool IsCull() const
+	{
+		return m_CameraCull;
+	}
 
 public:
 	CCollider* FindCollider(const std::string& Name);
@@ -179,6 +188,7 @@ public:
 	virtual void Update(float DeltaTime);
 	virtual void PostUpdate(float DeltaTime);
 	virtual void Collision(float DeltaTime);
+	virtual void PrevRender();
 	virtual void Render(HDC hDC);
 	virtual CGameObject* Clone();
 

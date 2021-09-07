@@ -4,8 +4,9 @@
 #include "../Scene/SceneResource.h"
 #include "../Scene/SceneCollision.h"
 #include "../Resource/AnimationSequence.h"
+#include "../Scene/Camera.h"
 
-CGameObject::CGameObject() : m_Scene(nullptr), m_MoveSpeed(200.f), m_TimeScale(1.f), m_Animation(nullptr)
+CGameObject::CGameObject() : m_Scene(nullptr), m_MoveSpeed(200.f), m_TimeScale(1.f), m_Animation(nullptr), m_CameraCull(false)
 {
 }
 
@@ -328,6 +329,48 @@ void CGameObject::Collision(float DeltaTime)
 	}
 }
 
+void CGameObject::PrevRender()
+{
+	CCamera* Camera = m_Scene->GetCamera();
+
+	m_RenderPos = m_Pos - Camera->GetPos();
+
+	Vector2 Size = m_Size;
+
+	if (m_Animation)
+	{
+		AnimationInfo* AnimInfo = m_Animation->m_CurrentAnimation;
+
+		const AnimationFrameData& FrameData = AnimInfo->Sequence->GetFrameData(AnimInfo->Frame);
+
+		Size = FrameData.Size;
+	}
+
+	Vector2 LT = m_RenderPos - m_Pivot * Size + m_Offset;
+
+	m_CameraCull = false;
+
+	if (LT.x + Size.x <= 0.f)
+	{
+		m_CameraCull = true;
+	}
+
+	else if (LT.x >= Camera->GetResolution().x)
+	{
+		m_CameraCull = true;
+	}
+
+	else if (LT.y + Size.y <= 0.f)
+	{
+		m_CameraCull = true;
+	}
+
+	else if (LT.y >= Camera->GetResolution().y)
+	{
+		m_CameraCull = true;
+	}
+}
+
 void CGameObject::Render(HDC hDC)
 {
 	if (m_Animation)
@@ -336,7 +379,7 @@ void CGameObject::Render(HDC hDC)
 
 		const AnimationFrameData& FrameData = AnimInfo->Sequence->GetFrameData(AnimInfo->Frame);
 
-		Vector2 LT = m_Pos - m_Pivot * FrameData.Size + m_Offset;
+		Vector2 LT = m_RenderPos - m_Pivot * FrameData.Size + m_Offset;
 
 		if (AnimInfo->Sequence->GetTextureType() == ETexture_Type::Atlas)
 		{
@@ -351,7 +394,7 @@ void CGameObject::Render(HDC hDC)
 
 	else
 	{
-		Vector2 LT = m_Pos - m_Pivot * m_Size + m_Offset;
+		Vector2 LT = m_RenderPos - m_Pivot * m_Size + m_Offset;
 
 		if (m_Texture)
 		{

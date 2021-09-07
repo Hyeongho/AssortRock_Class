@@ -2,6 +2,7 @@
 
 #include "../GameInfo.h"
 #include "../Object/GameObject.h"
+#include "../UI/UIWindow.h"
 
 class CScene
 {
@@ -14,18 +15,30 @@ protected:
 private:
 	class CSceneResource* m_Resource;
 	class CSceneCollision* m_Collision;
+	class CCamera* m_Camera;
 
 public:
 	class CSceneResource* GetSceneResource() const;
 	class CSceneCollision* GetSceneCollision() const;
-	
+	class CCamera* GetCamera() const;
 
 private:
+	CSharedPtr<CGameObject> m_Player;
 	std::list<CSharedPtr<CGameObject>> m_ObjList;
+	CGameObject** m_RenderArray;
+	int m_RenderCount;
+	int m_RenderCapacity;
 	std::unordered_map<std::string, CSharedPtr<CGameObject>> m_mapPrototype;
+	std::list<CSharedPtr<CUIWindow>> m_UIList;
 
 public:
 	CGameObject* FindObject(const std::string& Name);
+	void SetPlayer(const std::string& Name);
+	void SetPlayer(CGameObject* Player);
+	CGameObject* GetPlayer() const
+	{
+		return m_Player;
+	}
 
 public:
 	virtual bool Init();
@@ -33,6 +46,10 @@ public:
 	virtual bool PostUpdate(float DeltaTime);
 	virtual bool Collision(float DeltaTime);
 	virtual bool Render(HDC hDC);
+
+public:
+	static bool SortObject(CSharedPtr<CGameObject> Src, CSharedPtr<CGameObject> Dest);
+	static bool SortUI(CSharedPtr<CUIWindow> Src, CSharedPtr<CUIWindow> Dest);
 
 private:
 	CGameObject* FindPrototype(const std::string& Name);
@@ -99,6 +116,26 @@ public:
 		m_ObjList.push_back(Obj);
 
 		return Obj;
+	}
+
+	template <typename T>
+	T* CreateUIWindow(const std::string& Name)
+	{
+		T* Window = new T;
+
+		Window->SetName(Name);
+		Window->SetScene(this);
+
+		if (!Window->Init())
+		{
+			SAFE_DELETE(Window);
+
+			return nullptr;
+		}
+
+		m_UIList.push_back(Window);
+
+		return Window;
 	}
 };
 

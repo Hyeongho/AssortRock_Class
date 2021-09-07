@@ -4,6 +4,7 @@
 #include "../Object/Monster.h"
 #include "SceneResource.h"
 #include "../Object/EffectHit.h"
+#include "Camera.h"
 
 CMainScene::CMainScene()
 {
@@ -16,6 +17,8 @@ CMainScene::~CMainScene()
 bool CMainScene::Init()
 {
 	LoadAnimationSequence();
+
+	GetCamera()->SetWorldResolution(10000.f, 10000.f);
 
 	CEffectHit* EffectPrototype = CreatePrototype<CEffectHit>("HitEffect");
 
@@ -38,6 +41,11 @@ bool CMainScene::Init()
 	}
 
 	CPlayer* Player = CreateObject<CPlayer>("Player");
+
+	SetPlayer(Player);
+
+	GetCamera()->SetTarget(Player);
+	GetCamera()->SetTargetPivot(0.5f, 0.5f);
 
 	CMonster* Monster = CreateObject<CMonster>("Monster", Vector2(1000.0f, 100.f));
 

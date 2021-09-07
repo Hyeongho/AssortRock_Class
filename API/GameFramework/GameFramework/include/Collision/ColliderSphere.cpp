@@ -3,6 +3,8 @@
 #include "../Object/GameObject.h"
 #include "../GameManager.h"
 #include "Collision.h"
+#include "../Scene/Scene.h"
+#include "../Scene/Camera.h"
 
 CColliderSphere::CColliderSphere()
 {
@@ -53,16 +55,22 @@ void CColliderSphere::Render(HDC hDC)
 		Pen = CGameManager::GetInst()->GetRedPen();
 	}
 
+	CCamera* Camera = m_Scene->GetCamera();
+
+	SphereInfo RenderInfo = m_Info;
+
+	RenderInfo.Center -= Camera->GetPos();
+
 	HGDIOBJ Prev = SelectObject(hDC, Pen);
 
-	MoveToEx(hDC, (int)(m_Info.Center.x + m_Info.Radius), (int)m_Info.Center.y, nullptr);
+	MoveToEx(hDC, (int)(RenderInfo.Center.x + RenderInfo.Radius), (int)RenderInfo.Center.y, nullptr);
 
 	for (int i = 0; i < 12; i++)
 	{
 		float Radian = DegreeToRadian((i + 1) * (360.f / 12.f));
 
-		float x = m_Info.Center.x + cosf(Radian) * m_Info.Radius;
-		float y = m_Info.Center.y + sinf(Radian) * m_Info.Radius;
+		float x = RenderInfo.Center.x + cosf(Radian) * RenderInfo.Radius;
+		float y = RenderInfo.Center.y + sinf(Radian) * RenderInfo.Radius;
 
 		LineTo(hDC, (int)x, (int)y);
 	}
