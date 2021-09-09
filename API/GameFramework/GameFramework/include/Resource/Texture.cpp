@@ -90,6 +90,16 @@ bool CTexture::LoadTexture(const std::string& Name, const std::vector<std::wstri
 		}
 	}
 
+	if (m_vecTextureInfo.size() == 1)
+	{
+		m_TextureType = ETexture_Type::Atlas;
+	}
+
+	else
+	{
+		m_TextureType = ETexture_Type::Frame;
+	}
+
 	return true;
 }
 

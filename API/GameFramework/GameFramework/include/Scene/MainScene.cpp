@@ -5,6 +5,8 @@
 #include "SceneResource.h"
 #include "../Object/EffectHit.h"
 #include "Camera.h"
+#include "../UI/UIWindow.h"
+#include "../UI/UIImage.h"
 
 CMainScene::CMainScene()
 {
@@ -48,6 +50,13 @@ bool CMainScene::Init()
 	GetCamera()->SetTargetPivot(0.5f, 0.5f);
 
 	CMonster* Monster = CreateObject<CMonster>("Monster", Vector2(1000.0f, 100.f));
+
+	CUIWindow* TestWindow = CreateUIWindow<CUIWindow>("TestWindow");
+
+	CUIImage* Image = TestWindow->CreateWidget<CUIImage>("TestImage");
+
+	Image->SetTexture("Test", TEXT("teemo.bmp"));
+	Image->SetPos(100.f, 100.f);
 
 	return true;
 }

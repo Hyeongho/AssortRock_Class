@@ -166,6 +166,22 @@ void CGameObject::SetAnimationLoop(const std::string& Name, bool Loop)
 	m_Animation->SetLoop(Name, Loop);
 }
 
+float CGameObject::GetBottom() const
+{
+	Vector2 Size = m_Size;
+
+	if (m_Animation)
+	{
+		AnimationInfo* AnimInfo = m_Animation->m_CurrentAnimation;
+
+		const AnimationFrameData& FrameData = AnimInfo->Sequence->GetFrameData(AnimInfo->Frame);
+
+		Size = FrameData.Size;
+	}
+
+	return m_Pos.y - (1.f - m_Pivot.y) * Size.y + m_Offset.y;
+}
+
 void CGameObject::SetScene(CScene* Scene)
 {
 	m_Scene = Scene;

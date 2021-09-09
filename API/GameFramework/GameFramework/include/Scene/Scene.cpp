@@ -286,31 +286,21 @@ bool CScene::Render(HDC hDC)
 		m_RenderArray = Array;
 	}
 
-	m_RenderArray[m_RenderCount] = m_Player;
-	m_RenderCount++;
-
+	if (!m_Player->IsCull())
 	{
-		m_RenderCount = 0;
-
-		// 출력 전에 리스트를 정렬한다.
-
-		std::list<CSharedPtr<CGameObject>>::iterator iter = m_ObjList.begin();
-		std::list<CSharedPtr<CGameObject>>::iterator iterEnd = m_ObjList.end();
-
-		for (; iter != iterEnd;)
-		{
-			if (!(*iter)->IsActive())
-			{
-				iter = m_ObjList.erase(iter);
-				iterEnd = m_ObjList.end();
-				continue;
-			}
-
-			(*iter)->Render(hDC);
-
-			iter++;
-		}
+		m_RenderArray[m_RenderCount] = m_Player;
+		m_RenderCount++;
 	}
+
+	// 출력 목록을 정렬한다.
+	qsort(m_RenderArray, (size_t)m_RenderCount, sizeof(CGameObject*), CScene::SortY);
+
+	for (int i = 0; i < m_RenderCount; i++)
+	{
+		m_RenderArray[i]->Render(hDC);
+	}
+
+	m_RenderCount = 0;
 
 	{
 		auto iter = m_UIList.begin();
@@ -332,6 +322,33 @@ bool CScene::Render(HDC hDC)
 	}
 
 	return false;
+}
+
+int CScene::SortY(const void* Src, const void* Dest)
+{
+	CGameObject* SrcObj = *(CGameObject**)Src;
+	CGameObject* DestObj = *(CGameObject**)Dest;
+
+	// Bottom 값을 구한다.
+	float SrcY = SrcObj->GetBottom();
+	float DestY = DestObj->GetBottom();
+
+	if (SrcY < DestY)
+	{
+		return -1;
+	}
+
+	else if (SrcY > DestY)
+	{
+		return 1;
+	}
+
+	return 0;
+}
+
+int CScene::SortZorder(const void* Src, const void* Dest)
+{
+	return 0;
 }
 
 CGameObject* CScene::FindPrototype(const std::string& Name)

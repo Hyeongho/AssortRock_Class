@@ -36,3 +36,12 @@ enum class ECollision_State
 	Ignore, 
 	Collision
 };
+
+enum class EButton_State
+{
+	Normal, 
+	MouseOn, 
+	Click, 
+	Disable, 
+	End
+};

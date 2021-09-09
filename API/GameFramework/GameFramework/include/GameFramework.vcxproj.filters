@@ -168,11 +168,14 @@
     <ClCompile Include="UI\UIWidget.cpp">
       <Filter>07. UI\01. Widget</Filter>
     </ClCompile>
-    <ClCompile Include="UI\UIImage.cpp">
-      <Filter>07. UI</Filter>
-    </ClCompile>
     <ClCompile Include="Scene\Camera.cpp">
       <Filter>02. Scene\03. Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UIImage.cpp">
+      <Filter>07. UI\01. Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Button.cpp">
+      <Filter>07. UI\01. Widget</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -275,11 +278,14 @@
     <ClInclude Include="UI\UIWidget.h">
       <Filter>07. UI\01. Widget</Filter>
     </ClInclude>
-    <ClInclude Include="UI\UIImage.h">
-      <Filter>07. UI</Filter>
-    </ClInclude>
     <ClInclude Include="Scene\Camera.h">
       <Filter>02. Scene\03. Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UIImage.h">
+      <Filter>07. UI\01. Widget</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Button.h">
+      <Filter>07. UI\01. Widget</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

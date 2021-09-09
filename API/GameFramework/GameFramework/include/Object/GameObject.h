@@ -93,6 +93,8 @@ public:
 		return m_Velocity.Length();
 	}
 
+	float GetBottom() const;
+
 public:
 	void SetScene(class CScene* Scene);
 

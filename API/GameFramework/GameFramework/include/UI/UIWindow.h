@@ -14,10 +14,46 @@ public:
 protected:
     class CScene* m_Scene;
     int m_ZOrder;
-    std::list<CSharedPtr<CUIWidget>> m_WidgetList;
+    CUIWidget** m_WidgetArray;
+    int m_WidgetCount;
+    int m_WidgetCapacity;
+
+    Vector2 m_Pos;
+    Vector2 m_Size;
+
     bool m_Visibility;
 
-public: 
+public:
+    Vector2 GetPos() const
+    {
+        return m_Pos;
+    }
+
+    Vector2 GetSize() const
+    {
+        return m_Size;
+    }
+
+    void SetPos(const Vector2 Pos)
+    {
+        m_Pos = Pos;
+    }
+
+    void SetPos(float x, float y)
+    {
+        m_Pos = Vector2(x, y);
+    }
+
+    void SetSize(const Vector2 Size)
+    {
+        m_Size = Size;
+    }
+
+    void SetSize(float x, float y)
+    {
+        m_Size = Vector2(x, y);
+    }
+
     void SetScene(class CScene* Scene)
     {
         m_Scene = Scene;
@@ -50,5 +86,56 @@ public:
     virtual void Collision(float DeltaTime);
     virtual void Render(HDC hDC);
 
+public:
+    template <typename T>
+    T* FindWidget(const std::string& Name)
+    {
+        for (int i = 0; i < m_WidgetCount; i++)
+        {
+            if (m_WidgetArray[i]->GetName() == Name)
+            {
+                return (T*)m_WidgetArray[i];
+            }
+        }
+
+        return nullptr;
+    }
+
+public:
+    template <typename T>
+    T* CreateWidget(const std::string& Name)
+    {
+        T* Widget = new T;
+
+        Widget->SetName(Name);
+        Widget->SetScene(m_Scene);
+        Widget->SetOwner(this);
+
+        if (!Widget->Init())
+        {
+            SAFE_DELETE(Widget);
+
+            return nullptr;
+        }
+
+        if (m_WidgetCount == m_WidgetCapacity)
+        {
+            m_WidgetCapacity *= 2;
+
+            CUIWidget** Array = new CUIWidget * [m_WidgetCapacity];
+
+            memcpy(Array, m_WidgetArray, sizeof(CUIWidget*) * m_WidgetCapacity);
+
+            SAFE_DELETE_ARRAY(m_WidgetArray);
+
+            m_WidgetArray = Array;
+        }
+
+        Widget->AddRef();
+        m_WidgetArray[m_WidgetCount] = Widget;
+        m_WidgetCount++;
+
+        return (T*)Widget;
+    }
 };
 

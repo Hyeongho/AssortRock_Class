@@ -48,8 +48,8 @@ public:
 	virtual bool Render(HDC hDC);
 
 public:
-	static bool SortObject(CSharedPtr<CGameObject> Src, CSharedPtr<CGameObject> Dest);
-	static bool SortUI(CSharedPtr<CUIWindow> Src, CSharedPtr<CUIWindow> Dest);
+	static int SortY(const void* Src, const void* Dest);
+	static int SortZorder(const void* Src, const void* Dest);
 
 private:
 	CGameObject* FindPrototype(const std::string& Name);
