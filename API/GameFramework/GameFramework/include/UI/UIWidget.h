@@ -15,6 +15,7 @@ protected:
     class CUIWindow* m_Owner;
     Vector2 m_Pos;
     Vector2 m_Size;
+    bool m_MouseHovered;
 
 public:
     Vector2 GetPos() const
@@ -67,11 +68,28 @@ public:
         return m_Visibility;
     }
 
+    void SetZOrder(int ZOrder)
+    {
+        m_ZOrder = ZOrder;
+    }
+
+    int GetZOrder() const
+    {
+        return m_ZOrder;
+    }
+
 public:
     virtual bool Init();
     virtual void Update(float DeltaTime);
     virtual void PostUpdate(float DeltaTime);
     virtual void Collision(float DeltaTime);
     virtual void Render(HDC hDC);
+
+public:
+    bool CollisionMouse(const Vector2& MousePos, float DeltaTime);
+
+public:
+    virtual void CollisionMouseHoveredCallback(float DeltaTime);
+    virtual void CollisionMouseReleaseCallback(float DeltaTime);
 };
 

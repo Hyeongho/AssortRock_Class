@@ -29,7 +29,10 @@ private:
 	int m_RenderCount;
 	int m_RenderCapacity;
 	std::unordered_map<std::string, CSharedPtr<CGameObject>> m_mapPrototype;
-	std::list<CSharedPtr<CUIWindow>> m_UIList;
+	//std::list<CSharedPtr<CUIWindow>> m_UIList;
+	CUIWindow** m_UIArray;
+	int m_UICount;
+	int m_UICapacity;
 
 public:
 	CGameObject* FindObject(const std::string& Name);
@@ -49,7 +52,7 @@ public:
 
 public:
 	static int SortY(const void* Src, const void* Dest);
-	static int SortZorder(const void* Src, const void* Dest);
+	static int SortZOrder(const void* Src, const void* Dest);
 
 private:
 	CGameObject* FindPrototype(const std::string& Name);
@@ -133,7 +136,21 @@ public:
 			return nullptr;
 		}
 
-		m_UIList.push_back(Window);
+		if (m_UICount == m_UICapacity)
+		{
+			m_UICapacity *= 2;
+
+			CUIWindow** Array = new CUIWindow * [m_UICapacity];
+
+			memcpy(Array, m_UIArray, sizeof(CUIWindow*) * m_UICount);
+
+			SAFE_DELETE_ARRAY(m_UIArray);
+
+			m_UIArray = Array;
+		}
+
+		m_UIArray[m_UICount] = Window;
+		m_UICount++;
 
 		return Window;
 	}

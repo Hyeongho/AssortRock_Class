@@ -45,5 +45,9 @@ public:
 	virtual void PostUpdate(float DeltaTime);
 	virtual void Collision(float DeltaTime);
 	virtual void Render(HDC hDC);
+
+protected:
+	virtual void CollisionMouseHoveredCallback(float DeltaTime);
+	virtual void CollisionMouseReleaseCallback(float DeltaTime);
 };
 

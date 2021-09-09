@@ -57,6 +57,12 @@ bool CMainScene::Init()
 
 	Image->SetTexture("Test", TEXT("teemo.bmp"));
 	Image->SetPos(100.f, 100.f);
+	Image->SetZOrder(1);
+
+	CUIImage* Image1 = TestWindow->CreateWidget<CUIImage>("TestImage1");
+
+	Image1->SetTexture("Test1", TEXT("Start.bmp"));
+	Image1->SetPos(150.f, 100.f);
 
 	return true;
 }

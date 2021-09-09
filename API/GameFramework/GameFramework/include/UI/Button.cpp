@@ -81,8 +81,8 @@ void CButton::SetTexture(const std::string& Name, const std::vector<std::wstring
 
 		for (int i = 0; i < (int)EButton_State::End; i++)
 		{
-			m_FrameData[i].Size.x = m_Texture->GetWidth(i);
-			m_FrameData[i].Size.y = m_Texture->GetHeight(i);
+			m_FrameData[i].Size.x = (float)m_Texture->GetWidth(i);
+			m_FrameData[i].Size.y = (float)m_Texture->GetHeight(i);
 		}
 	}
 }
@@ -137,4 +137,14 @@ void CButton::Render(HDC hDC)
 			m_Texture->Render(hDC, m_Pos, Vector2(0.f, 0.f), m_Size, (int)m_ButtomState);
 		}
 	}
+}
+
+void CButton::CollisionMouseHoveredCallback(float DeltaTime)
+{
+	CUIWidget::CollisionMouseHoveredCallback(DeltaTime);
+}
+
+void CButton::CollisionMouseReleaseCallback(float DeltaTime)
+{
+	CUIWidget::CollisionMouseReleaseCallback(DeltaTime);
 }

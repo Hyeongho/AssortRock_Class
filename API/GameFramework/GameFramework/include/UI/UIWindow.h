@@ -8,7 +8,6 @@ class CUIWindow :
 {
 public:
     CUIWindow();
-    CUIWindow(const CUIWindow& widget);
     virtual ~CUIWindow();
 
 protected:
@@ -24,6 +23,16 @@ protected:
     bool m_Visibility;
 
 public:
+    CUIWidget* GetWidget(int Index)
+    {
+        return m_WidgetArray[Index];
+    }
+
+    int GetWidgetCount() const
+    {
+        return m_WidgetCount;
+    }
+
     Vector2 GetPos() const
     {
         return m_Pos;
@@ -85,6 +94,9 @@ public:
     virtual void PostUpdate(float DeltaTime);
     virtual void Collision(float DeltaTime);
     virtual void Render(HDC hDC);
+
+public:
+    static int SortZOrder(const void* Src, const void* Dest);
 
 public:
     template <typename T>

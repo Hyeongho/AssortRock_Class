@@ -7,9 +7,16 @@ CScene::CScene()
 {
 	m_Resource = new CSceneResource;
 	m_Collision = new CSceneCollision;
+
+	m_Collision->m_Scene = this;
+
 	m_RenderCount = 0;
 	m_RenderCapacity = 100;
 	m_RenderArray = new CGameObject * [m_RenderCapacity];
+
+	m_UICount = 0;
+	m_UICapacity = 10;
+	m_UIArray = new CUIWindow * [m_UICapacity];
 
 	m_Camera = new CCamera;
 
@@ -20,6 +27,13 @@ CScene::~CScene()
 {
 	SAFE_DELETE(m_Camera);
 	SAFE_DELETE_ARRAY(m_RenderArray);
+
+	for (int i = 0; i < m_UICount; i++)
+	{
+		SAFE_RELEASE(m_UIArray[i]);
+	}
+
+	SAFE_DELETE_ARRAY(m_UIArray);
 
 	m_ObjList.clear();
 
@@ -115,21 +129,29 @@ bool CScene::Update(float DeltaTime)
 	}
 
 	{
-		auto iter = m_UIList.begin();
-		auto iterEnd = m_UIList.end();
-
-		for (; iter != iterEnd;)
+		for (int i = 0; i < m_UICount;)
 		{
-			if (!(*iter)->IsActive())
+			if (!m_UIArray[i]->IsActive())
 			{
-				iter = m_UIList.erase(iter);
-				iterEnd = m_UIList.end();
+				m_UICount--;
+
+				for (int j = i; j < m_UICount; j++)
+				{
+					m_UIArray[j] = m_UIArray[j + 1];
+				}
+				
 				continue;
 			}
 
-			(*iter)->Update(DeltaTime);
+			else if (!m_UIArray[i]->GetVisibility())
+			{
+				i++;
+				continue;
+			}
 
-			iter++;
+			m_UIArray[i]->Update(DeltaTime);
+
+			i++;
 		}
 	}
 
@@ -161,21 +183,29 @@ bool CScene::PostUpdate(float DeltaTime)
 	}
 	
 	{
-		auto iter = m_UIList.begin();
-		auto iterEnd = m_UIList.end();
-
-		for (; iter != iterEnd;)
+		for (int i = 0; i < m_UICount;)
 		{
-			if (!(*iter)->IsActive())
+			if (!m_UIArray[i]->IsActive())
 			{
-				iter = m_UIList.erase(iter);
-				iterEnd = m_UIList.end();
+				m_UICount--;
+
+				for (int j = i; j < m_UICount; j++)
+				{
+					m_UIArray[j] = m_UIArray[j + 1];
+				}
+
 				continue;
 			}
 
-			(*iter)->PostUpdate(DeltaTime);
+			else if (!m_UIArray[i]->GetVisibility())
+			{
+				i++;
+				continue;
+			}
 
-			iter++;
+			m_UIArray[i]->PostUpdate(DeltaTime);
+
+			i++;
 		}
 	}
 
@@ -208,23 +238,40 @@ bool CScene::Collision(float DeltaTime)
 	}
 
 	{
-		auto iter = m_UIList.begin();
-		auto iterEnd = m_UIList.end();
-
-		for (; iter != iterEnd;)
+		if (m_UICount >= 2)
 		{
-			if (!(*iter)->IsActive())
+			qsort(m_UIArray, (size_t)m_UICount, sizeof(CUIWindow*), CUIWindow::SortZOrder);
+		}
+
+		for (int i = 0; i < m_UICount;)
+		{
+			if (!m_UIArray[i]->IsActive())
 			{
-				iter = m_UIList.erase(iter);
-				iterEnd = m_UIList.end();
+				m_UICount--;
+
+				for (int j = i; j < m_UICount; j++)
+				{
+					m_UIArray[j] = m_UIArray[j + 1];
+				}
+
 				continue;
 			}
 
-			(*iter)->Collision(DeltaTime);
+			else if (!m_UIArray[i]->GetVisibility())
+			{
+				i++;
+				continue;
+			}
 
-			iter++;
+			m_UIArray[i]->Collision(DeltaTime);
+
+			m_Collision->AddUIWindow(m_UIArray[i]);
+
+			i++;
 		}
 	}
+
+	m_Collision->CollisionMouse(DeltaTime);
 
 	m_Collision->Collision(DeltaTime);
 
@@ -303,21 +350,34 @@ bool CScene::Render(HDC hDC)
 	m_RenderCount = 0;
 
 	{
-		auto iter = m_UIList.begin();
-		auto iterEnd = m_UIList.end();
-
-		for (; iter != iterEnd;)
+		for (int i = 0; i < m_UICount;)
 		{
-			if (!(*iter)->IsActive())
+			if (!m_UIArray[i]->IsActive())
 			{
-				iter = m_UIList.erase(iter);
-				iterEnd = m_UIList.end();
+				m_UICount--;
+
+				for (int j = i; j < m_UICount; j++)
+				{
+					m_UIArray[j] = m_UIArray[j + 1];
+				}
+
 				continue;
 			}
 
-			(*iter)->Render(hDC);
+			i++;
+		}
 
-			iter++;
+		for (int i = m_UICount - 1; i >= 0;)
+		{		
+			if (!m_UIArray[i]->GetVisibility())
+			{
+				i--;
+				continue;
+			}
+
+			m_UIArray[i]->Render(hDC);
+
+			i--;
 		}
 	}
 
@@ -346,8 +406,25 @@ int CScene::SortY(const void* Src, const void* Dest)
 	return 0;
 }
 
-int CScene::SortZorder(const void* Src, const void* Dest)
+int CScene::SortZOrder(const void* Src, const void* Dest)
 {
+	CUIWindow* SrcObj = *(CUIWindow**)Src;
+	CUIWindow* DestObj = *(CUIWindow**)Dest;
+
+	// Bottom 값을 구한다.
+	int SrcZ = SrcObj->GetZOrder();
+	int DestZ = DestObj->GetZOrder();
+
+	if (SrcZ > DestZ)
+	{
+		return -1;
+	}
+
+	else if (SrcZ < DestZ)
+	{
+		return 1;
+	}
+
 	return 0;
 }
 

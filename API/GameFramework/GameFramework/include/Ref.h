@@ -34,7 +34,7 @@ public:
 	{
 		m_RefCount--;
 
-		if (m_RefCount == 0)
+		if (m_RefCount <= 0)
 		{
 			delete this;
 			return 0;
