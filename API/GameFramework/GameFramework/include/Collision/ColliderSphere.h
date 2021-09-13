@@ -24,6 +24,11 @@ public:
         return m_Info;
     }
 
+    virtual float GetBottom() const
+    {
+        return m_Info.Center.y + m_Info.Radius;
+    }
+
 public:
     virtual bool Init();
     virtual void Update(float DeltaTime);
@@ -31,5 +36,6 @@ public:
     virtual void Render(HDC hDC);
     virtual CColliderSphere* Clone();
     virtual bool Collision(CCollider* Dest);
+    virtual bool CollisionMouse(const Vector2& MousePos);
 };
 

@@ -13,6 +13,7 @@ CSceneCollision::CSceneCollision()
 	m_vecUIWindow.reserve(10);
 	m_SelectWidget = nullptr;
 	m_MouseHoveredWidget = nullptr;
+	m_MouseCollision = nullptr;
 }
 
 CSceneCollision::~CSceneCollision()
@@ -86,6 +87,12 @@ void CSceneCollision::CollisionMouse(float DeltaTime)
 				m_MouseHoveredWidget->CollisionMouseReleaseCallback(DeltaTime);
 			}
 
+			if (m_MouseCollision)
+			{
+				m_MouseCollision->SetMouseCollision(false);
+				m_MouseCollision = nullptr;
+			}
+
 			m_MouseHoveredWidget = vecWidget[i];
 			EnableCollision = true;
 		}
@@ -108,6 +115,39 @@ void CSceneCollision::CollisionMouse(float DeltaTime)
 
 		// 월드상의 충돌체와 마우스와의 충돌처리를 한다.
 		// 충돌체들을 화면에 나오는 충돌체들만 걸러내고 충돌체의 바닥 기준으로 정렬을 시켜준다.
+		size_t Size = m_vecCollider.size();
+
+		if (Size > 1)
+		{
+			qsort(&m_vecCollider[0], (size_t)Size, sizeof(CCollider*), CScene::SortY);
+
+			bool MouseCollision = false;
+
+			for (size_t i = 0; i < Size; i++)
+			{
+				if (m_vecCollider[i]->CollisionMouse(MouseWorldPos))
+				{
+					if (m_MouseCollision)
+					{
+						m_MouseCollision->SetMouseCollision(false);
+					}
+
+					m_MouseCollision = m_vecCollider[i];
+					m_MouseCollision->SetMouseCollision(true);
+
+					MouseCollision = true;
+				}
+			}
+
+			if (!MouseCollision)
+			{
+				if (m_MouseCollision)
+				{
+					m_MouseCollision->SetMouseCollision(false);
+					m_MouseCollision = nullptr;
+				}
+			}
+		}
 	}
 }
 
@@ -172,4 +212,26 @@ void CSceneCollision::Collision(float DeltaTime)
 
 	m_vecCollider.clear();
 	m_vecUIWindow.clear();
+}
+
+int CSceneCollision::SortY(const void* Src, const void* Dest)
+{
+	CCollider* SrcObj = *(CCollider**)Src;
+	CCollider* DestObj = *(CCollider**)Dest;
+
+	// Bottom 값을 구한다.
+	float SrcY = SrcObj->GetBottom();
+	float DestY = DestObj->GetBottom();
+
+	if (SrcY > DestY)
+	{
+		return -1;
+	}
+
+	else if (SrcY < DestY)
+	{
+		return 1;
+	}
+
+	return 0;
 }

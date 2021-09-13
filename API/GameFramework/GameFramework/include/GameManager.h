@@ -29,6 +29,11 @@ private:
 	HPEN m_hRedPen;
 
 public:
+	Resolution GetResolution() const
+	{
+		return m_RS;
+	}
+
 	HPEN GetGreenPen() const
 	{
 		return m_hGreenPen;
@@ -72,6 +77,7 @@ public:
 
 public:
 	float GetDeltaTime() const;
+	void Exit();
 
 public:
 	bool Init(HINSTANCE hInst);

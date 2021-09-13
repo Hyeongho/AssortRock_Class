@@ -26,6 +26,29 @@ CPlayer::~CPlayer()
 void CPlayer::Start()
 {
 	CCharacter::Start();
+
+	CInput::GetInst()->SetCallback<CPlayer>("MoveUp", KeyState_Push,
+		this, &CPlayer::MoveUp);
+
+	CInput::GetInst()->SetCallback<CPlayer>("MoveDown", KeyState_Push,
+		this, &CPlayer::MoveDown);
+
+	CInput::GetInst()->SetCallback<CPlayer>("MoveLeft", KeyState_Push,
+		this, &CPlayer::MoveLeft);
+
+	CInput::GetInst()->SetCallback<CPlayer>("MoveRight", KeyState_Push,
+		this, &CPlayer::MoveRight);
+
+	CInput::GetInst()->SetCallback<CPlayer>("Fire", KeyState_Down,
+		this, &CPlayer::BulletFire);
+
+	CInput::GetInst()->SetCallback<CPlayer>("Pause", KeyState_Down,
+		this, &CPlayer::Pause);
+	CInput::GetInst()->SetCallback<CPlayer>("Resume", KeyState_Down,
+		this, &CPlayer::Resume);
+
+	CInput::GetInst()->SetCallback<CPlayer>("Skill1", KeyState_Down,
+		this, &CPlayer::Skill1);
 }
 
 bool CPlayer::Init()
@@ -64,29 +87,6 @@ bool CPlayer::Init()
 	Body->SetCollisionProfile("Player");
 
 
-
-	CInput::GetInst()->SetCallback<CPlayer>("MoveUp", KeyState_Push,
-		this, &CPlayer::MoveUp);
-
-	CInput::GetInst()->SetCallback<CPlayer>("MoveDown", KeyState_Push,
-		this, &CPlayer::MoveDown);
-
-	CInput::GetInst()->SetCallback<CPlayer>("MoveLeft", KeyState_Push,
-		this, &CPlayer::MoveLeft);
-
-	CInput::GetInst()->SetCallback<CPlayer>("MoveRight", KeyState_Push,
-		this, &CPlayer::MoveRight);
-
-	CInput::GetInst()->SetCallback<CPlayer>("Fire", KeyState_Down,
-		this, &CPlayer::BulletFire);
-
-	CInput::GetInst()->SetCallback<CPlayer>("Pause", KeyState_Down,
-		this, &CPlayer::Pause);
-	CInput::GetInst()->SetCallback<CPlayer>("Resume", KeyState_Down,
-		this, &CPlayer::Resume);
-
-	CInput::GetInst()->SetCallback<CPlayer>("Skill1", KeyState_Down,
-		this, &CPlayer::Skill1);
 
 	return true;
 }

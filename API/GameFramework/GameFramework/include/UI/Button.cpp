@@ -2,10 +2,11 @@
 #include "../Scene/Scene.h"
 #include "../Scene/SceneResource.h"
 #include "UIWindow.h"
+#include "../Input.h"
 
 CButton::CButton()
 {
-	m_ButtomState = EButton_State::Normal;
+	m_ButtonState = EButton_State::Normal;
 }
 
 CButton::CButton(const CButton& widget)
@@ -98,7 +99,9 @@ void CButton::SetTextureColorKey(unsigned char r, unsigned g, unsigned char b, i
 void CButton::SetFrameData(EButton_State State, const Vector2& Start, const Vector2& Size)
 {
 	m_FrameData[(int)State].StartPos = Start;
-	m_FrameData[(int)State].StartPos = Size;
+	m_FrameData[(int)State].Size = Size;
+
+	m_Size = Size;
 }
 
 
@@ -109,6 +112,51 @@ bool CButton::Init()
 
 void CButton::Update(float DeltaTime)
 {
+	if (m_ButtonState != EButton_State::Disable)
+	{
+		if (m_MouseHovered)
+		{
+			//m_ButtonState = EButton_State::MouseOn;
+
+			if (CInput::GetInst()->GetMouseDown())
+			{
+				m_ButtonState = EButton_State::Click;
+			}
+
+			else if (m_ButtonState == EButton_State::Click && CInput::GetInst()->GetMouseUp())
+			{
+				// 버튼 기능 동작.
+				if (m_ButtonClickCallback)
+				{
+					m_ButtonClickCallback();
+				}
+
+				m_ButtonState = EButton_State::MouseOn;
+			}
+
+			else if (m_ButtonState == EButton_State::Click && CInput::GetInst()->GetMousePush())
+			{
+				m_ButtonState = EButton_State::Click;
+			}
+
+			else
+			{
+				m_ButtonState = EButton_State::MouseOn;
+
+				if (m_ButtonMouseOnCallback)
+				{
+					m_ButtonMouseOnCallback();
+				}
+			}
+		}
+
+		else
+		{
+			m_ButtonState = EButton_State::Normal;
+		}				
+	}
+
+	m_Size = m_FrameData[(int)m_ButtonState].Size;
 }
 
 void CButton::PostUpdate(float DeltaTime)
@@ -128,13 +176,13 @@ void CButton::Render(HDC hDC)
 		if (m_Texture->GetTextureType() == ETexture_Type::Atlas)
 		{
 			// 이미지를 이용해서 출력한다.
-			m_Texture->Render(hDC, m_Pos, Vector2(0.f, 0.f), m_Size);
+			m_Texture->Render(hDC, Pos, m_FrameData[(int)m_ButtonState].StartPos, m_FrameData[(int)m_ButtonState].Size);
 		}
 
 		else
 		{
 			// 이미지를 이용해서 출력한다.
-			m_Texture->Render(hDC, m_Pos, Vector2(0.f, 0.f), m_Size, (int)m_ButtomState);
+			m_Texture->Render(hDC, Pos, Vector2(0.f, 0.f), m_Size, (int)m_ButtonState);
 		}
 	}
 }

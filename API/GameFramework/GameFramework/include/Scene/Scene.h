@@ -74,8 +74,6 @@ public:
 			return nullptr;
 		}
 
-		Obj->Start();
-
 		m_ObjList.push_back(Obj);
 
 		return Obj;
@@ -114,7 +112,6 @@ public:
 		Obj->SetPos(Pos);
 		Obj->SetSize(Size);
 		Obj->SetName(Name);
-		Obj->Start();
 
 		m_ObjList.push_back(Obj);
 

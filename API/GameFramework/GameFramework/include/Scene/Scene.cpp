@@ -39,6 +39,8 @@ CScene::~CScene()
 
 	m_mapPrototype.clear();
 
+	m_Player = nullptr;
+
 	SAFE_DELETE(m_Resource);
 	SAFE_DELETE(m_Collision);
 }
@@ -107,7 +109,10 @@ bool CScene::Init()
 
 bool CScene::Update(float DeltaTime)
 {
-	m_Player->Update(DeltaTime);
+	if (m_Player)
+	{
+		m_Player->Update(DeltaTime);
+	}
 
 	{
 		auto iter = m_ObjList.begin();
@@ -161,7 +166,10 @@ bool CScene::Update(float DeltaTime)
 
 bool CScene::PostUpdate(float DeltaTime)
 {
-	m_Player->PostUpdate(DeltaTime);
+	if (m_Player)
+	{
+		m_Player->PostUpdate(DeltaTime);
+	}
 
 	{
 		std::list<CSharedPtr<CGameObject>>::iterator iter = m_ObjList.begin();
@@ -216,7 +224,10 @@ bool CScene::PostUpdate(float DeltaTime)
 
 bool CScene::Collision(float DeltaTime)
 {
-	m_Player->Collision(DeltaTime);
+	if (m_Player)
+	{
+		m_Player->Collision(DeltaTime);
+	}
 
 	{
 		std::list<CSharedPtr<CGameObject>>::iterator iter = m_ObjList.begin();
@@ -280,7 +291,10 @@ bool CScene::Collision(float DeltaTime)
 
 bool CScene::Render(HDC hDC)
 {
-	m_Player->PrevRender();
+	if (m_Player)
+	{
+		m_Player->PrevRender();
+	}
 
 	{
 		std::list<CSharedPtr<CGameObject>>::iterator iter = m_ObjList.begin();
@@ -333,10 +347,13 @@ bool CScene::Render(HDC hDC)
 		m_RenderArray = Array;
 	}
 
-	if (!m_Player->IsCull())
+	if (m_Player)
 	{
-		m_RenderArray[m_RenderCount] = m_Player;
-		m_RenderCount++;
+		if (!m_Player->IsCull())
+		{
+			m_RenderArray[m_RenderCount] = m_Player;
+			m_RenderCount++;
+		}
 	}
 
 	// 출력 목록을 정렬한다.

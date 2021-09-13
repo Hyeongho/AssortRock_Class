@@ -50,7 +50,26 @@ private:
 
 	HWND m_hWnd;
 
+	bool m_MouseDown;
+	bool m_MousePush;
+	bool m_MouseUp;
+
 public:
+	bool GetMouseDown()
+	{
+		return m_MouseDown;
+	}
+
+	bool GetMousePush()
+	{
+		return m_MousePush;
+	}
+
+	bool GetMouseUp()
+	{
+		return m_MouseUp;
+	}
+
 	Vector2 GetMousePos()
 	{
 		return m_MousePos;
@@ -78,6 +97,9 @@ private:
 	void UpdateMouse(float DeltaTime);
 	void UpdateKeyState();
 	void UpdateKeyInfo(float DeltaTime);
+
+public:
+	void ClearCallback();
 
 public:
 	template <typename T>

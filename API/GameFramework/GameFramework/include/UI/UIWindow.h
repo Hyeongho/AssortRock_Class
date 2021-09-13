@@ -6,7 +6,9 @@
 class CUIWindow :
     public CRef
 {
-public:
+    friend class CScene;
+
+protected:
     CUIWindow();
     virtual ~CUIWindow();
 

@@ -79,6 +79,9 @@
     <Filter Include="02. Scene\03. Camera">
       <UniqueIdentifier>{624be057-993e-43d2-a2fc-2cf02337a47e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="07. UI\02. Window">
+      <UniqueIdentifier>{8ee3f54c-a0d7-4a31-a194-3ad412b923a4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -176,6 +179,12 @@
     </ClCompile>
     <ClCompile Include="UI\Button.cpp">
       <Filter>07. UI\01. Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\StartScene.cpp">
+      <Filter>02. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UIStart.cpp">
+      <Filter>07. UI\02. Window</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -286,6 +295,12 @@
     </ClInclude>
     <ClInclude Include="UI\Button.h">
       <Filter>07. UI\01. Widget</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\StartScene.h">
+      <Filter>02. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UIStart.h">
+      <Filter>07. UI\02. Window</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

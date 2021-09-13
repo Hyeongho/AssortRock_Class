@@ -1,7 +1,9 @@
 #include "Collider.h"
 #include "CollisionManager.h"
+#include "../Scene/Scene.h"
+#include "../Scene/SceneCollision.h"
 
-CCollider::CCollider() : m_Scene(nullptr), m_Owner(nullptr), m_Enable(true), m_Profile(nullptr)
+CCollider::CCollider() : m_Scene(nullptr), m_Owner(nullptr), m_Enable(true), m_Profile(nullptr), m_MouserCollision(false)
 {
 }
 
@@ -14,6 +16,8 @@ CCollider::CCollider(const CCollider& collider) : CRef(collider), m_Scene(nullpt
 
 CCollider::~CCollider()
 {
+	m_Scene->GetSceneCollision()->ClearMouseCollision(this);
+
 	auto iter = m_CollisionList.begin();
 	auto iterEnd = m_CollisionList.end();
 
@@ -90,6 +94,22 @@ void CCollider::CallCollisionEnd(CCollider* Dest, float DeltaTime)
 	if (m_EndFunction)
 	{
 		m_EndFunction(this, Dest, DeltaTime);
+	}
+}
+
+void CCollider::CallMouseCollisionBegin(const Vector2& MousePos, float DeltaTime)
+{
+	if (m_BeginFunction)
+	{
+		m_MouseBeginFunction(this, MousePos, DeltaTime);
+	}
+}
+
+void CCollider::CallMouseCollisionEnd(const Vector2& MousePos, float DeltaTime)
+{
+	if (m_EndFunction)
+	{
+		m_MouseEndFunction(this, MousePos, DeltaTime);
 	}
 }
 

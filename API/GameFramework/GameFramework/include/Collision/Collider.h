@@ -22,9 +22,19 @@ protected:
     std::function<void(CCollider*, CCollider*, float)> m_BeginFunction;
     std::function<void(CCollider*, CCollider*, float)> m_EndFunction;
 
+    std::function<void(CCollider*, const Vector2&, float)> m_MouseBeginFunction;
+    std::function<void(CCollider*, const Vector2&, float)> m_MouseEndFunction;
+
     std::list<CSharedPtr<CCollider>> m_CollisionList;
 
+    bool m_MouserCollision;
+
 public:
+    void SetMouseCollision(bool MouserCollision)
+    {
+        m_MouserCollision = MouserCollision;
+    }
+
     void SetEnable(bool Enable)
     {
         m_Enable = Enable;
@@ -51,6 +61,11 @@ public:
     }
 
 public:
+    virtual float GetBottom() const
+    {
+        return 0.f;
+    }
+
     bool GetEnable()
     {
         return m_Enable;
@@ -84,6 +99,8 @@ public:
     void ClearCollisionList();
     void CallCollisionBegin(CCollider* Dest, float DeltaTime);
     void CallCollisionEnd(CCollider* Dest, float DeltaTime);
+    void CallMouseCollisionBegin(const Vector2& MousePos, float DeltaTime);
+    void CallMouseCollisionEnd(const Vector2& MousePos, float DeltaTime);
 
 public:
     virtual bool Init();
@@ -92,6 +109,7 @@ public:
     virtual void Render(HDC hDC);
     virtual CCollider* Clone();
     virtual bool Collision(CCollider* Dest) = 0;
+    virtual bool CollisionMouse(const Vector2& MousePos) = 0;
 
 public:
     template <typename T>
@@ -104,6 +122,18 @@ public:
     void SetCollisionEndFunction(T* Obj, void(T::* Func)(CCollider*, CCollider*, float))
     {
         m_EndFunction = std::bind(Func, Obj, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+    }
+
+    template <typename T>
+    void SetMouseCollisionBeginFunction(T* Obj, void(T::* Func)(CCollider*, const Vector2&, float))
+    {
+        m_MouseBeginFunction = std::bind(Func, Obj, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+    }
+
+    template <typename T>
+    void SetCollisionEndFunction(T* Obj, void(T::* Func)(CCollider*, const Vector2&, float))
+    {
+        m_MouseEndFunction = std::bind(Func, Obj, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
     }
 };
 

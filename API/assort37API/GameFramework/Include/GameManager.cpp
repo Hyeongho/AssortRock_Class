@@ -3,6 +3,7 @@
 #include "Timer.h"
 #include "Scene/SceneManager.h"
 #include "Scene/MainScene.h"
+#include "Scene/StartScene.h"
 #include "Input.h"
 #include "PathManager.h"
 #include "Resource/ResourceManager.h"
@@ -50,6 +51,11 @@ float CGameManager::GetDeltaTime() const
 	return m_Timer->GetDeltaTime() * m_TimeScale;
 }
 
+void CGameManager::Exit()
+{
+	DestroyWindow(m_hWnd);
+}
+
 bool CGameManager::Init(HINSTANCE hInst)
 {
 	m_hInst = hInst;
@@ -83,7 +89,7 @@ bool CGameManager::Init(HINSTANCE hInst)
 	if (!CSceneManager::GetInst()->Init())
 		return false;
 
-	CSceneManager::GetInst()->CreateScene<CMainScene>();
+	CSceneManager::GetInst()->CreateScene<CStartScene>();
 
 	// 타이머를 생성한다.
 	m_Timer = new CTimer;
@@ -145,9 +151,15 @@ void CGameManager::Logic()
 	// 입력 업데이트
 	CInput::GetInst()->Update(DeltaTime);
 
-	Update(DeltaTime);
-	PostUpdate(DeltaTime);
-	Collision(DeltaTime);
+	if (Update(DeltaTime))
+		return;
+
+	if (PostUpdate(DeltaTime))
+		return;
+
+	if (Collision(DeltaTime))
+		return;
+
 	Render(DeltaTime);
 }
 

@@ -50,7 +50,7 @@ void CColliderSphere::Render(HDC hDC)
 #ifdef _DEBUG
 	HPEN Pen = CGameManager::GetInst()->GetGreenPen();
 
-	if (!m_CollisionList.empty())
+	if (!m_CollisionList.empty() || m_MouserCollision)
 	{
 		Pen = CGameManager::GetInst()->GetRedPen();
 	}
@@ -99,4 +99,12 @@ bool CColliderSphere::Collision(CCollider* Dest)
 	}
 
 	return false;
+}
+
+
+bool CColliderSphere::CollisionMouse(const Vector2& MousePos)
+{
+	float Dist = Distance(m_Info.Center, MousePos);
+
+	return Dist <= m_Info.Radius;
 }

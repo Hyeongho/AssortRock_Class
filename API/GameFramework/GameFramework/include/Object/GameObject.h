@@ -34,6 +34,8 @@ protected:
 
 	bool m_CameraCull;
 
+	bool m_Start;
+
 public:
 	bool IsCull() const
 	{

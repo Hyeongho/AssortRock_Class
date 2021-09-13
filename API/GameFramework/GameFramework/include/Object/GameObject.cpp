@@ -6,7 +6,7 @@
 #include "../Resource/AnimationSequence.h"
 #include "../Scene/Camera.h"
 
-CGameObject::CGameObject() : m_Scene(nullptr), m_MoveSpeed(200.f), m_TimeScale(1.f), m_Animation(nullptr), m_CameraCull(false)
+CGameObject::CGameObject() : m_Scene(nullptr), m_MoveSpeed(200.f), m_TimeScale(1.f), m_Animation(nullptr), m_CameraCull(false), m_Start(false)
 {
 }
 
@@ -266,7 +266,7 @@ void CGameObject::SetTextureColorKey(unsigned char r, unsigned g, unsigned char 
 
 void CGameObject::Start()
 {
-
+	m_Start = true;
 }
 
 bool CGameObject::Init()
@@ -276,6 +276,11 @@ bool CGameObject::Init()
 
 void CGameObject::Update(float DeltaTime)
 {
+	if (!m_Start)
+	{
+		Start();
+	}
+
 	if (m_Animation)
 	{
 		m_Animation->Update(DeltaTime);

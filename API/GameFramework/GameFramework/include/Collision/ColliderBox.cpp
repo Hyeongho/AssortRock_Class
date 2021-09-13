@@ -56,7 +56,7 @@ void CColliderBox::Render(HDC hDC)
 #ifdef _DEBUG
 	HBRUSH Brush = CGameManager::GetInst()->GetGreenBrush();
 
-	if (!m_CollisionList.empty())
+	if (!m_CollisionList.empty() || m_MouserCollision)
 	{
 		Brush = CGameManager::GetInst()->GetRedBrush();
 	}
@@ -95,4 +95,29 @@ bool CColliderBox::Collision(CCollider* Dest)
 	}
 
 	return false;
+}
+
+bool CColliderBox::CollisionMouse(const Vector2& MousePos)
+{
+	if (m_Info.Left > MousePos.x)
+	{
+		return false;
+	}
+
+	else if (m_Info.Right < MousePos.x)
+	{
+		return false;
+	}
+
+	else if (m_Info.Top > MousePos.y)
+	{
+		return false;
+	}
+
+	else if (m_Info.Bottom < MousePos.y)
+	{
+		return false;
+	}
+
+	return true;
 }

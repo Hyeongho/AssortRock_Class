@@ -51,7 +51,7 @@ bool CMainScene::Init()
 
 	CMonster* Monster = CreateObject<CMonster>("Monster", Vector2(1000.0f, 100.f));
 
-	CUIWindow* TestWindow = CreateUIWindow<CUIWindow>("TestWindow");
+	/*CUIWindow* TestWindow = CreateUIWindow<CUIWindow>("TestWindow");
 
 	CUIImage* Image = TestWindow->CreateWidget<CUIImage>("TestImage");
 
@@ -62,7 +62,7 @@ bool CMainScene::Init()
 	CUIImage* Image1 = TestWindow->CreateWidget<CUIImage>("TestImage1");
 
 	Image1->SetTexture("Test1", TEXT("Start.bmp"));
-	Image1->SetPos(150.f, 100.f);
+	Image1->SetPos(150.f, 100.f);*/
 
 	return true;
 }

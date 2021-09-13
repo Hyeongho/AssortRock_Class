@@ -132,6 +132,10 @@ bool CInput::Init(HWND hWnd)
 {
 	m_hWnd = hWnd;
 
+	m_MouseDown = false;
+	m_MousePush = false;
+	m_MouseUp = false;
+
 	// 게임에서 사용하는 키를 설정한다.
 	CreateKey("MoveUp", 'W');
 	CreateKey("MoveDown", 'S');
@@ -179,6 +183,32 @@ void CInput::UpdateMouse(float DeltaTime)
 	m_MouseMove = Pos - m_MousePos;
 
 	m_MousePos = Pos;
+
+	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+	{
+		if (!m_MouseDown && !m_MousePush)
+		{
+			m_MouseDown = true;
+			m_MousePush = true;
+		}
+
+		else
+		{
+			m_MouseDown = false;
+		}
+	}
+
+	else if (m_MousePush)
+	{
+		m_MouseDown = false;
+		m_MousePush = false;
+		m_MouseUp = true;
+	}
+
+	else if (m_MouseUp)
+	{
+		m_MouseUp = false;
+	}
 }
 
 void CInput::UpdateKeyState()
@@ -283,3 +313,18 @@ void CInput::UpdateKeyInfo(float DeltaTime)
 		}
 	}
 }
+
+void CInput::ClearCallback()
+{
+	auto iter = m_mapInfo.begin();
+	auto iterEnd = m_mapInfo.end();
+
+	for (; iter != iterEnd; iter++)
+	{
+		for (int i = 0; i < KeyState_Max; i++)
+		{
+			iter->second->Callback[i] = nullptr;
+		}
+	}
+}
+

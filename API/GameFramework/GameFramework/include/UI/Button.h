@@ -14,7 +14,9 @@ public:
 protected:
 	CSharedPtr<CTexture> m_Texture;
 	AnimationFrameData m_FrameData[(int)EButton_State::End];
-	EButton_State m_ButtomState;
+	EButton_State m_ButtonState;
+	std::function<void()> m_ButtonClickCallback;
+	std::function<void()> m_ButtonMouseOnCallback;
 
 public:
 	void SetTexture(CTexture* Texture)
@@ -36,7 +38,7 @@ public:
 	void SetFrameData(EButton_State State, const Vector2& Start, const Vector2& Size);
 	void Enable(bool Enable)
 	{
-		m_ButtomState = Enable ? EButton_State::Normal : EButton_State::Disable;
+		m_ButtonState = Enable ? EButton_State::Normal : EButton_State::Disable;
 	}
 
 public:
@@ -49,5 +51,18 @@ public:
 protected:
 	virtual void CollisionMouseHoveredCallback(float DeltaTime);
 	virtual void CollisionMouseReleaseCallback(float DeltaTime);
+
+public:
+	template <typename T>
+	void SetClickCallback(T* Obj, void(T::* Func)())
+	{
+		m_ButtonClickCallback = std::bind(Func, Obj);
+	}
+
+	template <typename T>
+	void SetClickOnCallback(T* Obj, void(T::* Func)())
+	{
+		m_ButtonMouseOnCallback = std::bind(Func, Obj);
+	}
 };
 
