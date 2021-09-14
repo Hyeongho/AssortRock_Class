@@ -95,6 +95,8 @@ void CSceneCollision::CollisionMouse(float DeltaTime)
 
 			m_MouseHoveredWidget = vecWidget[i];
 			EnableCollision = true;
+
+			break;
 		}
 	}
 
@@ -119,7 +121,7 @@ void CSceneCollision::CollisionMouse(float DeltaTime)
 
 		if (Size > 1)
 		{
-			qsort(&m_vecCollider[0], (size_t)Size, sizeof(CCollider*), CScene::SortY);
+			qsort(&m_vecCollider[0], (size_t)Size, sizeof(CCollider*), CSceneCollision::SortY);
 
 			bool MouseCollision = false;
 
@@ -223,12 +225,12 @@ int CSceneCollision::SortY(const void* Src, const void* Dest)
 	float SrcY = SrcObj->GetBottom();
 	float DestY = DestObj->GetBottom();
 
-	if (SrcY > DestY)
+	if (SrcY < DestY)
 	{
 		return -1;
 	}
 
-	else if (SrcY < DestY)
+	else if (SrcY > DestY)
 	{
 		return 1;
 	}

@@ -3,6 +3,7 @@
 #include "../Collision/ColliderSphere.h"
 #include "EffectHit.h"
 #include "../Scene/Scene.h"
+#include "../Scene/SceneResource.h"
 
 CBullet::CBullet()
 {
@@ -98,4 +99,6 @@ void CBullet::CollisionBegin(CCollider* Src, CCollider* Dest, float DeltaTime)
 	Destroy();
 
  	CEffectHit* Hit = m_Scene->CreateObject<CEffectHit>("HitEffect", "HitEffect", m_Pos, Vector2(178.f, 164.f));
+
+	m_Scene->GetSceneResource()->SoundPlay("Fire");
 }

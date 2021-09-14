@@ -18,6 +18,8 @@ CMainScene::~CMainScene()
 
 bool CMainScene::Init()
 {
+	LoadSound();
+
 	LoadAnimationSequence();
 
 	GetCamera()->SetWorldResolution(10000.f, 10000.f);
@@ -134,4 +136,10 @@ void CMainScene::LoadAnimationSequence()
 	{
 		GetSceneResource()->AddAnimationFrameData("LucidNunNaLeftIdle", i * 82.f, 0.f, 82.f, 73.f);
 	}
+}
+
+void CMainScene::LoadSound()
+{
+	GetSceneResource()->LoadSound("Effect", false, "Fire", "Fire1.wav");
+	GetSceneResource()->SetVolume("Effect", 30);
 }

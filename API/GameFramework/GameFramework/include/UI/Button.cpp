@@ -105,6 +105,16 @@ void CButton::SetFrameData(EButton_State State, const Vector2& Start, const Vect
 }
 
 
+void CButton::SetMouseOnSound(const std::string& Name)
+{
+	m_ButtonSound[0] = m_Scene->GetSceneResource()->FindSound(Name);
+}
+
+void CButton::SetClickSound(const std::string& Name)
+{
+	m_ButtonSound[1] = m_Scene->GetSceneResource()->FindSound(Name);
+}
+
 bool CButton::Init()
 {
 	return true;
@@ -131,6 +141,11 @@ void CButton::Update(float DeltaTime)
 					m_ButtonClickCallback();
 				}
 
+				if (m_ButtonSound[1])
+				{
+					m_ButtonSound[1]->Play();
+				}
+
 				m_ButtonState = EButton_State::MouseOn;
 			}
 
@@ -140,7 +155,7 @@ void CButton::Update(float DeltaTime)
 			}
 
 			else
-			{
+			{		
 				m_ButtonState = EButton_State::MouseOn;
 
 				if (m_ButtonMouseOnCallback)
@@ -190,6 +205,11 @@ void CButton::Render(HDC hDC)
 void CButton::CollisionMouseHoveredCallback(float DeltaTime)
 {
 	CUIWidget::CollisionMouseHoveredCallback(DeltaTime);
+
+	if (m_ButtonSound[0])
+	{
+		m_ButtonSound[0]->Play();
+	}
 }
 
 void CButton::CollisionMouseReleaseCallback(float DeltaTime)

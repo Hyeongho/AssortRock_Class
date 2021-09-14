@@ -2,6 +2,7 @@
 
 #include "UIWidget.h"
 #include "../Resource/Texture.h"
+#include "../Resource/Sound.h"
 
 class CButton :
     public CUIWidget
@@ -17,6 +18,7 @@ protected:
 	EButton_State m_ButtonState;
 	std::function<void()> m_ButtonClickCallback;
 	std::function<void()> m_ButtonMouseOnCallback;
+	CSharedPtr<CSound> m_ButtonSound[2];
 
 public:
 	void SetTexture(CTexture* Texture)
@@ -40,6 +42,9 @@ public:
 	{
 		m_ButtonState = Enable ? EButton_State::Normal : EButton_State::Disable;
 	}
+
+	void SetMouseOnSound(const std::string& Name);
+	void SetClickSound(const std::string& Name);
 
 public:
 	virtual bool Init();

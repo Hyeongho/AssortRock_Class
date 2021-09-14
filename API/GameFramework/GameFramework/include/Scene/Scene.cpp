@@ -251,7 +251,7 @@ bool CScene::Collision(float DeltaTime)
 	{
 		if (m_UICount >= 2)
 		{
-			qsort(m_UIArray, (size_t)m_UICount, sizeof(CUIWindow*), CUIWindow::SortZOrder);
+			qsort(m_UIArray, (size_t)m_UICount, sizeof(CUIWindow*), CScene::SortZOrder);
 		}
 
 		for (int i = 0; i < m_UICount;)

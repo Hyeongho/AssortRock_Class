@@ -40,6 +40,23 @@ CSceneResource::~CSceneResource()
 			CResourceManager::GetInst()->ReleaseTexture(Name);
 		}
 	}
+
+	{
+		auto iter = m_mapSound.begin();
+		auto iterEnd = m_mapSound.end();
+
+		for (; iter != iterEnd;)
+		{
+			std::string	Name = iter->first;
+
+			// erase를 하면 SharedPtr이므로 자동으로 객체가 제거되며 카운트가
+			// 1 감소한다. erase는 지운 다음 iterator를 반환하므로 ++을 안해줘도
+			// 된다.
+			iter = m_mapSound.erase(iter);
+
+			CResourceManager::GetInst()->ReleaseSound(Name);
+		}
+	}
 }
 
 bool CSceneResource::LoadTexture(const std::string& Name, const TCHAR* FileName, const std::string& PathName)
@@ -206,6 +223,67 @@ CAnimationSequence* CSceneResource::FindAnimationSequence(const std::string& Nam
 	auto iter = m_mapAnimationSequence.find(Name);
 
 	if (iter == m_mapAnimationSequence.end())
+	{
+		return nullptr;
+	}
+
+	return iter->second;
+}
+
+bool CSceneResource::LoadSound(const std::string& GroupName, bool Loop, const std::string& Name, const char* FileName, const std::string& PathName)
+{
+	if (FindSound(Name))
+	{
+		return true;
+	}
+
+	if (!CResourceManager::GetInst()->LoadSound(GroupName, Loop, Name, FileName, PathName))
+	{
+		return false;
+	}
+
+	CSound* Sound = CResourceManager::GetInst()->FindSound(Name);
+
+	m_mapSound.insert(std::make_pair(Name, Sound));
+
+	return true;
+}
+
+bool CSceneResource::SetVolume(int Volume)
+{
+	return CResourceManager::GetInst()->SetVolume(Volume);
+}
+
+bool CSceneResource::SetVolume(const std::string& GrounpName, int Volume)
+{
+	return CResourceManager::GetInst()->SetVolume(GrounpName, Volume);
+}
+
+bool CSceneResource::SoundPlay(const std::string& Name)
+{
+	return CResourceManager::GetInst()->SoundPlay(Name);
+}
+
+bool CSceneResource::SoundStop(const std::string& Name)
+{
+	return CResourceManager::GetInst()->SoundStop(Name);
+}
+
+bool CSceneResource::SoundPause(const std::string& Name)
+{
+	return CResourceManager::GetInst()->SoundPause(Name);
+}
+
+bool CSceneResource::SoundResume(const std::string& Name)
+{
+	return CResourceManager::GetInst()->SoundResume(Name);
+}
+
+CSound* CSceneResource::FindSound(const std::string& Name)
+{
+	auto iter = m_mapSound.find(Name);
+
+	if (iter == m_mapSound.end())
 	{
 		return nullptr;
 	}

@@ -82,6 +82,12 @@
     <Filter Include="07. UI\02. Window">
       <UniqueIdentifier>{8ee3f54c-a0d7-4a31-a194-3ad412b923a4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Resource\03. Sound">
+      <UniqueIdentifier>{43fd5cd7-155e-46fc-a360-4cf0c740ab5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Resource\03. Sound\01. FMOD">
+      <UniqueIdentifier>{b1b7a2d4-58f3-47d1-be82-505eed193626}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -185,6 +191,9 @@
     </ClCompile>
     <ClCompile Include="UI\UIStart.cpp">
       <Filter>07. UI\02. Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\Sound.cpp">
+      <Filter>04. Resource\03. Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -302,6 +311,33 @@
     <ClInclude Include="UI\UIStart.h">
       <Filter>07. UI\02. Window</Filter>
     </ClInclude>
+    <ClInclude Include="fmod.h">
+      <Filter>04. Resource\03. Sound\01. FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod.hpp">
+      <Filter>04. Resource\03. Sound\01. FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod_codec.h">
+      <Filter>04. Resource\03. Sound\01. FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod_common.h">
+      <Filter>04. Resource\03. Sound\01. FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod_dsp.h">
+      <Filter>04. Resource\03. Sound\01. FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod_dsp_effects.h">
+      <Filter>04. Resource\03. Sound\01. FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod_errors.h">
+      <Filter>04. Resource\03. Sound\01. FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod_output.h">
+      <Filter>04. Resource\03. Sound\01. FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\Sound.h">
+      <Filter>04. Resource\03. Sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameFramework.rc">
@@ -312,5 +348,16 @@
     <Image Include="icon1.ico">
       <Filter>리소스 파일</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="fmod.cs">
+      <Filter>04. Resource\03. Sound\01. FMOD</Filter>
+    </None>
+    <None Include="fmod_dsp.cs">
+      <Filter>04. Resource\03. Sound\01. FMOD</Filter>
+    </None>
+    <None Include="fmod_errors.cs">
+      <Filter>04. Resource\03. Sound\01. FMOD</Filter>
+    </None>
   </ItemGroup>
 </Project>

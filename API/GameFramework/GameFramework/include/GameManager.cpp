@@ -163,6 +163,8 @@ void CGameManager::Logic()
 {
     float DeltaTime = m_Timer->Update() * m_TimeScale;
 
+    CResourceManager::GetInst()->Update();
+
     // 입력 업데이트
     CInput::GetInst()->Update(DeltaTime);
 

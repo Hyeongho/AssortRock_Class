@@ -2,6 +2,7 @@
 
 #include "Texture.h"
 #include "AnimationSequence.h"
+#include "Sound.h"
 
 class CResourceManager
 {
@@ -10,11 +11,18 @@ private:
 	~CResourceManager();
 
 private:
+	FMOD::System* m_System;
+	FMOD::ChannelGroup* m_MasterGroup;
+	std::unordered_map<std::string, FMOD::ChannelGroup*> m_mapChannelGroup;
+	std::unordered_map<std::string, CSharedPtr<CSound>> m_mapSound;
+
+private:
 	std::unordered_map<std::string, CSharedPtr<CTexture>> m_mapTexture;
 	std::unordered_map<std::string, CSharedPtr<CAnimationSequence>> m_mapAnimationSequence;
 	
 public:
 	bool Init();
+	void Update();
 
 public:
 	bool LoadTexture(const std::string& Name, const TCHAR* FileName, const std::string& PathName = TEXTURE_PATH);
@@ -37,6 +45,21 @@ public:
 	void ReleaseAnimationSequence(const std::string& Name);
 
 	CAnimationSequence* FindAnimationSequence(const std::string& Name); 
+
+public:
+	bool LoadSound(const std::string& GroupName, bool Loop, const std::string& Name, const char* FileName, const std::string& PathName = SOUND_PATH);
+	bool CreateSoundChannelGroup(const std::string& Name);
+	bool SetVolume(int Volume);
+	bool SetVolume(const std::string& GrounpName, int Volume);
+	bool SoundPlay(const std::string& Name);
+	bool SoundStop(const std::string& Name);
+	bool SoundPause(const std::string& Name);
+	bool SoundResume(const std::string& Name);
+
+	void ReleaseSound(const std::string& Name);
+
+	FMOD::ChannelGroup* FindSoundChannelGroup(const std::string& Name);
+	CSound* FindSound(const std::string& Name);
 
 private:
 	static CResourceManager* m_Inst;

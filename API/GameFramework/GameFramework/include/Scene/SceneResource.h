@@ -3,6 +3,7 @@
 #include "../Resource/Texture.h"
 #include "../Animation/AnimationInfo.h"
 #include "../Resource/AnimationSequence.h"
+#include "../Resource/Sound.h"
 
 class CSceneResource
 {
@@ -15,6 +16,7 @@ private:
 private:
 	std::unordered_map<std::string, CSharedPtr<CTexture>>	m_mapTexture;
 	std::unordered_map<std::string, CSharedPtr<CAnimationSequence>> m_mapAnimationSequence;
+	std::unordered_map<std::string, CSharedPtr<CSound>> m_mapSound;
 
 public:
 	bool LoadTexture(const std::string& Name, const TCHAR* FileName, const std::string& PathName = TEXTURE_PATH);
@@ -33,5 +35,16 @@ public:
 	void AddAnimationFrameData(const std::string& SequenceName, float PosX, float PosY, float SizeX, float SizeY);
 
 	CAnimationSequence* FindAnimationSequence(const std::string& Name);
+
+public:
+	bool LoadSound(const std::string& GroupName, bool Loop, const std::string& Name, const char* FileName, const std::string& PathName = SOUND_PATH);
+	bool SetVolume(int Volume);
+	bool SetVolume(const std::string& GrounpName, int Volume);
+	bool SoundPlay(const std::string& Name);
+	bool SoundStop(const std::string& Name);
+	bool SoundPause(const std::string& Name);
+	bool SoundResume(const std::string& Name);
+
+	CSound* FindSound(const std::string& Name);
 };
 
