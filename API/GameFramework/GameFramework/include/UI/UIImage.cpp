@@ -98,6 +98,6 @@ void CUIImage::Render(HDC hDC)
 		Vector2 Pos = m_Pos + m_Owner->GetPos();
 
 		// 이미지를 이용해서 출력한다.
-		m_Texture->Render(hDC, m_Pos, Vector2(0.f, 0.f), m_Size);
+		m_Texture->Render(hDC, Pos, Vector2(0.f, 0.f), m_Size);
 	}
 }

@@ -13,8 +13,14 @@ public:
 protected:
 	Vector2 m_Dir;
 	float m_Distance;
+	float m_Damage;
 
 public:
+	void SetBulletDamage(float Damage)
+	{
+		m_Damage = Damage;
+	}
+
 	void SetDir(float x, float y)
 	{
 		m_Dir.x = x;

@@ -151,5 +151,19 @@ public:
 
 		return Window;
 	}
+
+	template <typename T>
+	T* FindUIWindow(const std::string& Name)
+	{
+		for (int i = 0; i < m_UICount; i++)
+		{
+			if (m_UIArray[i]->GetName() == Name)
+			{
+				return (T*)m_UIArray[i];
+			}
+		}
+
+		return nullptr;
+	}
 };
 

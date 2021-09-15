@@ -2,6 +2,7 @@
 
 CCharacter::CCharacter() : m_CharacterInfo{}
 {
+	m_ObjType = EObject_Type::Character;
 }
 
 CCharacter::CCharacter(const CCharacter& obj) : CGameObject(obj)
@@ -51,4 +52,13 @@ void CCharacter::Render(HDC hDC)
 CCharacter* CCharacter::Clone()
 {
 	return nullptr;
+}
+
+float CCharacter::SetDamage(float Damage)
+{
+	Damage = CGameObject::SetDamage(Damage);
+
+	m_CharacterInfo.HP -= (int)Damage;
+
+	return Damage;
 }

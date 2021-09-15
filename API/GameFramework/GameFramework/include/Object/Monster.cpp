@@ -113,3 +113,8 @@ CMonster* CMonster::Clone()
 {
 	return new CMonster(*this);
 }
+
+float CMonster::SetDamage(float Damage)
+{
+	return 0.0f;
+}

@@ -4,6 +4,7 @@
 #include "../GameManager.h"
 #include "../Collision/ColliderBox.h"
 #include "../Collision/ColliderSphere.h"
+#include "../UI/UICharacterStateHUD.h"
 
 CPlayer::CPlayer() : m_Skill1Enable(false), m_Skill1Time(0.f)
 {
@@ -71,6 +72,9 @@ bool CPlayer::Init()
 	Body->SetExtent(80.f, 45.f);
 	Body->SetOffset(0.f, -22.5f);
 	Body->SetCollisionProfile("Player");
+
+	m_CharacterInfo.HP = 1000;
+	m_CharacterInfo.HPMax = 1000;
 
 	return true;
 }
@@ -143,6 +147,20 @@ void CPlayer::Render(HDC hDC)
 CPlayer* CPlayer::Clone()
 {
 	return new CPlayer(*this);
+}
+
+float CPlayer::SetDamage(float Damage)
+{
+	Damage = CCharacter::SetDamage(Damage);
+
+	CUICharacterStateHUD* State = m_Scene->FindUIWindow<CUICharacterStateHUD>("CharacterStateHUD");
+
+	if (State)
+	{
+		State->SetHPPercent(m_CharacterInfo.HP / (float)m_CharacterInfo.HPMax);
+	}
+
+	return Damage;
 }
 
 void CPlayer::MoveUp(float DeltaTime)

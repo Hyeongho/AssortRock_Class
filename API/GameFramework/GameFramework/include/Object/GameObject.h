@@ -36,7 +36,20 @@ protected:
 
 	bool m_Start;
 
+	EObject_Type m_ObjType;
+	bool m_DamageEnable;
+
 public:
+	void DamageEnable(bool Enable)
+	{
+		m_DamageEnable = Enable;
+	}
+
+	EObject_Type GetObjType() const
+	{
+		return m_ObjType;
+	}
+
 	bool IsCull() const
 	{
 		return m_CameraCull;
@@ -195,6 +208,7 @@ public:
 	virtual void PrevRender();
 	virtual void Render(HDC hDC);
 	virtual CGameObject* Clone();
+	virtual float SetDamage(float Damage);
 
 public:
 	template <typename T>

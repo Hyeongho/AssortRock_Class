@@ -6,12 +6,16 @@
 #include "../Resource/AnimationSequence.h"
 #include "../Scene/Camera.h"
 
-CGameObject::CGameObject() : m_Scene(nullptr), m_MoveSpeed(200.f), m_TimeScale(1.f), m_Animation(nullptr), m_CameraCull(false), m_Start(false)
+CGameObject::CGameObject() : m_Scene(nullptr), m_MoveSpeed(200.f), m_TimeScale(1.f), m_Animation(nullptr), m_CameraCull(false), m_Start(false), m_ObjType(EObject_Type::GameObject), 
+	m_DamageEnable(true)
 {
 }
 
 CGameObject::CGameObject(const CGameObject& obj) : CRef(obj)
 {
+	m_DamageEnable = obj.m_DamageEnable;
+	m_ObjType = obj.m_ObjType;
+
 	m_Scene = obj.m_Scene;
 
 	if (obj.m_Animation)
@@ -456,4 +460,14 @@ void CGameObject::Render(HDC hDC)
 CGameObject* CGameObject::Clone()
 {
 	return nullptr;
+}
+
+float CGameObject::SetDamage(float Damage)
+{
+	if (!m_DamageEnable)
+	{
+		return 0.f;
+	}
+
+	return Damage;
 }

@@ -19,10 +19,9 @@ protected:
     int m_WidgetCount;
     int m_WidgetCapacity;
 
-    Vector2 m_Pos;
-    Vector2 m_Size;
-
     bool m_Visibility;
+    Vector2 m_Pos;
+    Vector2 m_Size; 
 
 public:
     CUIWidget* GetWidget(int Index)
@@ -45,7 +44,7 @@ public:
         return m_Size;
     }
 
-    void SetPos(const Vector2 Pos)
+    void SetPos(const Vector2& Pos)
     {
         m_Pos = Pos;
     }
@@ -55,7 +54,7 @@ public:
         m_Pos = Vector2(x, y);
     }
 
-    void SetSize(const Vector2 Size)
+    void SetSize(const Vector2& Size)
     {
         m_Size = Size;
     }

@@ -88,6 +88,9 @@
     <Filter Include="04. Resource\03. Sound\01. FMOD">
       <UniqueIdentifier>{b1b7a2d4-58f3-47d1-be82-505eed193626}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Resource\04. Font">
+      <UniqueIdentifier>{f8bf431d-c7c2-46a6-b9dc-c28d19e5c3bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -194,6 +197,24 @@
     </ClCompile>
     <ClCompile Include="Resource\Sound.cpp">
       <Filter>04. Resource\03. Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ProgressBar.cpp">
+      <Filter>07. UI\01. Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UIMain.cpp">
+      <Filter>07. UI\02. Window</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UICharacterStateHUD.cpp">
+      <Filter>07. UI\02. Window</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\WidgetComponent.cpp">
+      <Filter>07. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UIText.cpp">
+      <Filter>07. UI\01. Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\Font.cpp">
+      <Filter>04. Resource\04. Font</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -337,6 +358,24 @@
     </ClInclude>
     <ClInclude Include="Resource\Sound.h">
       <Filter>04. Resource\03. Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ProgressBar.h">
+      <Filter>07. UI\01. Widget</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UIMain.h">
+      <Filter>07. UI\02. Window</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UICharacterStateHUD.h">
+      <Filter>07. UI\02. Window</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\WidgetComponent.h">
+      <Filter>07. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UIText.h">
+      <Filter>07. UI\01. Widget</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\Font.h">
+      <Filter>04. Resource\04. Font</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

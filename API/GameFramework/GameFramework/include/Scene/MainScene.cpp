@@ -5,8 +5,9 @@
 #include "SceneResource.h"
 #include "../Object/EffectHit.h"
 #include "Camera.h"
-#include "../UI/UIWindow.h"
+#include "../UI/UIMain.h"
 #include "../UI/UIImage.h"
+#include "../UI/UICharacterStateHUD.h"
 
 CMainScene::CMainScene()
 {
@@ -65,6 +66,9 @@ bool CMainScene::Init()
 
 	Image1->SetTexture("Test1", TEXT("Start.bmp"));
 	Image1->SetPos(150.f, 100.f);*/
+
+	CUIMain* MainWindow = CreateUIWindow<CUIMain>("MainWindow");
+	CUICharacterStateHUD* StateWindow = CreateUIWindow<CUICharacterStateHUD>("CharacterStateHUD");
 
 	return true;
 }
@@ -140,6 +144,9 @@ void CMainScene::LoadAnimationSequence()
 
 void CMainScene::LoadSound()
 {
+	GetSceneResource()->LoadSound("BGM", true, "MainBGM", "MainBgm.mp3");
+	GetSceneResource()->SoundPlay("MainBGM");
+
 	GetSceneResource()->LoadSound("Effect", false, "Fire", "Fire1.wav");
 	GetSceneResource()->SetVolume("Effect", 30);
 }

@@ -45,3 +45,11 @@ enum class EButton_State
 	Disable, 
 	End
 };
+
+enum class EObject_Type
+{
+	GameObject, 
+	Character, 
+	Bullet, 
+	Effect
+};

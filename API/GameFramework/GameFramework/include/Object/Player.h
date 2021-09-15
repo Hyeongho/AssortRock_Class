@@ -32,6 +32,7 @@ public:
 	virtual void Collision(float DeltaTime);
 	virtual void Render(HDC hDC);
 	virtual CPlayer* Clone();
+	virtual float SetDamage(float Damage);
 
 public:
 	void MoveUp(float DeltaTime);

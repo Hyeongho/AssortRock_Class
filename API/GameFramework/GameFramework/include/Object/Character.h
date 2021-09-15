@@ -14,6 +14,8 @@ protected:
 	CharacterInfo m_CharacterInfo;
 
 public:
+
+public:
 	void SetCharacterInfo(int Attack, int Armor, int HP, int MP, int Level, int Exp, int Gold, float AttackSpeed, float AttackDistance)
 	{
 		m_CharacterInfo.Attack = Attack;
@@ -41,5 +43,8 @@ public:
 	virtual void Collision(float DeltaTime);
 	virtual void Render(HDC hDC);
 	virtual CCharacter* Clone();
+
+public:
+	virtual float SetDamage(float Damage);
 };
 

@@ -6,6 +6,7 @@
 
 CEffectHit::CEffectHit()
 {
+	m_ObjType = EObject_Type::Effect;
 }
 
 CEffectHit::CEffectHit(const CEffectHit& obj) : CGameObject(obj)

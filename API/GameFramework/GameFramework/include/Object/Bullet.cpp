@@ -7,8 +7,12 @@
 
 CBullet::CBullet()
 {
+	m_ObjType = EObject_Type::Bullet;
+
 	m_Dir.x = 1.f;
 	m_Dir.y = 0.f;
+
+	m_Damage = 20.f;
 
 	m_Distance = 800.f;
 
@@ -17,6 +21,7 @@ CBullet::CBullet()
 
 CBullet::CBullet(const CBullet& obj) : CGameObject(obj)
 {
+	m_Damage = obj.m_Damage;
 	m_Dir = obj.m_Dir;
 	m_Distance = obj.m_Distance;
 }
@@ -97,6 +102,8 @@ CBullet* CBullet::Clone()
 void CBullet::CollisionBegin(CCollider* Src, CCollider* Dest, float DeltaTime)
 {
 	Destroy();
+
+	Dest->GetOwner()->SetDamage(m_Damage);
 
  	CEffectHit* Hit = m_Scene->CreateObject<CEffectHit>("HitEffect", "HitEffect", m_Pos, Vector2(178.f, 164.f));
 

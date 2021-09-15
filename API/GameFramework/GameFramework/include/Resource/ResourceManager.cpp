@@ -1,4 +1,5 @@
 #include "ResourceManager.h"
+#include "../PathManager.h"
 
 CResourceManager* CResourceManager::m_Inst = nullptr;
 
@@ -11,21 +12,34 @@ CResourceManager::~CResourceManager()
 	m_mapSound.clear();
 	m_mapAnimationSequence.clear();
 	m_mapTexture.clear();
+	m_mapFont.clear();
 
-	auto iter = m_mapChannelGroup.begin();
-	auto iterEnd = m_mapChannelGroup.end();
-
-	for (; iter != iterEnd; iter++)
 	{
-		iter->second->release();
-	}
+		auto iter = m_mapChannelGroup.begin();
+		auto iterEnd = m_mapChannelGroup.end();
 
-	m_mapChannelGroup.clear();
+		for (; iter != iterEnd; iter++)
+		{
+			iter->second->release();
+		}
+
+		m_mapChannelGroup.clear();
+	}
 
 	if (m_System)
 	{
 		m_System->close();
 		m_System->release();
+	}
+
+	{
+		auto iter = m_FontLoadList.begin();
+		auto iterEnd = m_FontLoadList.end();
+
+		for (; iter != iterEnd; iter++)
+		{
+			RemoveFontResource((*iter).c_str());
+		}
 	}
 }
 
@@ -59,6 +73,12 @@ bool CResourceManager::Init()
 	CreateSoundChannelGroup("BGM");
 	CreateSoundChannelGroup("Effect");
 	CreateSoundChannelGroup("UI");
+
+	LoadOtherFont(TEXT("NotoSansKR-Black.otf"));
+	LoadOtherFont(TEXT("NotoSansKR-Bold.otf"));
+	LoadOtherFont(TEXT("NotoSansKR-Regular.otf"));
+
+	LoadFont("DefaultFont", TEXT("NotoSansKR-Regular"));
 
 	return true;
 }
@@ -452,6 +472,60 @@ CSound* CResourceManager::FindSound(const std::string& Name)
 	auto iter = m_mapSound.find(Name);
 
 	if (iter == m_mapSound.end())
+	{
+		return nullptr;
+	}
+
+	return iter->second;
+}
+
+bool CResourceManager::LoadOtherFont(const TCHAR* FileName, const std::string& PathName)
+{
+	TCHAR FullPath[MAX_PATH] = {};
+
+	const PathInfo* Info = CPathManager::GetInst()->FindPath(PathName);
+
+	if (Info)
+	{
+		lstrcpy(FullPath, Info->Path);
+	}
+
+	lstrcat(FullPath, FileName);
+
+	AddFontResource(FullPath);
+
+	m_FontLoadList.push_back(FullPath);
+
+	return true;
+}
+
+bool CResourceManager::LoadFont(const std::string& Name, const TCHAR* FontName, int Width, int Height)
+{
+	CFont* Font = FindFont(Name);
+
+	if (Font)
+	{
+		return true;
+	}
+
+	Font = new CFont;
+
+	if (!Font->LoadFont(Name, FontName, Width, Height))
+	{
+		SAFE_DELETE(Font);
+		return false;
+	}
+
+	m_mapFont.insert(std::make_pair(Name, Font));
+
+	return true;
+}
+
+CFont* CResourceManager::FindFont(const std::string& Name)
+{
+	auto iter = m_mapFont.find(Name);
+
+	if (iter == m_mapFont.end())
 	{
 		return nullptr;
 	}

@@ -174,6 +174,7 @@
     <ClCompile Include="PathManager.cpp" />
     <ClCompile Include="Ref.cpp" />
     <ClCompile Include="Resource\AnimationSequence.cpp" />
+    <ClCompile Include="Resource\Font.cpp" />
     <ClCompile Include="Resource\ResourceManager.cpp" />
     <ClCompile Include="Resource\Sound.cpp" />
     <ClCompile Include="Resource\Texture.cpp" />
@@ -186,10 +187,15 @@
     <ClCompile Include="Scene\StartScene.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UI\Button.cpp" />
+    <ClCompile Include="UI\ProgressBar.cpp" />
+    <ClCompile Include="UI\UICharacterStateHUD.cpp" />
     <ClCompile Include="UI\UIImage.cpp" />
+    <ClCompile Include="UI\UIMain.cpp" />
     <ClCompile Include="UI\UIStart.cpp" />
+    <ClCompile Include="UI\UIText.cpp" />
     <ClCompile Include="UI\UIWidget.cpp" />
     <ClCompile Include="UI\UIWindow.cpp" />
+    <ClCompile Include="UI\WidgetComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation\Animation.h" />
@@ -222,6 +228,7 @@
     <ClInclude Include="Ref.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Resource\AnimationSequence.h" />
+    <ClInclude Include="Resource\Font.h" />
     <ClInclude Include="Resource\ResourceManager.h" />
     <ClInclude Include="Resource\Sound.h" />
     <ClInclude Include="Resource\Texture.h" />
@@ -235,10 +242,15 @@
     <ClInclude Include="SharedPtr.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="UI\Button.h" />
+    <ClInclude Include="UI\ProgressBar.h" />
+    <ClInclude Include="UI\UICharacterStateHUD.h" />
     <ClInclude Include="UI\UIImage.h" />
+    <ClInclude Include="UI\UIMain.h" />
     <ClInclude Include="UI\UIStart.h" />
+    <ClInclude Include="UI\UIText.h" />
     <ClInclude Include="UI\UIWidget.h" />
     <ClInclude Include="UI\UIWindow.h" />
+    <ClInclude Include="UI\WidgetComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameFramework.rc" />

@@ -1,5 +1,7 @@
 #pragma once
+
 #include "UIWindow.h"
+
 class CUIStart :
     public CUIWindow
 {
