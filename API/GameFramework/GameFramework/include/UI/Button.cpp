@@ -9,8 +9,12 @@ CButton::CButton()
 	m_ButtonState = EButton_State::Normal;
 }
 
-CButton::CButton(const CButton& widget)
+CButton::CButton(const CButton& widget) : CUIWidget(widget)
 {
+	memcpy(m_FrameData, widget.m_FrameData, sizeof(AnimationFrameData) * (int)EButton_State::End);
+
+	m_ButtonSound[0] = widget.m_ButtonSound[0];
+	m_ButtonSound[1] = widget.m_ButtonSound[1];
 }
 
 CButton::~CButton()
@@ -200,6 +204,29 @@ void CButton::Render(HDC hDC)
 			m_Texture->Render(hDC, Pos, Vector2(0.f, 0.f), m_Size, (int)m_ButtonState);
 		}
 	}
+}
+
+void CButton::Render(const Vector2& Pos, HDC hDC)
+{
+	if (m_Texture)
+	{
+		if (m_Texture->GetTextureType() == ETexture_Type::Atlas)
+		{
+			// 이미지를 이용해서 출력한다.
+			m_Texture->Render(hDC, Pos, m_FrameData[(int)m_ButtonState].StartPos, m_FrameData[(int)m_ButtonState].Size);
+		}
+
+		else
+		{
+			// 이미지를 이용해서 출력한다.
+			m_Texture->Render(hDC, Pos, Vector2(0.f, 0.f), m_Size, (int)m_ButtonState);
+		}
+	}
+}
+
+CButton* CButton::Clone()
+{
+	return new CButton(*this);
 }
 
 void CButton::CollisionMouseHoveredCallback(float DeltaTime)

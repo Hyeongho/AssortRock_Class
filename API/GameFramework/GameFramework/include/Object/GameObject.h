@@ -4,6 +4,7 @@
 #include "../Resource/Texture.h"
 #include "../Animation/Animation.h"
 #include "../Collision/Collider.h"
+#include "../UI/WidgetComponent.h"
 
 class CGameObject : public CRef
 {
@@ -38,6 +39,8 @@ protected:
 
 	EObject_Type m_ObjType;
 	bool m_DamageEnable;
+
+	std::list<CSharedPtr<CWidgetComponent>> m_WidgetComponentList;
 
 public:
 	void DamageEnable(bool Enable)
@@ -242,5 +245,47 @@ public:
 		m_ColliderList.push_back(Collider);
 
 		return Collider;
+	}
+
+	CWidgetComponent* FindWidgetComponent(const std::string& Name)
+	{
+		auto iter = m_WidgetComponentList.begin();
+		auto iterEnd = m_WidgetComponentList.end();
+
+		for (; iter != iterEnd; iter++)
+		{
+			if ((*iter)->GetName() == Name)
+			{
+				return *iter;
+			}
+		}
+
+		return nullptr;
+	}
+
+	CWidgetComponent* CreateWidgetComponent(const std::string& Name)
+	{
+		CWidgetComponent* Widget = FindWidgetComponent(Name);
+
+		if (Widget)
+		{
+			return nullptr;
+		}
+
+		Widget = new CWidgetComponent;
+
+		Widget->SetName(Name);
+		Widget->SetOwner(this);
+		Widget->SetScene(m_Scene);
+
+		if (!Widget->Init())
+		{
+			SAFE_DELETE(Widget);
+			return nullptr;
+		}
+
+		m_WidgetComponentList.push_back(Widget);
+
+		return Widget;
 	}
 };

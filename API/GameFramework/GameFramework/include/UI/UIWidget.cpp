@@ -34,6 +34,15 @@ void CUIWidget::Render(HDC hDC)
 {
 }
 
+void CUIWidget::Render(const Vector2& Pos, HDC hDC)
+{
+}
+
+CUIWidget* CUIWidget::Clone()
+{
+	return nullptr;
+}
+
 bool CUIWidget::CollisionMouse(const Vector2& MousePos, float DeltaTime)
 {
 	if (m_Pos.x <= MousePos.x && MousePos.x <= m_Pos.x + m_Size.x && m_Pos.y <= MousePos.y && MousePos.y <= m_Pos.y + m_Size.y)

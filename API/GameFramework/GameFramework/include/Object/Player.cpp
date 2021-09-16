@@ -5,6 +5,8 @@
 #include "../Collision/ColliderBox.h"
 #include "../Collision/ColliderSphere.h"
 #include "../UI/UICharacterStateHUD.h"
+#include "../UI/ProgressBar.h"
+#include "../UI/UIText.h"
 
 CPlayer::CPlayer() : m_Skill1Enable(false), m_Skill1Time(0.f)
 {
@@ -73,8 +75,28 @@ bool CPlayer::Init()
 	Body->SetOffset(0.f, -22.5f);
 	Body->SetCollisionProfile("Player");
 
+	m_HPBarWidget = CreateWidgetComponent("HPBarWidget");
+
+	CProgressBar* HPBar = m_HPBarWidget->CreateWidget<CProgressBar>("HPBar");
+
+	HPBar->SetTexture("WorldHPBar", TEXT("CharacterHPBar.bmp"));
+	
+	m_HPBarWidget->SetPos(-25.f, -95.f);
+
+	CWidgetComponent* NameWidget = CreateWidgetComponent("NameWidget");
+
+	CUIText* NameText = NameWidget->CreateWidget<CUIText>("NameText");
+
+	NameText->SetText(TEXT("·ç½Ãµå´«³ª"));
+	NameText->SetTextColor(255, 0, 0);
+
+	NameWidget->SetPos(-25.f, -115.f);
+
 	m_CharacterInfo.HP = 1000;
 	m_CharacterInfo.HPMax = 1000;
+
+	m_CharacterInfo.MP = 1000;
+	m_CharacterInfo.MPMax = 1000;
 
 	return true;
 }
@@ -92,7 +114,7 @@ void CPlayer::Update(float DeltaTime)
 	{
 		m_Skill1Time += DeltaTime;
 
-		if (m_Skill1Time >= 3.f)
+		if (m_Skill1Time >= 0.03f)
 		{
 			m_Skill1Enable = false;
 			m_Skill1Time = 0.f;
@@ -159,6 +181,10 @@ float CPlayer::SetDamage(float Damage)
 	{
 		State->SetHPPercent(m_CharacterInfo.HP / (float)m_CharacterInfo.HPMax);
 	}
+
+	CProgressBar* HPBar = (CProgressBar*)m_HPBarWidget->GetWidget();
+
+	HPBar->SetPercent(m_CharacterInfo.HP / (float)m_CharacterInfo.HPMax);
 
 	return Damage;
 }
@@ -232,6 +258,16 @@ void CPlayer::Skill1Enable()
 {
 	CGameManager::GetInst()->SetTimeScale(0.01f);
 	SetTimeScale(100.f);
+
+	CUICharacterStateHUD* State = m_Scene->FindUIWindow<CUICharacterStateHUD>("CharacterStateHUD");
+
+	m_CharacterInfo.MP -= 100;
+
+	if (State)
+	{
+		State->SetMPPercent(m_CharacterInfo.MP / (float)m_CharacterInfo.HPMax);
+	}
+
 	m_Skill1Enable = true;
 	//m_Skill1Time = 0.f;
 }

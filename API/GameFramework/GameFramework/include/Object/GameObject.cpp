@@ -27,17 +27,35 @@ CGameObject::CGameObject(const CGameObject& obj) : CRef(obj)
 
 	m_ColliderList.clear();
 
-	auto	iter = obj.m_ColliderList.begin();
-	auto	iterEnd = obj.m_ColliderList.end();
-
-	for (; iter != iterEnd; ++iter)
 	{
-		CCollider* Collider = (*iter)->Clone();
+		auto	iter = obj.m_ColliderList.begin();
+		auto	iterEnd = obj.m_ColliderList.end();
 
-		Collider->SetOwner(this);
-		Collider->SetScene(m_Scene);
+		for (; iter != iterEnd; ++iter)
+		{
+			CCollider* Collider = (*iter)->Clone();
 
-		m_ColliderList.push_back(Collider);
+			Collider->SetOwner(this);
+			Collider->SetScene(m_Scene);
+
+			m_ColliderList.push_back(Collider);
+		}
+	}
+
+	m_WidgetComponentList.clear();
+
+	{
+		auto iter = obj.m_WidgetComponentList.begin();
+		auto iterEnd = obj.m_WidgetComponentList.end();
+
+		for (; iter != iterEnd; iter++)
+		{
+			CWidgetComponent* Widget = (*iter)->Clone();
+			Widget->SetOwner(this);
+			Widget->SetScene(m_Scene);
+
+			m_WidgetComponentList.push_back(Widget);
+		}
 	}
 
 	m_PrevPos = obj.m_PrevPos;
@@ -290,24 +308,36 @@ void CGameObject::Update(float DeltaTime)
 		m_Animation->Update(DeltaTime);
 	}
 
-	auto iter = m_ColliderList.begin();
-	auto iterEnd = m_ColliderList.end();
-
-	for (; iter != iterEnd;)
 	{
-		if (!(*iter)->IsActive())
-		{
-			iter = m_ColliderList.erase(iter);
-			iterEnd = m_ColliderList.end();
-			continue;
-		}
+		auto iter = m_ColliderList.begin();
+		auto iterEnd = m_ColliderList.end();
 
-		else if ((*iter)->GetEnable())
+		for (; iter != iterEnd;)
+		{
+			if (!(*iter)->IsActive())
+			{
+				iter = m_ColliderList.erase(iter);
+				iterEnd = m_ColliderList.end();
+				continue;
+			}
+
+			else if ((*iter)->GetEnable())
+			{
+				(*iter)->Update(DeltaTime);
+			}
+
+			iter++;
+		}
+	}
+
+	{
+		auto iter = m_WidgetComponentList.begin();
+		auto iterEnd = m_WidgetComponentList.end();
+
+		for (; iter != iterEnd; iter++)
 		{
 			(*iter)->Update(DeltaTime);
 		}
-	
-		iter++;
 	}
 }
 
@@ -341,16 +371,38 @@ void CGameObject::PostUpdate(float DeltaTime)
 
 		iter++;
 	}
+
+	{
+		auto iter = m_WidgetComponentList.begin();
+		auto iterEnd = m_WidgetComponentList.end();
+
+		for (; iter != iterEnd; iter++)
+		{
+			(*iter)->PostUpdate(DeltaTime);
+		}
+	}
 }
 
 void CGameObject::Collision(float DeltaTime)
 {
-	auto iter = m_ColliderList.begin();
-	auto iterEnd = m_ColliderList.end();
-
-	for (; iter != iterEnd; iter++)
 	{
-		m_Scene->GetSceneCollision()->AddCollider(*iter);
+		auto iter = m_ColliderList.begin();
+		auto iterEnd = m_ColliderList.end();
+
+		for (; iter != iterEnd; iter++)
+		{
+			m_Scene->GetSceneCollision()->AddCollider(*iter);
+		}
+	}
+
+	{
+		auto iter = m_WidgetComponentList.begin();
+		auto iterEnd = m_WidgetComponentList.end();
+
+		for (; iter != iterEnd; iter++)
+		{
+			(*iter)->Collision(DeltaTime);
+		}
 	}
 }
 
@@ -433,24 +485,36 @@ void CGameObject::Render(HDC hDC)
 		}
 	}
 
-	auto iter = m_ColliderList.begin();
-	auto iterEnd = m_ColliderList.end();
-
-	for (; iter != iterEnd;)
 	{
-		if (!(*iter)->IsActive())
-		{
-			iter = m_ColliderList.erase(iter);
-			iterEnd = m_ColliderList.end();
-			continue;
-		}
+		auto iter = m_ColliderList.begin();
+		auto iterEnd = m_ColliderList.end();
 
-		else if ((*iter)->GetEnable())
+		for (; iter != iterEnd;)
+		{
+			if (!(*iter)->IsActive())
+			{
+				iter = m_ColliderList.erase(iter);
+				iterEnd = m_ColliderList.end();
+				continue;
+			}
+
+			else if ((*iter)->GetEnable())
+			{
+				(*iter)->Render(hDC);
+			}
+
+			iter++;
+		}
+	}
+
+	{
+		auto iter = m_WidgetComponentList.begin();
+		auto iterEnd = m_WidgetComponentList.end();
+
+		for (; iter != iterEnd; iter++)
 		{
 			(*iter)->Render(hDC);
 		}
-
-		iter++;
 	}
 
 	m_PrevPos = m_Pos;

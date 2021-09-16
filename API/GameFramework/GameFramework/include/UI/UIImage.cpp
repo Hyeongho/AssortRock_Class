@@ -7,8 +7,9 @@ CUIImage::CUIImage()
 {
 }
 
-CUIImage::CUIImage(const CUIImage& widget)
+CUIImage::CUIImage(const CUIImage& widget) : CUIWidget(widget)
 {
+	m_Texture = widget.m_Texture;
 }
 
 CUIImage::~CUIImage()
@@ -100,4 +101,18 @@ void CUIImage::Render(HDC hDC)
 		// 이미지를 이용해서 출력한다.
 		m_Texture->Render(hDC, Pos, Vector2(0.f, 0.f), m_Size);
 	}
+}
+
+void CUIImage::Render(const Vector2& Pos, HDC hDC)
+{
+	if (m_Texture)
+	{
+		// 이미지를 이용해서 출력한다.
+		m_Texture->Render(hDC, Pos, Vector2(0.f, 0.f), m_Size);
+	}
+}
+
+CUIImage* CUIImage::Clone()
+{
+	return new CUIImage(*this);
 }

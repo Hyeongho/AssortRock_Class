@@ -1,6 +1,7 @@
 #pragma once
 
 #include "UIWidget.h"
+#include "../Resource/Font.h"
 
 class CUIText :
     public CUIWidget
@@ -15,6 +16,7 @@ protected:
 	int m_TextCount;
 	int m_TextCapacity;
 	COLORREF m_TextColor;
+	CSharedPtr<CFont> m_Font;
 
 public:
 	void SetTextColor(unsigned char r, unsigned char g, unsigned char b)
@@ -62,7 +64,7 @@ public:
 			m_Text = Array;
 		}
 
-		lstrcpy(m_Text, Text);
+		lstrcat(m_Text, Text);
 
 		m_TextCount += lstrlen(Text);
 	}
@@ -74,11 +76,22 @@ public:
 		m_Text[m_TextCount] = 0;
 	}
 
+	void Clear()
+	{
+		m_TextCount = 0;
+
+		memset(m_Text, 0, sizeof(TCHAR) * m_TextCapacity);
+	}
+
+	void SetFont(const std::string& Name);
+
 public:
 	virtual bool Init();
 	virtual void Update(float DeltaTime);
 	virtual void PostUpdate(float DeltaTime);
 	virtual void Collision(float DeltaTime);
 	virtual void Render(HDC hDC);
+	virtual void Render(const Vector2& Pos, HDC hDC);
+	virtual CUIText* Clone();
 };
 

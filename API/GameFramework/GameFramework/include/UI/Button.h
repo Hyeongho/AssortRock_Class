@@ -52,6 +52,8 @@ public:
 	virtual void PostUpdate(float DeltaTime);
 	virtual void Collision(float DeltaTime);
 	virtual void Render(HDC hDC);
+	virtual void Render(const Vector2& Pos, HDC hDC);
+	virtual CButton* Clone();
 
 protected:
 	virtual void CollisionMouseHoveredCallback(float DeltaTime);

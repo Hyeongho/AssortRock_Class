@@ -8,7 +8,7 @@ CProgressBar::CProgressBar() : m_Percent(1.f)
 {
 }
 
-CProgressBar::CProgressBar(const CProgressBar& widget)
+CProgressBar::CProgressBar(const CProgressBar& widget) : CUIWidget(widget)
 {
 	m_Percent = widget.m_Percent;
 	m_Texture = widget.m_Texture;
@@ -103,4 +103,18 @@ void CProgressBar::Render(HDC hDC)
 		// 이미지를 이용해서 출력한다.
 		m_Texture->Render(hDC, Pos, Vector2(0.f, 0.f), m_Size * Vector2(m_Percent, 1.f));
 	}
+}
+
+void CProgressBar::Render(const Vector2& Pos, HDC hDC)
+{
+	if (m_Texture)
+	{
+		// 이미지를 이용해서 출력한다.
+		m_Texture->Render(hDC, Pos, Vector2(0.f, 0.f), m_Size * Vector2(m_Percent, 1.f));
+	}
+}
+
+CProgressBar* CProgressBar::Clone()
+{
+	return new CProgressBar(*this);
 }

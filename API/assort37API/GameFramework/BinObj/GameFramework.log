@@ -2,36 +2,24 @@
   Collider.cpp
   ColliderBox.cpp
   ColliderSphere.cpp
-  Collision.cpp
-  CollisionManager.cpp
   GameManager.cpp
-  Input.cpp
-  main.cpp
-  Math.cpp
   Bullet.cpp
   Character.cpp
   EffectHit.cpp
   GameObject.cpp
   Monster.cpp
   Player.cpp
-  PathManager.cpp
-  Ref.cpp
-  AnimationSequence.cpp
   Font.cpp
-  코드를 생성하고 있습니다...
-  컴파일하고 있습니다...
   ResourceManager.cpp
-  Sound.cpp
-  Texture.cpp
   Camera.cpp
   MainScene.cpp
   Scene.cpp
   SceneCollision.cpp
   SceneManager.cpp
-  SceneResource.cpp
   StartScene.cpp
-  Timer.cpp
   Button.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
   ProgressBar.cpp
   UICharacterStateHUD.cpp
   UIImage.cpp
@@ -40,8 +28,7 @@
   UIText.cpp
   UIWidget.cpp
   UIWindow.cpp
-  코드를 생성하고 있습니다...
-  컴파일하고 있습니다...
   WidgetComponent.cpp
+  main.cpp
   코드를 생성하고 있습니다...
   GameFramework.vcxproj -> E:\C++_Client\AssortRock_Class\API\assort37API\GameFramework\Bin\GameFramework_Debug.exe

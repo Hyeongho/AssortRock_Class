@@ -43,8 +43,7 @@ public:
 	virtual void Collision(float DeltaTime);
 	virtual void Render(HDC hDC);
 	virtual CCharacter* Clone();
-
-public:
 	virtual float SetDamage(float Damage);
+
 };
 

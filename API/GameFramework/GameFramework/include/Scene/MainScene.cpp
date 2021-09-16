@@ -149,4 +149,6 @@ void CMainScene::LoadSound()
 
 	GetSceneResource()->LoadSound("Effect", false, "Fire", "Fire1.wav");
 	GetSceneResource()->SetVolume("Effect", 30);
+
+	GetSceneResource()->LoadSound("Effect", false, "TextSound", "water-step-01.ogg");
 }

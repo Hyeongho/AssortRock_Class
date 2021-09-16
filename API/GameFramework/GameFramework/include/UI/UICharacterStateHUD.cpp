@@ -30,5 +30,20 @@ bool CUICharacterStateHUD::Init()
 
 	m_HPBar->SetPos(10.f, 10.f);
 
+	Back = CreateWidget<CUIImage>("MPBarBack");
+
+	Back->SetTexture("BarBack", TEXT("BarBack.bmp"));
+
+	Back->SetPos(0.f, 40.f);
+	Back->SetTextureColorKey(255, 0, 255);
+
+	//Back->SetPos(30.f, 20.f);
+
+	m_MPBar = CreateWidget<CProgressBar>("MPBar");
+
+	m_MPBar->SetTexture("MPBar", TEXT("BarDefault1.bmp"));
+
+	m_MPBar->SetPos(10.f, 50.f);
+
 	return true;
 }

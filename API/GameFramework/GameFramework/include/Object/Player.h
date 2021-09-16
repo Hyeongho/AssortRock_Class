@@ -16,6 +16,8 @@ protected:
 	bool m_Skill1Enable;
 	float m_Skill1Time;
 	std::list<CSharedPtr<CBullet>> m_Skill1BulletList;
+	CSharedPtr<CWidgetComponent> m_HPBarWidget;
+	CSharedPtr<CWidgetComponent> m_NameWidget;
 
 public: 
 	void SetAttackSpeed(float Speed)

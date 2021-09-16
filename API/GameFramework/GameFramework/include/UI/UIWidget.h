@@ -67,7 +67,7 @@ public:
     {
         return m_Visibility;
     }
-
+        
     void SetZOrder(int ZOrder)
     {
         m_ZOrder = ZOrder;
@@ -84,6 +84,8 @@ public:
     virtual void PostUpdate(float DeltaTime);
     virtual void Collision(float DeltaTime);
     virtual void Render(HDC hDC);
+    virtual void Render(const Vector2& Pos, HDC hDC);
+    virtual CUIWidget* Clone();
 
 public:
     bool CollisionMouse(const Vector2& MousePos, float DeltaTime);

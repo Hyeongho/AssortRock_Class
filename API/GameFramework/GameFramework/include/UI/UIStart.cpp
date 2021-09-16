@@ -4,6 +4,7 @@
 #include "../GameManager.h"
 #include "../Scene/MainScene.h"
 #include "../Scene/SceneManager.h"
+#include "UIText.h"
 
 CUIStart::CUIStart()
 {
@@ -23,7 +24,7 @@ bool CUIStart::Init()
 
 	CButton* Button = CreateWidget<CButton>("StartButton");
 
-	Button->SetTexture("StartButton", TEXT("StartButton.bmp"));
+	Button->SetTexture("StartButton", TEXT("ButtonBack.bmp"));
 	Button->SetPos(RS.Width / 2.f - 100.f, RS.Height / 2.f - 75.f);
 	Button->SetFrameData(EButton_State::Normal, Vector2(0.f, 0.f), Vector2(200.f, 100.f));
 	Button->SetFrameData(EButton_State::MouseOn, Vector2(200.f, 0.f), Vector2(200.f, 100.f));
@@ -35,9 +36,16 @@ bool CUIStart::Init()
 
 	Button->SetClickCallback<CUIStart>(this, &CUIStart::StartClick);
 
+	CUIText* Text = CreateWidget<CUIText>("StartButtonText");
+
+	Text->SetText(TEXT("START"));
+	Text->SetTextColor(100, 150, 200);
+	Text->SetPos(RS.Width / 2.f - 50.f, RS.Height / 2.f - 55.f);
+	Text->SetZOrder(2);
+
 	Button = CreateWidget<CButton>("ExitButton");
 
-	Button->SetTexture("StartButton", TEXT("StartButton.bmp"));
+	Button->SetTexture("StartButton", TEXT("ButtonBack.bmp"));
 	Button->SetPos(RS.Width / 2.f - 100.f, RS.Height / 2.f + 75.f);
 	Button->SetFrameData(EButton_State::Normal, Vector2(0.f, 0.f), Vector2(200.f, 100.f));
 	Button->SetFrameData(EButton_State::MouseOn, Vector2(200.f, 0.f), Vector2(200.f, 100.f));
@@ -48,6 +56,13 @@ bool CUIStart::Init()
 	Button->SetZOrder(1);
 
 	Button->SetClickCallback<CUIStart>(this, &CUIStart::ExitClick);
+
+	Text = CreateWidget<CUIText>("ExitButtonText");
+
+	Text->SetText(TEXT("EXIT"));
+	Text->SetTextColor(100, 150, 200);
+	Text->SetPos(RS.Width / 2.f - 50.f, RS.Height / 2.f + 95.f);
+	Text->SetZOrder(2);
 
 	return true;
 }
