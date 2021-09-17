@@ -8,6 +8,7 @@
 #include <Windows.h>
 #include <list>		// 더블링크드리스트 템플릿 자료구조
 #include <vector>	// 동적배열 템플릿 자료구조
+#include <stack>
 #include <string>
 #include <unordered_map>
 #include <crtdbg.h>

@@ -13,6 +13,12 @@ public:
 
 protected:
     CSharedPtr<CTexture> m_Texture;
+	std::vector<AnimationFrameData> m_vecFrameData;
+	int m_FrameIndex;
+	float m_PlayTime;
+	float m_FrameTime;
+	float m_AnimTime;
+	Vector2 m_Offset;
 
 public:
 	void SetTexture(CTexture* Texture)
@@ -31,6 +37,14 @@ public:
 	void SetTextureFullPath(const std::string& Name, const TCHAR* FullPath);
 	void SetTexture(const std::string& Name, const std::vector<std::wstring>& vecFileName, const std::string& PathName = TEXTURE_PATH);
 	void SetTextureColorKey(unsigned char r, unsigned g, unsigned char b, int Index = 0);
+	void AddFrameData(const Vector2& Pos, const Vector2& Size)
+	{
+		AnimationFrameData data = {};
+		data.StartPos = Pos;
+		data.Size = Size;
+
+		m_vecFrameData.push_back(data);
+	}
 
 public:
     virtual bool Init();

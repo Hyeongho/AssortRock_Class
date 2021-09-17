@@ -3,13 +3,17 @@
 #include "../Scene/SceneResource.h"
 #include "UIWindow.h"
 
-CUIImage::CUIImage()
+CUIImage::CUIImage() : m_FrameIndex(0), m_PlayTime(1.f), m_AnimTime(0.f)
 {
 }
 
 CUIImage::CUIImage(const CUIImage& widget) : CUIWidget(widget)
 {
 	m_Texture = widget.m_Texture;
+	m_PlayTime = widget.m_PlayTime;
+	m_AnimTime = 0.f;;
+	m_FrameIndex = 0;
+	m_vecFrameData = widget.m_vecFrameData;
 }
 
 CUIImage::~CUIImage()
@@ -82,6 +86,19 @@ bool CUIImage::Init()
 
 void CUIImage::Update(float DeltaTime)
 {
+	if (!m_vecFrameData.empty())
+	{
+		m_AnimTime += DeltaTime;
+
+		float FrameTime = m_PlayTime / m_vecFrameData.size();
+
+		if (m_AnimTime >= FrameTime)
+		{
+			m_AnimTime -= FrameTime;
+
+			m_FrameIndex = (m_FrameIndex + 1) % m_vecFrameData.size();
+		}
+	}	
 }
 
 void CUIImage::PostUpdate(float DeltaTime)
@@ -97,9 +114,31 @@ void CUIImage::Render(HDC hDC)
 	if (m_Texture)
 	{
 		Vector2 Pos = m_Pos + m_Owner->GetPos();
+		Vector2 ImagePos;
+		Vector2 Size = m_Size;
 
-		// 이미지를 이용해서 출력한다.
-		m_Texture->Render(hDC, Pos, Vector2(0.f, 0.f), m_Size);
+		if (!m_vecFrameData.empty())
+		{
+			ImagePos = m_vecFrameData[m_FrameIndex].StartPos;
+			Size = m_vecFrameData[m_FrameIndex].Size;
+
+			if (m_Texture->GetTextureType() == ETexture_Type::Frame)
+			{
+				// 이미지를 이용해서 출력한다.
+				m_Texture->Render(hDC, Pos + m_Offset, ImagePos, Size, m_FrameIndex);
+			}
+
+			else
+			{
+				m_Texture->Render(hDC, Pos + m_Offset, ImagePos, Size);
+			}
+		}
+
+		else
+		{
+			// 이미지를 이용해서 출력한다.
+			m_Texture->Render(hDC, Pos + m_Offset, ImagePos, Size);
+		}	
 	}
 }
 
@@ -107,8 +146,31 @@ void CUIImage::Render(const Vector2& Pos, HDC hDC)
 {
 	if (m_Texture)
 	{
-		// 이미지를 이용해서 출력한다.
-		m_Texture->Render(hDC, Pos, Vector2(0.f, 0.f), m_Size);
+		Vector2 ImagePos;
+		Vector2 Size = m_Size;
+
+		if (!m_vecFrameData.empty())
+		{
+			ImagePos = m_vecFrameData[m_FrameIndex].StartPos;
+			Size = m_vecFrameData[m_FrameIndex].Size;
+
+			if (m_Texture->GetTextureType() == ETexture_Type::Frame)
+			{
+				// 이미지를 이용해서 출력한다.
+				m_Texture->Render(hDC, Pos + m_Offset, ImagePos, Size, m_FrameIndex);
+			}
+
+			else
+			{
+				m_Texture->Render(hDC, Pos + m_Offset, ImagePos, Size);
+			}
+		}
+
+		else
+		{
+			// 이미지를 이용해서 출력한다.
+			m_Texture->Render(hDC, Pos + m_Offset, ImagePos, Size);
+		}
 	}
 }
 

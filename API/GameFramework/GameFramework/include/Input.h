@@ -1,6 +1,14 @@
 #pragma once
 
 #include "GameInfo.h"
+#include "UI/UIImage.h"
+
+enum EMouse_Type
+{
+	Mouse_Default, 
+	Mouse_Battle, 
+	Mouse_End
+};
 
 struct KeyState
 {
@@ -54,6 +62,9 @@ private:
 	bool m_MousePush;
 	bool m_MouseUp;
 
+	std::vector<CSharedPtr<CUIImage>> m_vecMouseImage;
+	EMouse_Type m_MouseType;
+
 public:
 	bool GetMouseDown()
 	{
@@ -80,6 +91,11 @@ public:
 		return m_MouseMove;
 	}
 
+	void ChangeMouse(EMouse_Type Type)
+	{
+		m_MouseType = Type;
+	}
+
 public:
 	bool CreateKey(const std::string& Name, int Key);
 	bool SetCtrlKey(const std::string& Name, bool State);
@@ -92,6 +108,7 @@ private:
 public:
 	bool Init(HWND hWnd);
 	void Update(float DeltaTime);
+	void Render(HDC hDC);
 
 private:
 	void UpdateMouse(float DeltaTime);

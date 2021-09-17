@@ -187,6 +187,9 @@ void CGameManager::Render(float DeltaTime)
 
 	CSceneManager::GetInst()->Render(m_hBackDC);
 
+	// 마지막으로 마우스를 출력한다.
+	CInput::GetInst()->Render(m_hBackDC);
+
 	BitBlt(m_hDC, 0, 0, m_RS.Width, m_RS.Height, m_hBackDC, 0, 0, SRCCOPY);
 }
 

@@ -6,6 +6,7 @@
 #include "../Scene/SceneManager.h"
 #include "../Scene/SceneResource.h"
 #include "UIText.h"
+#include "NumberWidget.h"
 
 CUIMain::CUIMain()
 {
@@ -34,6 +35,24 @@ bool CUIMain::Init()
 	m_TextTime = 0.f;
 	m_OutputText = 0;
 	m_OutputIndex = 0;
+
+	CNumberWidget* Number = CreateWidget<CNumberWidget>("Number");
+
+	std::vector<std::wstring> vecNumberFileName;
+
+	for (int i = 0; i < 10; i++)
+	{
+		TCHAR FileName[256] = {};
+
+		wsprintf(FileName, TEXT("Number/%d"), i);
+
+		vecNumberFileName.push_back(FileName);
+	}
+
+	Number->SetTexture("Number", vecNumberFileName);
+	Number->SetPos(500.f, 100.f);
+	Number->SetSize(29.f, 48.f);
+	Number->SetNumber(123);
 
 	return true ;
 }

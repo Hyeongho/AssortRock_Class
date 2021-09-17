@@ -1,4 +1,5 @@
 #include "Input.h"
+#include "Resource/ResourceManager.h"
 
 CInput* CInput::m_Inst = nullptr;
 
@@ -20,6 +21,8 @@ CInput::CInput()
 	m_Ctrl = false;
 	m_Alt = false;
 	m_Shift = false;
+
+	m_MouseType = Mouse_Default;
 }
 
 CInput::~CInput()
@@ -151,6 +154,40 @@ bool CInput::Init(HWND hWnd)
 
 	CreateKey("Skill1", '1');
 
+	ShowCursor(FALSE);
+
+	CUIImage* MouseDafault = new CUIImage;
+
+	MouseDafault->SetSize(32.f, 31.f);
+
+	std::vector<std::wstring> vecFileName;
+
+	for (int i = 0; i <= 10; i++)
+	{
+		TCHAR FileName[MAX_PATH] = {};
+		wsprintf(FileName, TEXT("Mouse/%d.bmp"), i);
+
+		vecFileName.push_back(FileName);
+	}	
+
+	CResourceManager::GetInst()->LoadTexture("MouseDafault", vecFileName);
+
+	CTexture* Texture = CResourceManager::GetInst()->FindTexture("MouseDafault");
+
+	for (int i = 0; i <= 10; i++)
+	{
+		Texture->SetColorKey(255, 0, 255, i);
+	}
+
+	MouseDafault->SetTexture(Texture);
+
+	for (int i = 0; i <= 10; i++)
+	{
+		MouseDafault->AddFrameData(Vector2(0.f, 0.f), Vector2(32.f, 31.f));
+	}
+
+	m_vecMouseImage.push_back(MouseDafault);
+
 	return true;
 }
 
@@ -164,6 +201,13 @@ void CInput::Update(float DeltaTime)
 
 	// 위에서 업데이트를 해준 상태를 이용해서 실제 키 정보를 업데이트한다.
 	UpdateKeyInfo(DeltaTime);
+
+	m_vecMouseImage[m_MouseType]->Update(DeltaTime);
+}
+
+void CInput::Render(HDC hDC)
+{
+	m_vecMouseImage[m_MouseType]->Render(m_MousePos, hDC);
 }
 
 void CInput::UpdateMouse(float DeltaTime)

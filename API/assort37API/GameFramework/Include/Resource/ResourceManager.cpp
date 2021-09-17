@@ -54,7 +54,7 @@ bool CResourceManager::Init()
 		return false;
 
 	// System을 초기화한다.
-	result = m_System->init(128, FMOD_INIT_NORMAL, nullptr);
+	result = m_System->init(4093, FMOD_INIT_NORMAL, nullptr);
 
 	if (result != FMOD_OK)
 		return false;
@@ -82,6 +82,7 @@ bool CResourceManager::Init()
 
 void CResourceManager::Update()
 {
+	m_System->update();
 }
 
 bool CResourceManager::LoadTexture(const std::string& Name, 

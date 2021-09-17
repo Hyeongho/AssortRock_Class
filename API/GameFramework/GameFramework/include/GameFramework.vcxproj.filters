@@ -216,6 +216,12 @@
     <ClCompile Include="Resource\Font.cpp">
       <Filter>04. Resource\04. Font</Filter>
     </ClCompile>
+    <ClCompile Include="UI\MouseWidget.cpp">
+      <Filter>07. UI\01. Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\NumberWidget.cpp">
+      <Filter>07. UI\01. Widget</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -376,6 +382,12 @@
     </ClInclude>
     <ClInclude Include="Resource\Font.h">
       <Filter>04. Resource\04. Font</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\MouseWidget.h">
+      <Filter>07. UI\01. Widget</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\NumberWidget.h">
+      <Filter>07. UI\01. Widget</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -85,6 +85,7 @@ bool CResourceManager::Init()
 
 void CResourceManager::Update()
 {
+	m_System->update();
 }
 
 bool CResourceManager::LoadTexture(const std::string& Name, const TCHAR* FileName, const std::string& PathName)
