@@ -18,6 +18,12 @@ private:
     int m_OutputText;
     int m_OutputIndex;
 
+    class CNumberWidget* m_NumberWidget;
+    class CNumberWidget* m_Number1Widget;
+    class CNumberWidget* m_MinuteWidget;
+    float m_Time;
+    int m_Minute;
+
 public:
     virtual bool Init();
     virtual void Update(float DeltaTime);

@@ -1,15 +1,31 @@
-﻿  GameManager.cpp
-  Input.cpp
+﻿  Animation.cpp
+  Collider.cpp
+  ColliderBox.cpp
+  ColliderSphere.cpp
+  GameManager.cpp
+  Bullet.cpp
+  Character.cpp
+  DamageFont.cpp
+  EffectHit.cpp
+  GameObject.cpp
+  Monster.cpp
   Player.cpp
+  Camera.cpp
   MainScene.cpp
+  Scene.cpp
   SceneCollision.cpp
   SceneManager.cpp
+  StartScene.cpp
   Button.cpp
   NumberWidget.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
   ProgressBar.cpp
   UICharacterStateHUD.cpp
   UIImage.cpp
   UIMain.cpp
   UIStart.cpp
+  UIText.cpp
+  WidgetComponent.cpp
   코드를 생성하고 있습니다...
   GameFramework.vcxproj -> E:\C++_Client\AssortRock_Class\API\GameFramework\GameFramework\Bin\GameFramework_Debug.exe

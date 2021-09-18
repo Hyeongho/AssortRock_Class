@@ -6,15 +6,22 @@
 #include "../Resource/AnimationSequence.h"
 #include "../Scene/Camera.h"
 
-CGameObject::CGameObject() : m_Scene(nullptr), m_MoveSpeed(200.f), m_TimeScale(1.f), m_Animation(nullptr), m_CameraCull(false), m_Start(false), m_ObjType(EObject_Type::GameObject), 
-	m_DamageEnable(true)
+CGameObject::CGameObject() : m_Scene(nullptr), m_MoveSpeed(200.f), m_TimeScale(1.f), m_Animation(nullptr), m_CameraCull(false), m_Start(false), m_ObjType(EObject_Type::GameObject),
+m_DamageEnable(true), m_PhysicsSimulate(false), m_IsGruond(true), m_FallTime(0.f), m_FallStartY(0.f), m_Jump(false), m_JumpVelocity(0.f), m_GravityAccel(10.f), m_LifeTime(0.f)
 {
 }
 
 CGameObject::CGameObject(const CGameObject& obj) : CRef(obj)
 {
+	m_PhysicsSimulate = obj.m_PhysicsSimulate;
+	m_IsGruond = obj.m_IsGruond;
+	m_FallTime = obj.m_FallTime;
+	m_FallStartY = obj.m_FallStartY;
+	m_Jump = obj.m_Jump;
+	m_JumpVelocity = obj.m_JumpVelocity;
 	m_DamageEnable = obj.m_DamageEnable;
 	m_ObjType = obj.m_ObjType;
+	m_GravityAccel = obj.m_GravityAccel;
 
 	m_Scene = obj.m_Scene;
 
@@ -289,6 +296,9 @@ void CGameObject::SetTextureColorKey(unsigned char r, unsigned g, unsigned char 
 void CGameObject::Start()
 {
 	m_Start = true;
+
+	// 나중에 땅에 닿으면 갱신한다.
+	m_FallStartY = m_Pos.y;
 }
 
 bool CGameObject::Init()
@@ -306,6 +316,42 @@ void CGameObject::Update(float DeltaTime)
 	if (m_Animation)
 	{
 		m_Animation->Update(DeltaTime);
+	}
+
+	if (m_LifeTime > 0.f)
+	{
+		m_LifeTime -= DeltaTime;
+
+		if (m_LifeTime <= 0.f)
+		{
+			Destroy();
+
+			return;
+		}
+	}
+
+	// 중력을 적용한다.
+	if (!m_IsGruond && m_PhysicsSimulate)
+	{
+		// 떨어지는 시간을 누적시켜준다.
+		m_FallTime += DeltaTime * m_GravityAccel;
+
+		// 9.8 m/s^2
+		// t초 후 y값
+		// V: 속도	A: 가속도	G: 중력
+		// y = V * A - 0.5f * G * T * T
+		// 0 = -0.5GA^2 VA - y
+		// (*b +- 루트(b^2 - 4ac)) / 2a
+		float Velocity = 0.f;
+
+		if (m_Jump)
+		{
+			Velocity = m_JumpVelocity * m_FallTime;
+		}
+
+		float SaveY = m_Pos.y;
+
+		m_Pos.y = m_FallStartY - (Velocity - 0.5f * GRAVITY * m_FallTime * m_FallTime);
 	}
 
 	{
@@ -477,11 +523,6 @@ void CGameObject::Render(HDC hDC)
 		{
 			// 이미지를 이용해서 출력한다.
 			m_Texture->Render(hDC, LT, m_ImageStart, m_Size);
-		}
-
-		else
-		{
-			Rectangle(hDC, (int)LT.x, (int)LT.y, (int)(LT.x + m_Size.x), (int)(LT.y + m_Size.y));
 		}
 	}
 

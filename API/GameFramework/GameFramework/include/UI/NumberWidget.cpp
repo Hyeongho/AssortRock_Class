@@ -66,16 +66,54 @@ void CNumberWidget::Render(HDC hDC)
 
 		for (size_t i = 0; i < Size; i++)
 		{
+			if (m_Texture->GetTextureType() == ETexture_Type::Frame)
+			{
+				m_FrameIndex = m_vecNumber[i];
+			}
 
+			else
+			{
+				m_FrameIndex = 0;
+			}
+
+			m_Offset.x = i * m_Size.x;
+
+			CUIImage::Render(hDC);			
 		}
 	}
-
-	CUIImage::Render(hDC);
 }
 
 void CNumberWidget::Render(const Vector2& Pos, HDC hDC)
 {
-	CUIImage::Render(Pos, hDC);
+	if (m_vecNumber.empty())
+	{
+		// 비어있으면 0을 출력한다.
+		m_FrameIndex = 0;
+		CUIImage::Render(Pos, hDC);
+	}
+
+	else
+	{
+		// 비어있지 않다면 값이 있다는 것이다.
+		size_t	Size = m_vecNumber.size();
+
+		for (size_t i = 0; i < Size; ++i)
+		{
+			if (m_Texture->GetTextureType() == ETexture_Type::Frame)
+			{
+				m_FrameIndex = m_vecNumber[i];
+			}
+
+			else
+			{
+				m_FrameIndex = 0;
+			}
+
+			m_Offset.x = i * m_Size.x;
+
+			CUIImage::Render(Pos, hDC);
+		}
+	}
 }
 
 CNumberWidget* CNumberWidget::Clone()

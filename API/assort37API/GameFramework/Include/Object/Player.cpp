@@ -221,7 +221,7 @@ void CPlayer::MoveRight(float DeltaTime)
 
 void CPlayer::BulletFire(float DeltaTime)
 {
-	ChangeAnimation("LucidNunNaRightAttack");	
+	ChangeAnimation("LucidNunNaRightAttack");
 
 	/*if (m_Skill1Enable)
 	{

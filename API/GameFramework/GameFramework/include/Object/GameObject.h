@@ -26,6 +26,7 @@ protected:
 	Vector2 m_Offset;
 	float m_MoveSpeed;
 	float m_TimeScale;
+	float m_LifeTime;
 
 	CSharedPtr<CTexture> m_Texture;
 
@@ -42,7 +43,46 @@ protected:
 
 	std::list<CSharedPtr<CWidgetComponent>> m_WidgetComponentList;
 
+	bool m_PhysicsSimulate;
+	float m_GravityAccel;
+	bool m_IsGruond;
+	float m_FallTime;
+	float m_FallStartY;
+	bool m_Jump;
+	float m_JumpVelocity;
+
 public:
+	void SetLifeTime(float Time)
+	{
+		m_LifeTime = Time;
+	}
+
+	void SetGravityAccel(float Accel)
+	{
+		m_GravityAccel = Accel;
+	}
+
+	void SetPhysicsSimulate(bool Physics)
+	{
+		m_PhysicsSimulate = Physics;
+	}
+
+	void SetJumpVelocity(float JumpVelocity)
+	{
+		m_JumpVelocity = JumpVelocity;
+	}
+
+	void Jump()
+	{
+		if (!m_Jump)
+		{
+			m_Jump = true;
+			m_IsGruond = false;
+
+			m_FallStartY = m_Pos.y;
+		}
+	}
+
 	void DamageEnable(bool Enable)
 	{
 		m_DamageEnable = Enable;
