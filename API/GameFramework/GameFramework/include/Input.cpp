@@ -23,6 +23,8 @@ CInput::CInput()
 	m_Shift = false;
 
 	m_MouseType = Mouse_Default;
+
+	m_ShowCursor = false;
 }
 
 CInput::~CInput()
@@ -154,6 +156,8 @@ bool CInput::Init(HWND hWnd)
 
 	CreateKey("Skill1", '1');
 
+	CreateKey("Editor", VK_F1);
+
 	ShowCursor(FALSE);
 
 	CUIImage* MouseDafault = new CUIImage;
@@ -193,6 +197,31 @@ bool CInput::Init(HWND hWnd)
 
 void CInput::Update(float DeltaTime)
 {
+	RECT rc;
+	GetClientRect(m_hWnd, &rc);
+
+	POINT ptMouse;
+	GetCursorPos(&ptMouse);
+	ScreenToClient(m_hWnd, &ptMouse);
+
+	if (rc.left <= ptMouse.x && ptMouse.x <= rc.right && rc.top <= ptMouse.y && ptMouse.y <= rc.bottom)
+	{
+		if (IsShowCursor())
+		{
+			SetShowCursor(false);
+			ShowCursor(FALSE);
+		}
+	}
+
+	else
+	{
+		if (!IsShowCursor())
+		{
+			SetShowCursor(true);
+			ShowCursor(TRUE);
+		}
+	}
+
 	// 키상태를 업데이트 해준다.
 	UpdateKeyState();
 

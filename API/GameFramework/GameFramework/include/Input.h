@@ -62,10 +62,17 @@ private:
 	bool m_MousePush;
 	bool m_MouseUp;
 
+	bool m_ShowCursor;
+
 	std::vector<CSharedPtr<CUIImage>> m_vecMouseImage;
 	EMouse_Type m_MouseType;
 
 public:
+	bool IsShowCursor() const
+	{
+		return m_ShowCursor;
+	}
+
 	bool GetMouseDown()
 	{
 		return m_MouseDown;
@@ -94,6 +101,11 @@ public:
 	void ChangeMouse(EMouse_Type Type)
 	{
 		m_MouseType = Type;
+	}
+
+	void SetShowCursor(bool Cursor)
+	{
+		m_ShowCursor = Cursor;
 	}
 
 public:

@@ -91,6 +91,9 @@
     <Filter Include="04. Resource\04. Font">
       <UniqueIdentifier>{f8bf431d-c7c2-46a6-b9dc-c28d19e5c3bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="08. Map">
+      <UniqueIdentifier>{a4f1e6ef-d5c5-438c-a122-fd70b16981f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -224,6 +227,21 @@
     </ClCompile>
     <ClCompile Include="Object\DamageFont.cpp">
       <Filter>03. Object\03. Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\MapBase.cpp">
+      <Filter>08. Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\TileMap.cpp">
+      <Filter>08. Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\Tile.cpp">
+      <Filter>08. Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\EditorScene.cpp">
+      <Filter>02. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\EditorDlg.cpp">
+      <Filter>02. Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -394,6 +412,21 @@
     </ClInclude>
     <ClInclude Include="Object\DamageFont.h">
       <Filter>03. Object\03. Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\MapBase.h">
+      <Filter>08. Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\TileMap.h">
+      <Filter>08. Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\Tile.h">
+      <Filter>08. Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\EditorScene.h">
+      <Filter>02. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\EditorDlg.h">
+      <Filter>02. Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

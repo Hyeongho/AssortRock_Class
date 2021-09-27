@@ -3,23 +3,24 @@
   ColliderBox.cpp
   ColliderSphere.cpp
   GameManager.cpp
+  MapBase.cpp
   Bullet.cpp
-  Character.cpp
   DamageFont.cpp
   EffectHit.cpp
   GameObject.cpp
   Monster.cpp
   Player.cpp
-  Camera.cpp
+  EditorDlg.cpp
+  EditorScene.cpp
   MainScene.cpp
   Scene.cpp
   SceneCollision.cpp
   SceneManager.cpp
   StartScene.cpp
   Button.cpp
-  NumberWidget.cpp
   코드를 생성하고 있습니다...
   컴파일하고 있습니다...
+  NumberWidget.cpp
   ProgressBar.cpp
   UICharacterStateHUD.cpp
   UIImage.cpp

@@ -54,6 +54,71 @@ END
 // remains consistent on all systems.
 IDI_ICON1               ICON                    "icon1.ico"
 
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DIALOG_EDITOR DIALOGEX 0, 0, 419, 345
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "확인",IDOK,175,324,50,14
+    PUSHBUTTON      "취소",IDCANCEL,256,324,50,14
+    CTEXT           "타일가로개수",IDC_STATIC,7,7,66,16,SS_CENTERIMAGE | WS_BORDER
+    CTEXT           "타일세로개수",IDC_STATIC,7,29,66,17,SS_CENTERIMAGE | WS_BORDER
+    EDITTEXT        IDC_EDIT_TILECOUNTX,80,7,73,16,ES_CENTER | ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        IDC_EDIT_TILECOUNTY,80,29,73,17,ES_CENTER | ES_AUTOHSCROLL | ES_NUMBER
+    CTEXT           "타일가로크기",IDC_STATIC,160,7,66,16,SS_CENTERIMAGE | WS_BORDER
+    CTEXT           "타일세로크기",IDC_STATIC,160,29,66,17,SS_CENTERIMAGE | WS_BORDER
+    EDITTEXT        IDC_EDIT_TILESIZEX,233,7,73,16,ES_CENTER | ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        IDC_EDIT_TILESIZEY,233,29,73,17,ES_CENTER | ES_AUTOHSCROLL | ES_NUMBER
+    PUSHBUTTON      "맵생성",IDC_BUTTON_CREATEMAP,312,7,100,39
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_DIALOG_EDITOR, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 412
+        VERTGUIDE, 73
+        VERTGUIDE, 80
+        VERTGUIDE, 153
+        VERTGUIDE, 160
+        VERTGUIDE, 225
+        VERTGUIDE, 233
+        VERTGUIDE, 306
+        VERTGUIDE, 312
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 338
+        HORZGUIDE, 23
+        HORZGUIDE, 29
+        HORZGUIDE, 46
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_DIALOG_EDITOR AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
 #endif    // 한국어(대한민국) resources
 /////////////////////////////////////////////////////////////////////////////
 
