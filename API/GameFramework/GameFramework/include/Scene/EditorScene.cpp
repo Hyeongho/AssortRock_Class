@@ -5,8 +5,9 @@
 #include "../UI/UIStart.h"
 #include "../Input.h"
 #include "EditorDlg.h"
+#include "../Map/TileMap.h"
 
-CEditorScene::CEditorScene() : m_Dlg(nullptr), m_Start(false)
+CEditorScene::CEditorScene() : m_Dlg(nullptr), m_Start(false), m_TileMap(nullptr)
 {
 }
 
@@ -17,6 +18,8 @@ CEditorScene::~CEditorScene()
 
 bool CEditorScene::Init()
 {
+	CScene::Init();
+
 	LoadSound();
 
 	LoadAnimationSequence();
@@ -35,6 +38,8 @@ bool CEditorScene::Init()
 
 bool CEditorScene::Update(float DeltaTime)
 {
+	CScene::Update(DeltaTime);
+
 	if (!m_Start)
 	{
 		m_Start = true;
@@ -65,11 +70,13 @@ bool CEditorScene::Update(float DeltaTime)
 		}
 	}
 
-	return true;
+	return false;
 }
 
 bool CEditorScene::PostUpdate(float DeltaTime)
 {
+	CScene::PostUpdate(DeltaTime);
+
 	return false;
 }
 
@@ -89,4 +96,24 @@ void CEditorScene::LoadSound()
 void CEditorScene::OnEditor(float DeltaTiem)
 {
 	
+}
+
+void CEditorScene::CreateTileMap()
+{
+	if (m_TileMap)
+	{
+		return;
+	}
+
+	m_TileMap = CreateMap<CTileMap>("TileMap");
+}
+
+void CEditorScene::SetTileInfo(int CountX, int CountY, int SizeX, int SizeY)
+{
+	m_TileMap->CreateTile(CountX, CountY, Vector2((float)SizeX, (float)SizeY));
+}
+
+void CEditorScene::SetTileTexture(CTexture* Texture)
+{
+	m_TileMap->SetTileTexture(Texture);
 }

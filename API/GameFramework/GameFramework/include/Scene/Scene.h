@@ -23,7 +23,7 @@ public:
 	class CCamera* GetCamera() const;
 
 private:
-	std::list<class CMapbase*> m_MapList;
+	std::list<class CMapBase*> m_MapList;
 	CSharedPtr<CGameObject> m_Player;
 	std::list<CSharedPtr<CGameObject>> m_ObjList;
 	CGameObject** m_RenderArray;

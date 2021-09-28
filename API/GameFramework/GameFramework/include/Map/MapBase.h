@@ -15,8 +15,26 @@ protected:
 	std::string m_Name;
 	Vector2 m_Pos;
 	Vector2 m_Size;
+	int m_ZOrder;
+	bool m_Enable;
+	bool m_Active;
 
 public:
+	bool IsActive() const
+	{
+		return m_Active;
+	}
+
+	bool IsEnable() const
+	{
+		return m_Enable;
+	}
+
+	int GetZOrder() const
+	{
+		return m_ZOrder;
+	}
+
 	const std::string& GetName() const
 	{
 		return m_Name;
@@ -33,6 +51,11 @@ public:
 	}
 
 public:
+	void SetZOrder(int ZOrder)
+	{
+		m_ZOrder = ZOrder;
+	}
+
 	void SetScene(class CScene* Scene)
 	{
 		m_Scene = Scene;

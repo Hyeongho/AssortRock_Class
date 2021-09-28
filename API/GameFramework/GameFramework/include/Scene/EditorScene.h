@@ -12,6 +12,7 @@ private:
 private:
 	bool m_Start;
 	class CEditorDlg* m_Dlg;
+	class CTileMap* m_TileMap;
 
 public:
 	virtual bool Init();
@@ -24,5 +25,8 @@ private:
 
 public:
 	void OnEditor(float DeltaTiem);
+	void CreateTileMap();
+	void SetTileInfo(int CountX, int CountY, int SizeX, int SizeY);
+	void SetTileTexture(class CTexture* Texture);
 };
 

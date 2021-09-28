@@ -2,6 +2,7 @@
 #include "SceneResource.h"
 #include "SceneCollision.h"
 #include "Camera.h"
+#include "../Map/MapBase.h"
 
 CScene::CScene()
 {
@@ -34,6 +35,18 @@ CScene::~CScene()
 	}
 
 	SAFE_DELETE_ARRAY(m_UIArray);
+
+	{
+		auto iter = m_MapList.begin();
+		auto iterEnd = m_MapList.end();
+
+		for (; iter != iterEnd; iter++)
+		{
+			SAFE_DELETE((*iter));
+		}
+
+		m_MapList.clear();
+	}
 
 	m_ObjList.clear();
 
@@ -219,6 +232,56 @@ bool CScene::PostUpdate(float DeltaTime)
 
 	m_Camera->Update(DeltaTime);
 
+	{
+		auto iter = m_MapList.begin();
+		auto iterEnd = m_MapList.end();
+
+		for (; iter != iterEnd;)
+		{
+			if (!(*iter)->IsActive())
+			{
+				SAFE_DELETE((*iter));
+				iter = m_MapList.erase(iter);
+				iterEnd = m_MapList.end();
+				continue;
+			}
+
+			else if (!(*iter)->IsEnable())
+			{
+				iter++;
+				continue;
+			}
+
+			(*iter)->Update(DeltaTime);
+			iter++;
+		}
+	}
+
+	{
+		auto iter = m_MapList.begin();
+		auto iterEnd = m_MapList.end();
+
+		for (; iter != iterEnd;)
+		{
+			if (!(*iter)->IsActive())
+			{
+				SAFE_DELETE((*iter));
+				iter = m_MapList.erase(iter);
+				iterEnd = m_MapList.end();
+				continue;
+			}
+
+			else if (!(*iter)->IsEnable())
+			{
+				iter++;
+				continue;
+			}
+
+			(*iter)->PostUpdate(DeltaTime);
+			iter++;
+		}
+	}
+
 	return false;
 }
 
@@ -291,6 +354,31 @@ bool CScene::Collision(float DeltaTime)
 
 bool CScene::Render(HDC hDC)
 {
+	{
+		auto iter = m_MapList.begin();
+		auto iterEnd = m_MapList.end();
+
+		for (; iter != iterEnd;)
+		{
+			if (!(*iter)->IsActive())
+			{
+				SAFE_DELETE((*iter));
+				iter = m_MapList.erase(iter);
+				iterEnd = m_MapList.end();
+				continue;
+			}
+
+			else if (!(*iter)->IsEnable())
+			{
+				iter++;
+				continue;
+			}
+
+			(*iter)->Render(hDC);
+			iter++;
+		}
+	}
+
 	if (m_Player)
 	{
 		m_Player->PrevRender();

@@ -1,6 +1,6 @@
 #include "MapBase.h"
 
-CMapBase::CMapBase() : m_Scene(nullptr)
+CMapBase::CMapBase() : m_Scene(nullptr), m_ZOrder(0), m_Enable(true), m_Active(true)
 {
 }
 
