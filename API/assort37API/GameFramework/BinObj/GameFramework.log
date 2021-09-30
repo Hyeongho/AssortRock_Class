@@ -7,25 +7,29 @@
   GameManager.cpp
   Input.cpp
   main.cpp
+  MapBase.cpp
+  Tile.cpp
+  TileMap.cpp
   Math.cpp
   Bullet.cpp
   Character.cpp
+  DamageFont.cpp
   EffectHit.cpp
   GameObject.cpp
   Monster.cpp
   Player.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
   PathManager.cpp
   Ref.cpp
   AnimationSequence.cpp
   Font.cpp
-  코드를 생성하고 있습니다...
-  컴파일하고 있습니다...
   ResourceManager.cpp
   Sound.cpp
-E:\C++_Client\AssortRock_Class\API\assort37API\GameFramework\Include\Resource\Sound.cpp(56,50): warning C4311: '형식 캐스트': 'FMOD::Channel *'에서 'int'(으)로 포인터가 잘립니다.
-E:\C++_Client\AssortRock_Class\API\assort37API\GameFramework\Include\Resource\Sound.cpp(56,50): warning C4302: '형식 캐스트': 'FMOD::Channel *'에서 'int'(으)로 잘립니다.
   Texture.cpp
   Camera.cpp
+  EditorDlg.cpp
+  EditorScene.cpp
   MainScene.cpp
   Scene.cpp
   SceneCollision.cpp
@@ -36,14 +40,14 @@ E:\C++_Client\AssortRock_Class\API\assort37API\GameFramework\Include\Resource\So
   Button.cpp
   NumberWidget.cpp
   ProgressBar.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
   UICharacterStateHUD.cpp
   UIImage.cpp
   UIMain.cpp
   UIStart.cpp
   UIText.cpp
   UIWidget.cpp
-  코드를 생성하고 있습니다...
-  컴파일하고 있습니다...
   UIWindow.cpp
   WidgetComponent.cpp
   코드를 생성하고 있습니다...

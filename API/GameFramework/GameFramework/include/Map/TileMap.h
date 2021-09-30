@@ -29,6 +29,9 @@ public:
 	bool CreateTile(int CountX, int CountY, const Vector2& TileSize);
 	bool SetTileTexture(CTexture* Texture);
 	bool SetTileTexture(CTexture* Texture, int IndexX, int IndexY);
+	void ChangeTileOption(const Vector2& Pos, ETileOption Option);
+	void SetTileFrmae(const Vector2& Pos, const Vector2& Start, const Vector2& End);
+	CTile* GetTile(const Vector2& Pos);
 
 public:
 	virtual void Start();

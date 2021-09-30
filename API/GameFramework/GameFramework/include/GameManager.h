@@ -24,9 +24,13 @@ private:
 
 	HBRUSH m_hGreenBrush;
 	HBRUSH m_hRedBrush;
+	HBRUSH m_hYellowBrush;
 
 	HPEN m_hGreenPen;
 	HPEN m_hRedPen;
+	HPEN m_hYellowPen;
+
+	bool m_EditorMode;
 
 public:
 	Resolution GetResolution() const
@@ -54,6 +58,11 @@ public:
 		return m_hRedBrush;
 	}
 
+	HBRUSH GetYellowBrush() const
+	{
+		return m_hYellowBrush;
+	}
+
 	HDC GetWindowDC() const
 	{
 		return m_hDC;
@@ -69,7 +78,17 @@ public:
 		return m_hInst;
 	}
 
+	bool IsEditorMode() const
+	{
+		return m_EditorMode;
+	}
+
 public:
+	void SetEditorMode(bool Mode)
+	{
+		m_EditorMode = Mode;
+	}
+
 	void SetTimeScale(float TimeScale)
 	{
 		m_TimeScale = TimeScale;

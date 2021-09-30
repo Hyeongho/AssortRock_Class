@@ -92,6 +92,49 @@ bool CTileMap::SetTileTexture(CTexture* Texture, int IndexX, int IndexY)
 	return true;
 }
 
+void CTileMap::ChangeTileOption(const Vector2& Pos, ETileOption Option)
+{
+	CTile* Tile = GetTile(Pos);
+
+	if (!Tile)
+	{
+		return;
+	}
+
+	Tile->SetTileOption(Option);
+}
+
+void CTileMap::SetTileFrmae(const Vector2& Pos, const Vector2& Start, const Vector2& End)
+{
+	CTile* Tile = GetTile(Pos);
+
+	if (!Tile)
+	{
+		return;
+	}
+
+	Tile->SetStartFrame(Start);
+	Tile->SetEndFrame(End);
+}
+
+CTile* CTileMap::GetTile(const Vector2& Pos)
+{
+	int IndexX = (int)(Pos.x / m_TileSize.x);
+	int IndexY = (int)(Pos.y / m_TileSize.y);
+
+	if (IndexX < 0 || IndexX >= m_TileCountX)
+	{
+		return nullptr;
+	}
+
+	if (IndexY < 0 || IndexY >= m_TileCountY)
+	{
+		return nullptr;
+	}
+
+	return m_vecTile[IndexY * m_TileCountX + IndexX];
+}
+
 void CTileMap::Start()
 {
 	CMapBase::Start();
@@ -118,7 +161,7 @@ void CTileMap::Update(float DeltaTime)
 		m_StartX = (int)(CameraPos.x / m_TileSize.x);
 		m_StartY = (int)(CameraPos.y / m_TileSize.y);
 		m_EndX = (int)((CameraPos.x  + Resolution.x) / m_TileSize.x);
-		m_EndY = (int)((CameraPos.x + Resolution.y) / m_TileSize.y);
+		m_EndY = (int)((CameraPos.y + Resolution.y) / m_TileSize.y);
 
 		m_StartX = m_StartX < 0 ? 0 : m_StartX;
 		m_StartY = m_StartY < 0 ? 0 : m_StartY;

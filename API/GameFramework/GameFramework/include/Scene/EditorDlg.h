@@ -3,6 +3,17 @@
 #include "../GameInfo.h"
 #include "../Resource/Texture.h"
 
+struct TileFrmaeData
+{
+	Vector2 Start;
+	Vector2 End;
+};
+
+struct TileTextureFrameData
+{
+	std::vector<TileFrmaeData> vecData;
+};
+
 class CEditorDlg 
 {
 public:
@@ -18,8 +29,38 @@ private:
 	int m_SelectTextureListIndex;
 	TCHAR m_SelectTextureListText[256];
 	CSharedPtr<CTexture> m_SelectTileTexture;
+	std::vector<TileTextureFrameData> m_vecTextureFrameData;
+
+	HWND m_EditModeCombo;
+	ETileEditMode m_TileEditMode;
+
+	HWND m_TileOptionCombo;
+	ETileOption m_TileOption;
+
+	HWND m_FrameListBox;
+	int m_SelectFrameIndex;
 
 public:
+	ETileOption GetTileOption() const
+	{
+		return (ETileOption)SendMessage(m_TileOptionCombo, CB_GETCURSEL, 0, 0);
+	}
+
+	TileFrmaeData GetTileFrameData() const
+	{
+		if (m_SelectTextureListIndex == -1 || m_SelectFrameIndex == -1)
+		{
+			return TileFrmaeData();
+		}
+
+		return m_vecTextureFrameData[m_SelectTextureListIndex].vecData[m_SelectFrameIndex];
+	}
+
+	ETileEditMode GetTileEditMode() const
+	{
+		return (ETileEditMode)SendMessage(m_EditModeCombo, CB_GETCURSEL, 0, 0);
+	}
+
 	bool IsOpen() const
 	{
 		return m_Open;
@@ -45,6 +86,10 @@ public:
 	void LoadTileTexture();
 	void SelectTexture();
 	void SelectList();
+	void AddFrame();
+	void DeleteFrame();
+	void ModifyFrame();
+	void ChangeFrame();
 
 private:
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);

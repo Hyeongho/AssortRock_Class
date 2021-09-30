@@ -53,3 +53,18 @@ enum class EObject_Type
 	Bullet, 
 	Effect
 };
+
+enum class ETileOption
+{
+	Normal, 
+	Wall, 
+	Slow, 
+	End
+};
+
+enum class ETileEditMode
+{
+	Option, 
+	Image, 
+	End
+};

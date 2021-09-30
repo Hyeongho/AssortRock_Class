@@ -7,7 +7,7 @@
 
 CEditorDlg* g_Dlg;
 
-CEditorDlg::CEditorDlg() : m_ID(0), m_hDlg(0), m_Open(true), m_Scene(nullptr), m_SelectTextureListText{}
+CEditorDlg::CEditorDlg() : m_ID(0), m_hDlg(0), m_Open(true), m_Scene(nullptr), m_SelectTextureListText{}, m_SelectFrameIndex(-1)
 {
 	g_Dlg = this;
 }
@@ -34,9 +34,52 @@ bool CEditorDlg::Init(int ID)
 	SetDlgItemInt(m_hDlg, IDC_EDIT_TILESIZEX, 40, TRUE);
 	SetDlgItemInt(m_hDlg, IDC_EDIT_TILESIZEY, 53, TRUE);
 
+	SetDlgItemInt(m_hDlg, IDC_EDIT_STARTFRAMEX, 0, TRUE);
+	SetDlgItemInt(m_hDlg, IDC_EDIT_STARTFRAMEY, 0, TRUE);
+
+	SetDlgItemInt(m_hDlg, IDC_EDIT_ENDFRAMEX, 40, TRUE);
+	SetDlgItemInt(m_hDlg, IDC_EDIT_ENDFRAMEY, 53, TRUE);
+
 	m_TextureListBox = GetDlgItem(m_hDlg, IDC_LIST_TILETEXTURE);
 
+	m_FrameListBox = GetDlgItem(m_hDlg, IDC_LIST_TEXTUREFRAME);
+	
 	m_SelectTextureListIndex = -1;
+
+	m_EditModeCombo = GetDlgItem(m_hDlg, IDC_COMBO_EDITMODE);
+
+	TCHAR TileEditMode[(int)ETileEditMode::End][30] =
+	{
+		TEXT("타일옵션"), 
+		TEXT("타일이미지")
+	};
+
+	for (int i = 0; i < (int)ETileEditMode::End; i++)
+	{
+		SendMessage(m_EditModeCombo, CB_ADDSTRING, 0, (LPARAM)TileEditMode[i]);
+	}
+
+	SendMessage(m_EditModeCombo, CB_SETCURSEL, 0, 0);
+
+	m_TileEditMode = ETileEditMode::Option;
+
+	m_TileOptionCombo = GetDlgItem(m_hDlg, IDC_COMBO_TILEOPTION);
+
+	TCHAR TileOptionText[(int)ETileOption::End][30] =
+	{
+		TEXT("Normal"),
+		TEXT("Wall"), 
+		TEXT("Slow")
+	};
+
+	for (int i = 0; i < (int)ETileOption::End; i++)
+	{
+		SendMessage(m_TileOptionCombo, CB_ADDSTRING, 0, (LPARAM)TileOptionText[i]);
+	}
+
+	SendMessage(m_TileOptionCombo, CB_SETCURSEL, 0, 0);
+
+	m_TileOption = ETileOption::Normal;
 
 	return true;
 }
@@ -108,7 +151,12 @@ void CEditorDlg::LoadTileTexture()
 
 		CTexture* Texture = m_Scene->GetSceneResource()->FindTexture(TextureName);
 
+		Texture->SetColorKey(255, 0, 255);
+
 		SendMessage(m_TextureListBox, LB_ADDSTRING, 0, (LPARAM)FileName);
+
+		TileTextureFrameData data;
+		m_vecTextureFrameData.push_back(data);
 	}
 }
 
@@ -143,6 +191,78 @@ void CEditorDlg::SelectList()
 	{
 		memset(m_SelectTextureListText, 0, sizeof(TCHAR) * 256);
 		SendMessage(m_TextureListBox, LB_GETTEXT, m_SelectTextureListIndex, (LPARAM)m_SelectTextureListText);
+
+		int Count = (int)SendMessage(m_FrameListBox, LB_GETCOUNT, 0, 0);
+
+		for (int i = 0; i < Count; i++)
+		{
+			SendMessage(m_FrameListBox, LB_DELETESTRING, 0, 0);
+		}
+
+		for (size_t i = 0; i < m_vecTextureFrameData[m_SelectTextureListIndex].vecData.size(); i++)
+		{
+			TCHAR Text[32] = {};
+
+			wsprintf(Text, TEXT("%d"), (int)i);
+
+			SendMessage(m_FrameListBox, LB_ADDSTRING, 0, (LPARAM)Text);
+		}
+
+		m_SelectFrameIndex = -1;
+	}
+}
+
+void CEditorDlg::AddFrame()
+{
+	if (m_SelectTextureListIndex == -1)
+	{
+		return;
+	}
+
+	BOOL Transfer = FALSE;
+
+	int StartFrameX = GetDlgItemInt(m_hDlg, IDC_EDIT_STARTFRAMEX, &Transfer, TRUE);
+	int StartFrameY = GetDlgItemInt(m_hDlg, IDC_EDIT_STARTFRAMEY, &Transfer, TRUE);
+	int EndFrameX = GetDlgItemInt(m_hDlg, IDC_EDIT_ENDFRAMEX, &Transfer, TRUE);
+	int EndFrameY = GetDlgItemInt(m_hDlg, IDC_EDIT_ENDFRAMEY, &Transfer, TRUE);
+
+	TileFrmaeData Data;
+
+	Data.Start.x = (float)StartFrameX;
+	Data.Start.y = (float)StartFrameY;
+	Data.End.x = (float)EndFrameX;
+	Data.End.y = (float)EndFrameY;
+
+	TCHAR Text[32] = {};
+
+	wsprintf(Text, TEXT("%d"), m_vecTextureFrameData[m_SelectTextureListIndex].vecData.size());
+
+	SendMessage(m_FrameListBox, LB_ADDSTRING, 0, (LPARAM)Text);
+
+	m_vecTextureFrameData[m_SelectTextureListIndex].vecData.push_back(Data);
+}
+
+void CEditorDlg::DeleteFrame()
+{
+}
+
+void CEditorDlg::ModifyFrame()
+{
+}
+
+void CEditorDlg::ChangeFrame()
+{
+	m_SelectFrameIndex = (int)SendMessage(m_FrameListBox, LB_GETCURSEL, 0, 0);
+
+	if (m_SelectFrameIndex != -1)
+	{
+		TileFrmaeData Data = m_vecTextureFrameData[m_SelectTextureListIndex].vecData[m_SelectFrameIndex];
+
+		SetDlgItemInt(m_hDlg, IDC_EDIT_STARTFRAMEX, (int)Data.Start.x, TRUE);
+		SetDlgItemInt(m_hDlg, IDC_EDIT_STARTFRAMEY, (int)Data.Start.y, TRUE);
+
+		SetDlgItemInt(m_hDlg, IDC_EDIT_ENDFRAMEX, (int)Data.End.x, TRUE);
+		SetDlgItemInt(m_hDlg, IDC_EDIT_ENDFRAMEY, (int)Data.End.y, TRUE);
 	}
 }
 
@@ -172,6 +292,16 @@ LRESULT CEditorDlg::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 			}
 			break;
 
+		case IDC_LIST_TEXTUREFRAME:
+			switch (HIWORD(wParam))
+			{
+			case LBN_SELCHANGE:
+			{
+				g_Dlg->ChangeFrame();
+			}
+			break;
+			}
+			break;
 		case IDOK:
 			break;
 
@@ -189,6 +319,18 @@ LRESULT CEditorDlg::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 
 		case IDC_BUTTON_SETTEXTURE:
 			g_Dlg->SelectTexture();
+			break;
+
+		case IDC_BUTTON_ADDFRAME:
+			g_Dlg->AddFrame();
+			break;
+
+		case IDC_BUTTON_DELETEFRAME:
+			g_Dlg->DeleteFrame();
+			break;
+
+		case IDC_BUTTON_MODIFYFRAME:
+			g_Dlg->ModifyFrame();
 			break;
 		}
 		break;

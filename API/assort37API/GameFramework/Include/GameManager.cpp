@@ -14,7 +14,8 @@ bool CGameManager::m_Loop = true;
 
 CGameManager::CGameManager()	:
 	m_Timer(nullptr),
-	m_TimeScale(1.f)
+	m_TimeScale(1.f),
+	m_EditorMode(false)
 {
 }
 
@@ -39,6 +40,7 @@ CGameManager::~CGameManager()
 
 	DeleteObject(m_hGreenBrush);
 	DeleteObject(m_hRedBrush);
+	DeleteObject(m_hYellowBrush);
 	DeleteObject(m_hGreenPen);
 	DeleteObject(m_hRedPen);
 
@@ -103,6 +105,8 @@ bool CGameManager::Init(HINSTANCE hInst)
 
 	m_hGreenBrush = CreateSolidBrush(RGB(0, 255, 0));
 	m_hRedBrush = CreateSolidBrush(RGB(255, 0, 0));
+	m_hYellowBrush = CreateSolidBrush(RGB(255, 255, 0));
+
 	m_hGreenPen = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
 	m_hRedPen = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
 

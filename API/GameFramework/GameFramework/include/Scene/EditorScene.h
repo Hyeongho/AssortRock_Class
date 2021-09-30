@@ -13,6 +13,7 @@ private:
 	bool m_Start;
 	class CEditorDlg* m_Dlg;
 	class CTileMap* m_TileMap;
+	float m_ScroolSpeed;
 
 public:
 	virtual bool Init();
@@ -28,5 +29,14 @@ public:
 	void CreateTileMap();
 	void SetTileInfo(int CountX, int CountY, int SizeX, int SizeY);
 	void SetTileTexture(class CTexture* Texture);
+
+public:
+	void CameraMoveUp(float DeltaTime);
+	void CameraMoveDown(float DeltaTime);
+	void CameraMoveLeft(float DeltaTime);
+	void CameraMoveRight(float DeltaTime);
+
+	void MouseLButton(float DeltaTime);
+	void MouseRButton(float DeltaTime);
 };
 

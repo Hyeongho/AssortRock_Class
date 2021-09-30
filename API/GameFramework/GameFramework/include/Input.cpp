@@ -157,6 +157,8 @@ bool CInput::Init(HWND hWnd)
 	CreateKey("Skill1", '1');
 
 	CreateKey("Editor", VK_F1);
+	CreateKey("MouseLButton", VK_LBUTTON);
+	CreateKey("MouseRButton", VK_RBUTTON);
 
 	ShowCursor(FALSE);
 
