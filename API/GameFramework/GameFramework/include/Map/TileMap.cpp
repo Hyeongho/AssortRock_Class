@@ -46,6 +46,7 @@ bool CTileMap::CreateTile(int CountX, int CountY, const Vector2& TileSize)
 		for (int j = 0; j < m_TileCountX; j++)
 		{
 			CTile* Tile = new CTile;
+			Tile->m_Scene = m_Scene;
 
 			Tile->Init();
 
@@ -238,5 +239,87 @@ void CTileMap::Render(HDC hDC)
 				m_vecTile[i * m_TileCountX + j]->Render(hDC);
 			}
 		}
+	}
+}
+
+void CTileMap::Save(FILE* pFile)
+{
+	CMapBase::Save(pFile);
+
+	fwrite(&m_TileCountX, sizeof(int), 1, pFile);
+	fwrite(&m_TileCountY, sizeof(int), 1, pFile);
+
+	fwrite(&m_TileSize, sizeof(Vector2), 1, pFile);
+
+	fwrite(&m_StartX, sizeof(int), 1, pFile);
+	fwrite(&m_StartY, sizeof(int), 1, pFile);
+	fwrite(&m_EndX, sizeof(int), 1, pFile);
+	fwrite(&m_EndY, sizeof(int), 1, pFile);
+
+	if (m_TileTexture)
+	{
+		bool Tex = true;
+		fwrite(&Tex, sizeof(bool), 1, pFile);
+
+		m_TileTexture->Save(pFile);
+	}
+
+	else
+	{
+		bool Tex = false;
+		fwrite(&Tex, sizeof(bool), 1, pFile);
+	}
+
+	int TIleCount = (int)m_vecTile.size();
+	fwrite(&TIleCount, sizeof(int), 1, pFile);
+
+	for (int i = 0; i < TIleCount; i++)
+	{
+		m_vecTile[i]->Save(pFile);
+	}
+}
+
+void CTileMap::Load(FILE* pFile)
+{
+	CMapBase::Load(pFile);
+
+	fread(&m_TileCountX, sizeof(int), 1, pFile);
+	fread(&m_TileCountY, sizeof(int), 1, pFile);
+
+	fread(&m_TileSize, sizeof(Vector2), 1, pFile);
+
+	fread(&m_StartX, sizeof(int), 1, pFile);
+	fread(&m_StartY, sizeof(int), 1, pFile);
+	fread(&m_EndX, sizeof(int), 1, pFile);
+	fread(&m_EndY, sizeof(int), 1, pFile);
+
+	bool Tex = true;
+	fread(&Tex, sizeof(bool), 1, pFile);
+
+	if (Tex)
+	{
+		m_TileTexture = CTexture::LoadStatic(pFile, m_Scene);
+	}
+
+	int TIleCount = 0;
+	fread(&TIleCount, sizeof(int), 1, pFile);
+
+	size_t TileSize = m_vecTile.size();
+
+	for (size_t i = 0; i < TileSize; i++)
+	{
+		SAFE_DELETE(m_vecTile[i]);
+	}
+
+	m_vecTile.clear();
+
+	for (int i = 0; i < TIleCount; i++)
+	{
+		CTile* Tile = new CTile;
+		Tile->m_Scene = m_Scene;
+
+		m_vecTile.push_back(Tile);
+
+		m_vecTile[i]->Load(pFile);
 	}
 }

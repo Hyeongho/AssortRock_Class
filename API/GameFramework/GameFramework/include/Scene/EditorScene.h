@@ -38,5 +38,9 @@ public:
 
 	void MouseLButton(float DeltaTime);
 	void MouseRButton(float DeltaTime);
+
+public:
+	void Save(const char* FullPath);
+	void Load(const char* FullPath);
 };
 

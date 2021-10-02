@@ -90,6 +90,8 @@ public:
 	void DeleteFrame();
 	void ModifyFrame();
 	void ChangeFrame();
+	void Save();
+	void Load();
 
 private:
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);

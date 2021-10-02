@@ -266,6 +266,66 @@ void CEditorDlg::ChangeFrame()
 	}
 }
 
+void CEditorDlg::Save()
+{
+	TCHAR FilePath[MAX_PATH] = {};
+
+	OPENFILENAME OpenFile = {};
+
+	OpenFile.lStructSize = sizeof(OPENFILENAME);
+	OpenFile.hwndOwner = m_hDlg;
+	OpenFile.lpstrFilter = TEXT("모든파일\0*.*\0MapFile\0*.map");
+	OpenFile.lpstrFile = FilePath;
+	OpenFile.nMaxFile = MAX_PATH;
+	OpenFile.lpstrInitialDir = CPathManager::GetInst()->FindPath(MAP_PATH)->Path;
+
+	if (GetSaveFileName(&OpenFile) != 0)
+	{
+		char FullPath[MAX_PATH] = {};
+
+#ifdef UNICODE
+		// 유니코드 문자열을 멀티바이트 문자열로 변환한다.
+		int ConvertLength = WideCharToMultiByte(CP_ACP, 0, FilePath, -1, nullptr, 0, 0, 0);
+
+		WideCharToMultiByte(CP_ACP, 0, FilePath, -1, FullPath, ConvertLength, 0, 0);
+#else
+		strcpy_s(FullPath, FilePath);
+#endif // UNICODE
+
+		m_Scene->Save(FullPath);
+	}
+}
+
+void CEditorDlg::Load()
+{
+	TCHAR FilePath[MAX_PATH] = {};
+
+	OPENFILENAME OpenFile = {};
+
+	OpenFile.lStructSize = sizeof(OPENFILENAME);
+	OpenFile.hwndOwner = m_hDlg;
+	OpenFile.lpstrFilter = TEXT("모든파일\0*.*\0MapFile\0*.map");
+	OpenFile.lpstrFile = FilePath;
+	OpenFile.nMaxFile = MAX_PATH;
+	OpenFile.lpstrInitialDir = CPathManager::GetInst()->FindPath(MAP_PATH)->Path;
+
+	if (GetOpenFileName(&OpenFile) != 0)
+	{
+		char FullPath[MAX_PATH] = {};
+
+#ifdef UNICODE
+		// 유니코드 문자열을 멀티바이트 문자열로 변환한다.
+		int ConvertLength = WideCharToMultiByte(CP_ACP, 0, FilePath, -1, nullptr, 0, 0, 0);
+
+		WideCharToMultiByte(CP_ACP, 0, FilePath, -1, FullPath, ConvertLength, 0, 0);
+#else
+		strcpy_s(FullPath, FilePath);
+#endif // UNICODE
+
+		m_Scene->Load(FullPath);
+	}
+}
+
 LRESULT CEditorDlg::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
@@ -331,6 +391,14 @@ LRESULT CEditorDlg::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 
 		case IDC_BUTTON_MODIFYFRAME:
 			g_Dlg->ModifyFrame();
+			break;
+
+		case IDC_BUTTON_SAVE:
+			g_Dlg->Save();
+			break;
+
+		case IDC_BUTTON_LOAD:
+			g_Dlg->Load();
 			break;
 		}
 		break;

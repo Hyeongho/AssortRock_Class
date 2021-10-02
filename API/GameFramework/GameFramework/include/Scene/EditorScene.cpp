@@ -208,3 +208,24 @@ void CEditorScene::MouseRButton(float DeltaTime)
 
 	m_TileMap->ChangeTileOption(MousePos, ETileOption::Normal);
 }
+
+void CEditorScene::Save(const char* FullPath)
+{
+	if (!m_TileMap)
+	{
+		MessageBox(0, TEXT("맵을 생성하세요"), TEXT("Error"), MB_OK);
+		return;
+	}
+
+	m_TileMap->SaveFullPath(FullPath);
+}
+
+void CEditorScene::Load(const char* FullPath)
+{
+	if (!m_TileMap)
+	{
+		m_TileMap = CreateMap<CTileMap>("TileMap");
+	}
+
+	m_TileMap->LoadFullPath(FullPath);
+}

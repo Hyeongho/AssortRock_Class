@@ -12,6 +12,7 @@ private:
 	~CTile();
 
 private:
+	class CScene* m_Scene;
 	Vector2 m_Pos;
 	Vector2 m_Size;
 	int m_IndexX;
@@ -68,5 +69,7 @@ public:
 	void PostUpdate(float DeltaTime);
 	void PrevRender();
 	void Render(HDC hDC);
+	void Save(FILE* pFile);
+	void Load(FILE* pFile);
 };
 

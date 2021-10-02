@@ -71,3 +71,53 @@ void CTile::Render(HDC hDC)
 		FrameRect(hDC, &rc, Brush);
 	}
 }
+
+void CTile::Save(FILE* pFile)
+{
+	fwrite(&m_Pos, sizeof(Vector2), 1, pFile);
+	fwrite(&m_Size, sizeof(Vector2), 1, pFile);
+
+	fwrite(&m_IndexX, sizeof(int), 1, pFile);
+	fwrite(&m_IndexY, sizeof(int), 1, pFile);
+	fwrite(&m_Index, sizeof(int), 1, pFile);
+
+	fwrite(&m_StartFrame, sizeof(Vector2), 1, pFile);
+	fwrite(&m_EndFrame, sizeof(Vector2), 1, pFile);
+	fwrite(&m_Option, sizeof(ETileOption), 1, pFile);
+
+	if (m_Texture)
+	{
+		bool Tex = true;
+		fwrite(&Tex, sizeof(bool), 1, pFile);
+
+		m_Texture->Save(pFile);
+	}
+
+	else
+	{
+		bool Tex = false;
+		fwrite(&Tex, sizeof(bool), 1, pFile);
+	}
+}
+
+void CTile::Load(FILE* pFile)
+{
+	fread(&m_Pos, sizeof(Vector2), 1, pFile);
+	fread(&m_Size, sizeof(Vector2), 1, pFile);
+
+	fread(&m_IndexX, sizeof(int), 1, pFile);
+	fread(&m_IndexY, sizeof(int), 1, pFile);
+	fread(&m_Index, sizeof(int), 1, pFile);
+
+	fread(&m_StartFrame, sizeof(Vector2), 1, pFile);
+	fread(&m_EndFrame, sizeof(Vector2), 1, pFile);
+	fread(&m_Option, sizeof(ETileOption), 1, pFile);
+
+	bool Tex = true;
+	fread(&Tex, sizeof(bool), 1, pFile);
+
+	if (Tex)
+	{
+		m_Texture = CTexture::LoadStatic(pFile, m_Scene);
+	}
+}
