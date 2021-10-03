@@ -95,10 +95,10 @@ public:
 	virtual void PostUpdate(float DeltaTime);
 	virtual void PrevRender();
 	virtual void Render(HDC hDC);
-	virtual void Save(const char* FileName, const std::string& PathName = MAP_PATH);
+	virtual void SaveFile(const char* FileName, const std::string& PathName = MAP_PATH);
 	virtual void SaveFullPath(const char* FullPath);
 	virtual void Save(FILE* pFile);
-	virtual void Load(const char* FileName, const std::string& PathName = MAP_PATH);
+	virtual void LoadFile(const char* FileName, const std::string& PathName = MAP_PATH);
 	virtual void LoadFullPath(const char* FullPath);
 	virtual void Load(FILE* pFile);
 };

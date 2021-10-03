@@ -92,6 +92,7 @@ public:
 	void ChangeFrame();
 	void Save();
 	void Load();
+	void TIleImageAllCLear();
 
 private:
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);

@@ -34,7 +34,7 @@ void CMapBase::Render(HDC hDC)
 {
 }
 
-void CMapBase::Save(const char* FileName, const std::string& PathName)
+void CMapBase::SaveFile(const char* FileName, const std::string& PathName)
 {
 	char FullPath[MAX_PATH] = {};
 
@@ -81,7 +81,7 @@ void CMapBase::Save(FILE* pFile)
 	fwrite(&m_Active, sizeof(bool), 1, pFile);
 }
 
-void CMapBase::Load(const char* FileName, const std::string& PathName)
+void CMapBase::LoadFile(const char* FileName, const std::string& PathName)
 {
 	char FullPath[MAX_PATH] = {};
 

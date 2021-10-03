@@ -326,6 +326,11 @@ void CEditorDlg::Load()
 	}
 }
 
+void CEditorDlg::TIleImageAllCLear()
+{
+	m_Scene->TileImageAllClear();
+}
+
 LRESULT CEditorDlg::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
@@ -399,6 +404,10 @@ LRESULT CEditorDlg::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 
 		case IDC_BUTTON_LOAD:
 			g_Dlg->Load();
+			break;
+
+		case IDC_BUTTON_IMAGECLEAR:
+			g_Dlg->TIleImageAllCLear();
 			break;
 		}
 		break;

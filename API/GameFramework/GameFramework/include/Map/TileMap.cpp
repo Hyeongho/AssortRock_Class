@@ -93,6 +93,18 @@ bool CTileMap::SetTileTexture(CTexture* Texture, int IndexX, int IndexY)
 	return true;
 }
 
+void CTileMap::SetTileTexture(const Vector2& Pos, CTexture* Texture)
+{
+	CTile* Tile = GetTile(Pos);
+
+	if (!Tile)
+	{
+		return;
+	}
+
+	Tile->SetTileTexture(Texture);
+}
+
 void CTileMap::ChangeTileOption(const Vector2& Pos, ETileOption Option)
 {
 	CTile* Tile = GetTile(Pos);
@@ -114,6 +126,7 @@ void CTileMap::SetTileFrmae(const Vector2& Pos, const Vector2& Start, const Vect
 		return;
 	}
 
+	Tile->SetTileTexture(m_TileTexture);
 	Tile->SetStartFrame(Start);
 	Tile->SetEndFrame(End);
 }
@@ -134,6 +147,16 @@ CTile* CTileMap::GetTile(const Vector2& Pos)
 	}
 
 	return m_vecTile[IndexY * m_TileCountX + IndexX];
+}
+
+void CTileMap::TileImageAllClear()
+{
+	size_t Size = m_vecTile.size();
+
+	for (size_t i = 0; i < Size; i++)
+	{
+		m_vecTile[i]->SetTileTexture(nullptr);
+	}
 }
 
 void CTileMap::Start()
@@ -322,4 +345,9 @@ void CTileMap::Load(FILE* pFile)
 
 		m_vecTile[i]->Load(pFile);
 	}
+
+	m_Size = m_TileSize * Vector2((float)m_TileCountX, (float)m_TileCountY);
+
+	CCamera* Camera = m_Scene->GetCamera();
+	Camera->SetWorldResolution(m_Size);
 }

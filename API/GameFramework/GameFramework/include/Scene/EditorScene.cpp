@@ -164,11 +164,16 @@ void CEditorScene::MouseLButton(float DeltaTime)
 		return;
 	}
 
-	ETileEditMode EditMode = m_Dlg->GetTileEditMode();
-
 	Vector2 MousePos = CInput::GetInst()->GetMousePos();
 
 	CCamera* Camera = GetCamera();
+
+	if (MousePos.x < 0.f || MousePos.x > Camera->GetResolution().x || MousePos.y < 0.f || MousePos.y > Camera->GetResolution().y)
+	{
+		return;
+	}
+
+	ETileEditMode EditMode = m_Dlg->GetTileEditMode();
 
 	MousePos += Camera->GetPos();
 
@@ -198,15 +203,32 @@ void CEditorScene::MouseRButton(float DeltaTime)
 		return;
 	}
 
-	ETileEditMode EditMode = m_Dlg->GetTileEditMode();
-
 	Vector2 MousePos = CInput::GetInst()->GetMousePos();
 
 	CCamera* Camera = GetCamera();
 
+	if (MousePos.x < 0.f || MousePos.x > Camera->GetResolution().x || MousePos.y < 0.f || MousePos.y > Camera->GetResolution().y)
+	{
+		return;
+	}
+
+	ETileEditMode EditMode = m_Dlg->GetTileEditMode();
+
 	MousePos += Camera->GetPos();
 
-	m_TileMap->ChangeTileOption(MousePos, ETileOption::Normal);
+	switch (EditMode)
+	{
+	case ETileEditMode::Option:
+	{
+		m_TileMap->ChangeTileOption(MousePos, ETileOption::Normal);
+	}
+	break;
+	case ETileEditMode::Image:
+	{
+		m_TileMap->SetTileTexture(MousePos, nullptr);
+	}
+	break;
+	}
 }
 
 void CEditorScene::Save(const char* FullPath)
@@ -228,4 +250,14 @@ void CEditorScene::Load(const char* FullPath)
 	}
 
 	m_TileMap->LoadFullPath(FullPath);
+}
+
+void CEditorScene::TileImageAllClear()
+{
+	if (!m_TileMap)
+	{
+		return;
+	}
+
+	m_TileMap->TileImageAllClear();
 }

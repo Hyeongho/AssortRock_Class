@@ -22,9 +22,9 @@
 #define IDC_EDIT_ENDFRAMEY              1017
 #define IDC_BUTTON_DELETEFRAME          1018
 #define IDC_BUTTON_MODIFYFRAME          1019
+#define IDC_BUTTON_IMAGECLEAR           1020
 #define IDC_BUTTON_SAVE                 1021
 #define IDC_BUTTON_LOAD                 1023
-#define IDC_BUTTON4                     1024
 
 // Next default values for new objects
 // 
