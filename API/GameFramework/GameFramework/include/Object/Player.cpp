@@ -98,6 +98,11 @@ bool CPlayer::Init()
 	m_CharacterInfo.MP = 1000;
 	m_CharacterInfo.MPMax = 1000;
 
+	//SetGravityAccel(30.f);
+	SetPhysicsSimulate(true);
+	SetJumpVelocity(150.f);
+	m_IsGruond = false;
+
 	return true;
 }
 

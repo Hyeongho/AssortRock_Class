@@ -23,6 +23,8 @@ CScene::CScene()
 	m_Camera = new CCamera;
 
 	m_Camera->Init();
+
+	m_TileMap = nullptr;
 }
 
 CScene::~CScene()

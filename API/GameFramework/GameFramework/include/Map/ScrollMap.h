@@ -14,13 +14,14 @@ protected:
 
 protected:
 	CSharedPtr<CTexture> m_ScrollTexture;
-	Vector2 m_ScroolRatio;
+	Vector2 m_TextureSize;
+	Vector2 m_ScrollRatio;
 	bool m_Loop;
 
 public:
 	void SetScrollRatio(float x, float y)
 	{
-		m_ScroolRatio = Vector2(x, y);
+		m_ScrollRatio = Vector2(x, y);
 	}
 
 	void SetLoop(bool Loop)
@@ -33,7 +34,7 @@ public:
 	void SetTextureFullPath(const std::string& Name, const TCHAR* FullPath);
 	void SetTexture(const std::string& Name, const std::vector<std::wstring>& vecFilName, const std::string& PathName = TEXTURE_PATH);
 	void SetTexture(const std::string& Name);
-	void SetTextureColorKey(const unsigned char r, const unsigned char g, const unsigned char b, int Index = 0);
+	void SetTextureColorKey(const unsigned char r, const unsigned char g, const unsigned char b);
 
 public:
 	virtual void Start();

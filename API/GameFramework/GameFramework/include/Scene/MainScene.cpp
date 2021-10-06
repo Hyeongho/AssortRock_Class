@@ -70,6 +70,20 @@ bool CMainScene::Init()
 	Image1->SetPos(150.f, 100.f);*/
 
 	GetCamera()->SetWorldResolution(3000.f, 1200.f);
+	//GetCamera()->SetWorldResolution(30000.f, 12000.f);
+
+	//float ScrollWidth = 1500.f - GetCamera()->GetResolution().x;
+	//float ScrollHeight = 1200.f - GetCamera()->GetResolution().y;
+
+	//float TileMapWidth = 3000.f - GetCamera()->GetResolution().x;
+	//float TileMapHeight = 1200.f - GetCamera()->GetResolution().y;
+
+	//CScrollMap* Map = CreateMap<CScrollMap>("ScrollMap");
+	//Map->SetSize(1280.f, 720.f);
+	//Map->SetTexture("ScrollBack", TEXT("Sky.bmp"));
+	//Map->SetLoop(true);
+	////Map->SetScrollRatio(ScrollWidth / TileMapWidth, ScrollHeight / TileMapHeight);
+	//Map->SetZOrder(0);
 
 	float ScrollWidth = 1500.f - GetCamera()->GetResolution().x;
 	float ScrollHeight = 1200.f - GetCamera()->GetResolution().y;
@@ -80,6 +94,7 @@ bool CMainScene::Init()
 	CScrollMap* Map = CreateMap<CScrollMap>("ScrollMap");
 	Map->SetSize(1280.f, 720.f);
 	Map->SetTexture("ScrollBack", TEXT("Sky.bmp"));
+	Map->SetLoop(false);
 	Map->SetScrollRatio(ScrollWidth / TileMapWidth, ScrollHeight / TileMapHeight);
 	Map->SetZOrder(0);
 

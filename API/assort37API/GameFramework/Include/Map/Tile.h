@@ -40,6 +40,11 @@ public:
 		return m_Option;
 	}
 
+	Vector2 GetPos()	const
+	{
+		return m_Pos;
+	}
+
 public:
 	void SetTileInfo(const Vector2& Pos, const Vector2& Size,
 		int IndexX, int IndexY, int Index, CTexture* Texture)

@@ -51,7 +51,14 @@ protected:
 	bool m_Jump;
 	float m_JumpVelocity;
 
+	bool m_FloorCheck;
+
 public:
+	void SetFloorCheck(bool Check)
+	{
+		m_FloorCheck = Check;
+	}
+
 	void SetLifeTime(float Time)
 	{
 		m_LifeTime = Time;

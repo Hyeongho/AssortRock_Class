@@ -3,6 +3,7 @@
 #include "../GameInfo.h"
 #include "../Object/GameObject.h"
 #include "../UI/UIWindow.h"
+#include "../Map/TileMap.h"
 
 class CScene
 {
@@ -34,14 +35,21 @@ private:
 	CUIWindow** m_UIArray;
 	int m_UICount;
 	int m_UICapacity;
+	CTileMap* m_TileMap;
 
 public:
 	CGameObject* FindObject(const std::string& Name);
 	void SetPlayer(const std::string& Name);
 	void SetPlayer(CGameObject* Player);
+
 	CGameObject* GetPlayer() const
 	{
 		return m_Player;
+	}
+
+	CTileMap* GetTileMap() const
+	{
+		return m_TileMap;
 	}
 
 public:
@@ -181,6 +189,11 @@ public:
 		{
 			SAFE_DELETE(Map);
 			return nullptr;
+		}
+
+		if (typeid(T).hash_code() == typeid(CTileMap).hash_code())
+		{
+			m_TileMap = (CTileMap*)Map;
 		}
 
 		m_MapList.push_back(Map);

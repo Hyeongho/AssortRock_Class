@@ -22,6 +22,8 @@ CScene::CScene()
 	m_Camera = new CCamera;
 
 	m_Camera->Init();
+
+	m_TileMap = nullptr;
 }
 
 CScene::~CScene()
@@ -522,12 +524,12 @@ int CScene::SortZOrder(const void* Src, const void* Dest)
 
 	if (SrcZ > DestZ)
 	{
-		return 1;
+		return -1;
 	}
 
 	else if (SrcZ < DestZ)
 	{
-		return -1;
+		return 1;
 	}
 
 	return 0;

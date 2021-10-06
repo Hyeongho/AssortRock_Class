@@ -26,6 +26,17 @@ protected:
 	int m_EndY;
 
 public:
+	int GetTileCountX() const
+	{
+		return m_TileCountX;
+	}
+
+	int GetTileCountY() const
+	{
+		return m_TileCountY;
+	}
+
+public:
 	bool CreateTile(int CountX, int CountY, const Vector2& TileSize);
 	bool SetTileTexture(CTexture* Texture);
 	bool SetTileTexture(CTexture* Texture, int IndexX, int IndexY);
@@ -33,6 +44,13 @@ public:
 	void ChangeTileOption(const Vector2& Pos, ETileOption Option);
 	void SetTileFrmae(const Vector2& Pos, const Vector2& Start, const Vector2& End);
 	CTile* GetTile(const Vector2& Pos);
+	CTile* GetTile(int Index);
+	CTile* GetTile(int IndexX, int IndexY);
+	int GetTileIndexX(float PosX);
+	int GetTileIndexY(float PosY);
+	int GetTileIndex(const Vector2& Pos);
+	int GetOriginTileIndexX(float PosX);
+	int GetOriginTileIndexY(float PosY);
 	void TileImageAllClear();
 
 public:

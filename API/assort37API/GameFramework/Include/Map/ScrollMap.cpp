@@ -52,6 +52,9 @@ void CScrollMap::SetTextureColorKey(const unsigned char r, const unsigned char g
 void CScrollMap::Start()
 {
 	CMapBase::Start();
+
+	if (m_ScrollTexture)
+		m_TextureSize = Vector2((float)m_ScrollTexture->GetWidth(), (float)m_ScrollTexture->GetHeight());
 }
 
 bool CScrollMap::Init()
@@ -110,15 +113,43 @@ void CScrollMap::Render(HDC hDC)
 
 			Vector2 Resolution = Camera->GetResolution();
 
-			Vector2	ImagePos;
+			Vector2	ImagePos = Camera->GetPos() * m_ScrollRatio;
 
 			int	XRatio = (int)(CameraPos.x / Resolution.x);
 			int	YRatio = (int)(CameraPos.y / Resolution.y);
 
-			// 화요일에 잘라서 이어붙이기.
+			unsigned int	Width = m_ScrollTexture->GetWidth();
+			unsigned int	Height = m_ScrollTexture->GetHeight();
 
-			// 왼쪽 출력
-			m_ScrollTexture->Render(hDC, m_Pos, ImagePos, m_Size);
+			// 좌상단, 우상단, 좌하단, 우하단 출력
+			unsigned int	WidthRatio = (unsigned int)(CameraPos.x / Width);
+			unsigned int	HeightRatio = (unsigned int)(CameraPos.y / Height);
+
+			Vector2	ConvertPos;
+			ConvertPos.x = CameraPos.x - WidthRatio * Width;
+			ConvertPos.y = CameraPos.y - HeightRatio * Height;
+
+			Vector2	ConvertLeftTopSize;
+			ConvertLeftTopSize.x = Width - ConvertPos.x;
+			ConvertLeftTopSize.y = Height - ConvertPos.y;
+
+			// 좌 상단 출력
+			m_ScrollTexture->Render(hDC, Vector2(0.f, 0.f), ConvertPos, ConvertLeftTopSize);
+
+			// 우 상단 출력
+			m_ScrollTexture->Render(hDC, Vector2(ConvertLeftTopSize.x, 0.f), 
+				Vector2(0.f, Height - ConvertLeftTopSize.y), 
+				Vector2(Resolution.x - ConvertLeftTopSize.x, ConvertLeftTopSize.y));
+
+			// 좌 하단 출력
+			m_ScrollTexture->Render(hDC, Vector2(0.f, ConvertLeftTopSize.y),
+				Vector2(ConvertPos.x, 0.f),
+				Vector2(ConvertLeftTopSize.x, Resolution.y - ConvertLeftTopSize.y));
+
+			// 우 하단 출력
+			m_ScrollTexture->Render(hDC, Vector2(ConvertLeftTopSize.x, ConvertLeftTopSize.y),
+				Vector2(0.f, 0.f),
+				Vector2(Resolution.x - ConvertLeftTopSize.x, Resolution.y - ConvertLeftTopSize.y));
 		}
 	}
 }

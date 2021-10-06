@@ -109,6 +109,11 @@ bool CPlayer::Init()
 	m_CharacterInfo.HP = 1000;
 	m_CharacterInfo.HPMax = 1000;
 
+	//SetGravityAccel(30.f);
+	SetPhysicsSimulate(true);
+	SetJumpVelocity(150.f);
+	m_IsGround = false;
+
 	return true;
 }
 

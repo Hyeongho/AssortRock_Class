@@ -6,6 +6,7 @@
 #include "../Scene/SceneCollision.h"
 #include "../Resource/AnimationSequence.h"
 #include "../Scene/Camera.h"
+#include "../Map/TileMap.h"
 
 CGameObject::CGameObject()	:
 	m_Scene(nullptr),
@@ -23,13 +24,15 @@ CGameObject::CGameObject()	:
 	m_Jump(false),
 	m_JumpVelocity(0.f),
 	m_GravityAccel(10.f),
-	m_LifeTime(0.f)
+	m_LifeTime(0.f),
+	m_FloorCheck(false)
 {
 }
 
 CGameObject::CGameObject(const CGameObject& obj)	:
 	CRef(obj)
 {
+	m_FloorCheck = obj.m_FloorCheck;
 	m_GravityAccel = obj.m_GravityAccel;
 	m_PhysicsSimulate = obj.m_PhysicsSimulate;
 	m_IsGround = obj.m_IsGround;
@@ -429,6 +432,83 @@ void CGameObject::PostUpdate(float DeltaTime)
 		for (; iter != iterEnd; ++iter)
 		{
 			(*iter)->PostUpdate(DeltaTime);
+		}
+	}
+
+	if (!m_IsGround && m_Pos.y - m_PrevPos.y > 0.f)
+	{
+		// 이전 위치와 현재 위치의 타일 인덱스를 구해온다.
+		int	PrevIndexX, PrevIndexY, IndexX, IndexY;
+
+		CTileMap* TileMap = m_Scene->GetTileMap();
+
+		if ((TileMap->GetTileIndexX(m_PrevPos.x) != -1 ||
+			TileMap->GetTileIndexX(m_Pos.x)) &&
+			(TileMap->GetTileIndexY(m_PrevPos.y) != -1 ||
+				TileMap->GetTileIndexY(m_Pos.y)))
+
+		{
+			Vector2	PrevBottomPos = m_PrevPos;
+			Vector2	BottomPos = m_Pos;
+
+			PrevBottomPos.y = m_PrevPos.y + (1.f - m_Pivot.y) * m_Size.y;
+			BottomPos.y = m_Pos.y + (1.f - m_Pivot.y) * m_Size.y;
+
+			PrevIndexX = TileMap->GetOriginTileIndexX(PrevBottomPos.x);
+			PrevIndexY = TileMap->GetOriginTileIndexY(PrevBottomPos.y);
+			IndexX = TileMap->GetOriginTileIndexX(BottomPos.x);
+			IndexY = TileMap->GetOriginTileIndexY(BottomPos.y);
+
+			if (PrevIndexX < 0)
+				PrevIndexX = 0;
+
+			else if (PrevIndexX >= TileMap->GetTileCountX())
+				PrevIndexX = TileMap->GetTileCountX() - 1;
+
+			if (PrevIndexY < 0)
+				PrevIndexY = 0;
+
+			else if (PrevIndexY >= TileMap->GetTileCountY())
+				PrevIndexY = TileMap->GetTileCountY() - 1;
+
+			if (IndexX < 0)
+				IndexX = 0;
+
+			else if (IndexX >= TileMap->GetTileCountX())
+				IndexX = TileMap->GetTileCountX() - 1;
+
+			if (IndexY < 0)
+				IndexY = 0;
+
+			else if (IndexY >= TileMap->GetTileCountY())
+				IndexY = TileMap->GetTileCountY() - 1;
+
+			// 위에서 아래로 반복한다. 위쪽의 타일이 Y인덱스가 더 작으므로
+			// 작은 인덱스에서 큰 인덱스 순서로 체크를 할 수 있도록 한다.
+			int	MinY = IndexY < PrevIndexY ? IndexY : PrevIndexY;
+			int	MaxY = IndexY > PrevIndexY ? IndexY : PrevIndexY;
+
+			int	MinX = IndexX < PrevIndexX ? IndexX : PrevIndexX;
+			int	MaxX = IndexX > PrevIndexX ? IndexX : PrevIndexX;
+
+			bool	Check = false;
+
+			for (int i = MinY; i <= MaxY; ++i)
+			{
+				for (int j = MinX; j <= MaxX; ++j)
+				{
+					if (TileMap->GetTile(j, i)->GetTileOption() == ETileOption::Wall)
+					{
+						Check = true;
+						m_Pos.y = TileMap->GetTile(j, i)->GetPos().y - (1.f - m_Pivot.y) * m_Size.y;
+						m_IsGround = true;
+						break;
+					}
+				}
+
+				if (Check)
+					break;
+			}
 		}
 	}
 }

@@ -147,6 +147,57 @@ CTile* CTileMap::GetTile(const Vector2& Pos)
 	return m_vecTile[IndexY * m_TileCountX + IndexX];
 }
 
+CTile* CTileMap::GetTile(int Index)
+{
+	return m_vecTile[Index];
+}
+
+CTile* CTileMap::GetTile(int IndexX, int IndexY)
+{
+	return m_vecTile[IndexY * m_TileCountX + IndexX];
+}
+
+int CTileMap::GetTileIndexX(float PosX)
+{
+	int	IndexX = (int)(PosX / m_TileSize.x);
+
+	if (IndexX < 0 || IndexX >= m_TileCountX)
+		return -1;
+
+	return IndexX;
+}
+
+int CTileMap::GetTileIndexY(float PosY)
+{
+	int	IndexY = (int)(PosY / m_TileSize.y);
+
+	if (IndexY < 0 || IndexY >= m_TileCountY)
+		return -1;
+
+	return IndexY;
+}
+
+int CTileMap::GetTileIndex(const Vector2& Pos)
+{
+	int	IndexX = GetTileIndexX(Pos.x);
+	int	IndexY = GetTileIndexY(Pos.y);
+
+	if (IndexX == -1 || IndexY == -1)
+		return -1;
+
+	return IndexY * m_TileCountX + IndexX;
+}
+
+int CTileMap::GetOriginTileIndexX(float PosX)
+{
+	return (int)(PosX / m_TileSize.x);
+}
+
+int CTileMap::GetOriginTileIndexY(float PosY)
+{
+	return (int)(PosY / m_TileSize.y);
+}
+
 void CTileMap::TileImageAllClear()
 {
 	size_t	Size = m_vecTile.size();

@@ -14,6 +14,7 @@ protected:
 
 protected:
 	CSharedPtr<CTexture>	m_ScrollTexture;
+	Vector2		m_TextureSize;
 	Vector2		m_ScrollRatio;
 	bool		m_Loop;
 
