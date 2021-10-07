@@ -8,13 +8,15 @@
 #include "../Map/TileMap.h"
 
 CGameObject::CGameObject() : m_Scene(nullptr), m_MoveSpeed(200.f), m_TimeScale(1.f), m_Animation(nullptr), m_CameraCull(false), m_Start(false), m_ObjType(EObject_Type::GameObject),
-m_DamageEnable(true), m_PhysicsSimulate(false), m_IsGruond(true), m_FallTime(0.f), m_FallStartY(0.f), m_Jump(false), m_JumpVelocity(0.f), m_GravityAccel(10.f), m_LifeTime(0.f), 
-m_FloorCheck(false)
+m_DamageEnable(true), m_PhysicsSimulate(false), m_IsGruond(true), m_FallTime(0.f), m_FallStartY(0.f), m_Jump(false), m_JumpVelocity(0.f), m_GravityAccel(10.f), m_LifeTime(0.f),
+m_FloorCheck(false), m_SideWallCheck(false)
 {
+	m_PrevPos.y = -1.f;
 }
 
 CGameObject::CGameObject(const CGameObject& obj) : CRef(obj)
 {
+	m_PrevPos.y = -1.f;
 	m_FloorCheck = obj.m_FloorCheck;
 	m_PhysicsSimulate = obj.m_PhysicsSimulate;
 	m_IsGruond = obj.m_IsGruond;
@@ -431,95 +433,188 @@ void CGameObject::PostUpdate(float DeltaTime)
 		}
 	}
 
-	if (!m_IsGruond && m_Pos.y - m_PrevPos.y > 0.f)
+	//float DirX = m_Pos.x - m_PrevPos.x;
+
+	//if (DirX != 0.f && m_SideWallCheck)
+	//{
+	//	Vector2 LT = m_Pos - m_Pivot * m_Size;
+	//	Vector2 RB = LT + m_Size;
+
+	//	int LTIndexX, LTIndexY, RBIndexX, RBIndexY;
+
+	//	CTileMap* TileMap = m_Scene->GetTileMap();
+
+	//	LTIndexX = TileMap->GetOriginTileIndexX(LT.x);
+	//	LTIndexY = TileMap->GetOriginTileIndexY(LT.y);
+	//	RBIndexX = TileMap->GetOriginTileIndexX(RB.x);
+	//	RBIndexY = TileMap->GetOriginTileIndexY(RB.y);
+
+	//	LTIndexX = LTIndexX < 0 ? 0 : LTIndexX;
+	//	LTIndexY = LTIndexY < 0 ? 0 : LTIndexY;
+
+	//	RBIndexX = RBIndexX > TileMap->GetTileCountX() - 1 ? TileMap->GetTileCountX() - 1 : RBIndexX;
+	//	RBIndexY = RBIndexY > TileMap->GetTileCountY() - 1 ? TileMap->GetTileCountY() - 1 : RBIndexY;
+
+	//	bool SideCollision = false;
+
+	//	// 오른쪽으로 이동할때
+	//	if (DirX > 0.f)
+	//	{
+	//		for (int i = LTIndexY; i <= RBIndexY; i++)
+	//		{
+	//			for (int j = LTIndexX; j <= RBIndexX; j++)
+	//			{
+	//				int Index = i * TileMap->GetTileCountX() + j;
+
+	//				if (TileMap->GetTile(Index)->GetTileOption() != ETileOption::Wall || !TileMap->GetTile(Index)->GetSideCollision())
+	//				{
+	//					continue;
+	//				}
+
+	//				Vector2 TilePos = TileMap->GetTile(Index)->GetPos();
+	//				Vector2 TileSize = TileMap->GetTile(Index)->GetSize();
+
+	//				if (TilePos.y - 0.001f <= RB.y && RB.y <= TilePos.y + 0.001f)
+	//				{
+	//					continue;
+	//				}
+
+	//				// 렉트충돌
+	//				if (LT.x <= TilePos.x + TileSize.x && LT.y <= TilePos.y + TileSize.y && RB.x > TilePos.x && RB.y >= TilePos.y)
+	//				{
+	//					SideCollision = true;
+
+	//					float MoveX = TilePos.x - m_Pos.x;
+
+	//					//Move(Vector2(MoveX, 0.f));
+	//					m_Pos.x += MoveX;
+	//					m_Velocity.x += MoveX;
+	//				}
+	//			}
+
+	//			if (SideCollision)
+	//			{
+	//				break;
+	//			}
+	//		}
+	//	}
+
+	//	// 왼쪽으로 이동할때
+	//	else
+	//	{
+	//		for (int i = LTIndexY; i <= RBIndexY; i++)
+	//		{
+	//			for (int j = RBIndexX; j >= LTIndexX; j--)
+	//			{
+	//				int Index = i * TileMap->GetTileCountX() + j;
+
+	//				if (TileMap->GetTile(Index)->GetTileOption() != ETileOption::Wall || !TileMap->GetTile(Index)->GetSideCollision())
+	//				{
+	//					continue;
+	//				}
+
+	//				Vector2 TilePos = TileMap->GetTile(Index)->GetPos();
+	//				Vector2 TileSize = TileMap->GetTile(Index)->GetSize();
+
+	//				// 렉트충돌
+	//				if (LT.x <= TilePos.x + TileSize.x && LT.y <= TilePos.y + TileSize.y && RB.x > TilePos.x && RB.y >= TilePos.y)
+	//				{
+	//					SideCollision = true;
+
+	//					float MoveX = TilePos.x + TileSize.x - m_Pos.x;
+
+	//					//Move(Vector2(MoveX, 0.f));
+	//					m_Pos.x += MoveX;
+	//					m_Velocity.x += MoveX;
+	//				}
+	//			}
+
+	//			if (SideCollision)
+	//			{
+	//				break;
+	//			}
+	//		}
+	//	}
+	//}
+
+	//if (!m_IsGruond && m_Pos.y - m_PrevPos.y > 0.f)
+	if (m_PhysicsSimulate)
 	{
-		// 이전 위치와 현재 위치의 타일 인덱스를 구해온다.
-		int PrevIndexX, PrevIndexY, IndexX, IndexY;
-		
 		CTileMap* TileMap = m_Scene->GetTileMap();
 
-		if ((TileMap->GetTileIndexX(m_PrevPos.x) != -1 || TileMap->GetTileIndexX(m_Pos.x)) && (TileMap->GetTileIndexY(m_PrevPos.y) != -1 || TileMap->GetTileIndexY(m_Pos.y)))
+		float PrevBottom = m_PrevPos.y + (1.f - m_Pivot.y) * m_Size.y;
+		float CurBottom = m_Pos.y + (1.f - m_Pivot.y) * m_Size.y;
+		float PrevLeft = m_PrevPos.x - m_Pivot.x * m_Size.x;
+		float CurLeft = m_Pos.x - m_Pivot.x * m_Size.x;
+		float PrevRight = PrevLeft + m_Size.x;
+		float CurRight = CurLeft + m_Size.x;
+
+		float resultLeft = PrevLeft < CurLeft ? PrevLeft : CurLeft;
+		float resultRight = PrevRight > CurRight ? PrevRight : CurRight;
+		float resultTop = PrevBottom < CurBottom ? PrevBottom : CurBottom;
+		float resultBottom = PrevBottom > CurBottom ? PrevBottom : CurBottom;
+
+		// 이전 위치와 현재 위치의 타일 인덱스를 구해온다.
+		int LeftIndex, TopIndex, RightIndex, BottomIndex;
+
+		LeftIndex = TileMap->GetOriginTileIndexX(resultLeft);
+		TopIndex = TileMap->GetOriginTileIndexY(resultTop);
+		RightIndex = TileMap->GetOriginTileIndexX(resultRight);
+		BottomIndex = TileMap->GetOriginTileIndexY(resultBottom);
+
+		if (LeftIndex < 0)
 		{
-			Vector2 PrevBottomPos = m_PrevPos;
-			Vector2 BottomPos = m_Pos;
+			LeftIndex = 0;
+		}
 
-			PrevBottomPos.y = m_PrevPos.y + (1.f - m_Pivot.y) * m_Size.y;
-			BottomPos.y = m_Pos.y + (1.f - m_Pivot.y) * m_Size.y;
+		if (TopIndex < 0)
+		{
+			TopIndex = 0;
+		}
 
-			PrevIndexX = TileMap->GetOriginTileIndexX(PrevBottomPos.x);
-			PrevIndexY = TileMap->GetOriginTileIndexY(PrevBottomPos.y);
-			IndexX = TileMap->GetOriginTileIndexX(BottomPos.x);
-			IndexY = TileMap->GetOriginTileIndexY(BottomPos.y);
+		if (RightIndex >= TileMap->GetTileCountX())
+		{
+			RightIndex = TileMap->GetTileCountX() - 1;
+		}
 
-			if (PrevIndexX < 0)
+		if (BottomIndex >= TileMap->GetTileCountY())
+		{
+			BottomIndex = TileMap->GetTileCountY() - 1;
+		}
+
+		bool Check = false;
+
+		for (int i = TopIndex; i <= BottomIndex; i++)
+		{
+			for (int j = LeftIndex; j <= RightIndex; j++)
 			{
-				PrevIndexX = 0;
-			}
-
-			else if (PrevIndexX >= TileMap->GetTileCountX())
-			{
-				PrevIndexX = TileMap->GetTileCountX() - 1;
-			}
-
-			if (PrevIndexY < 0)
-			{
-				PrevIndexY = 0;
-			}
-
-			else if (PrevIndexY >= TileMap->GetTileCountY())
-			{
-				PrevIndexY = TileMap->GetTileCountY() - 1;
-			}
-
-			if (IndexX < 0)
-			{
-				IndexX = 0;
-			}
-
-			else if (IndexX >= TileMap->GetTileCountX())
-			{
-				IndexX = TileMap->GetTileCountX() - 1;
-			}
-
-			if (IndexY < 0)
-			{
-				IndexY = 0;
-			}
-
-			else if (IndexY >= TileMap->GetTileCountY())
-			{
-				IndexY = TileMap->GetTileCountY() - 1;
-			}
-
-			// 위에서 아래로 반복한다. 위쪽의 타일이 Y인덱스가 더 작으므로 작은 인덱스에서 큰 인덱스 순서로 체크를 할 수 있도록 한다.
-			int MinY = IndexY < PrevIndexY ? IndexY : PrevIndexY;
-			int MaxY = IndexY > PrevIndexY ? IndexY : PrevIndexY;
-
-			int MinX = IndexX < PrevIndexX ? IndexX : PrevIndexX;
-			int MaxX = IndexX > PrevIndexX ? IndexX : PrevIndexX;
-
-			bool Check = false;
-
-			for (int i = MinY; i <= MaxY; i++)
-			{
-				for (int j = MinX; j <= MaxX; j++)
+				if (TileMap->GetTile(j, i)->GetTileOption() == ETileOption::Wall)
 				{
-					if (TileMap->GetTile(j, i)->GetTileOption() == ETileOption::Wall)
-					{
-						Check = true;
-
-						m_Pos.y = TileMap->GetTile(j, i)->GetPos().y - (1.f - m_Pivot.y) * m_Size.y;
-						m_IsGruond = true;
-						break;
-					}
-				}
-
-				if (Check)
-				{
+					Check = true;
+					m_FallTime = 0.f;
+					m_Pos.y = TileMap->GetTile(j, i)->GetPos().y - (1.f - m_Pivot.y) * m_Size.y;
+					m_IsGruond = true;
+					m_Jump = false;
 					break;
 				}
 			}
-		}	
+
+			if (Check)
+			{
+				break;
+			}
+		}
+
+		if (!Check)
+		{
+			if (m_IsGruond)
+			{
+				m_FallTime = 0.f;
+				m_FallStartY = m_Pos.y;
+			}
+
+			m_IsGruond = false;
+		}
 	}
 }
 

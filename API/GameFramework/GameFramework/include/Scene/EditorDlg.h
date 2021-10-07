@@ -40,7 +40,15 @@ private:
 	HWND m_FrameListBox;
 	int m_SelectFrameIndex;
 
+	HWND m_SideCollisionCheckHandel;
+	bool m_SideCollision;
+
 public:
+	bool GetSideCollision() const
+	{
+		return m_SideCollision;
+	}
+
 	ETileOption GetTileOption() const
 	{
 		return (ETileOption)SendMessage(m_TileOptionCombo, CB_GETCURSEL, 0, 0);
@@ -93,6 +101,7 @@ public:
 	void Save();
 	void Load();
 	void TIleImageAllCLear();
+	void SideCollisionCheck();
 
 private:
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);

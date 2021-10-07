@@ -117,6 +117,18 @@ void CTileMap::ChangeTileOption(const Vector2& Pos, ETileOption Option)
 	Tile->SetTileOption(Option);
 }
 
+void CTileMap::ChangeTileSideCollision(const Vector2 Pos, bool SideCollision)
+{
+	CTile* Tile = GetTile(Pos);
+
+	if (!Tile)
+	{
+		return;
+	}
+
+	Tile->SetSideCollision(SideCollision);
+}
+
 void CTileMap::SetTileFrmae(const Vector2& Pos, const Vector2& Start, const Vector2& End)
 {
 	CTile* Tile = GetTile(Pos);

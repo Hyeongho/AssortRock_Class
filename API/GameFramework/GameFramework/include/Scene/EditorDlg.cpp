@@ -81,6 +81,9 @@ bool CEditorDlg::Init(int ID)
 
 	m_TileOption = ETileOption::Normal;
 
+	m_SideCollisionCheckHandel = GetDlgItem(m_hDlg, IDC_CHECK_SIDECOLLISION);
+	m_SideCollision = false;
+
 	return true;
 }
 
@@ -331,6 +334,19 @@ void CEditorDlg::TIleImageAllCLear()
 	m_Scene->TileImageAllClear();
 }
 
+void CEditorDlg::SideCollisionCheck()
+{
+	if (SendMessage(m_SideCollisionCheckHandel, BM_GETCHECK, 0, 0) == BST_UNCHECKED)
+	{
+		m_SideCollision = false;
+	}
+
+	else
+	{
+		m_SideCollision = true;
+	}
+}
+
 LRESULT CEditorDlg::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
@@ -408,6 +424,10 @@ LRESULT CEditorDlg::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 
 		case IDC_BUTTON_IMAGECLEAR:
 			g_Dlg->TIleImageAllCLear();
+			break;
+
+		case IDC_CHECK_SIDECOLLISION:
+			g_Dlg->SideCollisionCheck();
 			break;
 		}
 		break;

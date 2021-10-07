@@ -36,6 +36,8 @@ void CPlayer::Start()
 	CInput::GetInst()->SetCallback<CPlayer>("Resume", KeyState_Down, this, &CPlayer::Resume);
 
 	CInput::GetInst()->SetCallback<CPlayer>("Skill1", KeyState_Down, this, &CPlayer::Skill1);
+
+	CInput::GetInst()->SetCallback<CPlayer>("Jump", KeyState_Down, this, &CPlayer::JumpKey);
 }
 
 bool CPlayer::Init()
@@ -100,8 +102,8 @@ bool CPlayer::Init()
 
 	//SetGravityAccel(30.f);
 	SetPhysicsSimulate(true);
-	SetJumpVelocity(150.f);
-	m_IsGruond = false;
+	SetJumpVelocity(70.f);
+	SetSideWallCheck(true);
 
 	return true;
 }
@@ -242,6 +244,11 @@ void CPlayer::Resume(float DeltaTime)
 void CPlayer::Skill1(float DeltaTime)
 {
 	ChangeAnimation("LucidNunNaRightSkill1");
+}
+
+void CPlayer::JumpKey(float DeltaTime)
+{
+	Jump();
 }
 
 void CPlayer::AttackEnd()

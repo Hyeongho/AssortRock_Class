@@ -45,6 +45,7 @@ public:
 	void Pause(float DeltaTime);
 	void Resume(float DeltaTime);
 	void Skill1(float DeltaTime);
+	void JumpKey(float DeltaTime);
 
 public:
 	void AttackEnd();

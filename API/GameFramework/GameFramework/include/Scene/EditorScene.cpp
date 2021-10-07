@@ -184,8 +184,11 @@ void CEditorScene::MouseLButton(float DeltaTime)
 		ETileOption Option = m_Dlg->GetTileOption();
 
 		m_TileMap->ChangeTileOption(MousePos, Option);
+
+		m_TileMap->ChangeTileSideCollision(MousePos, m_Dlg->GetSideCollision());
 	}
 		break;
+
 	case ETileEditMode::Image:
 	{
 		TileFrmaeData FrameData = m_Dlg->GetTileFrameData();

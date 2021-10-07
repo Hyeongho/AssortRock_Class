@@ -53,7 +53,14 @@ protected:
 
 	bool m_FloorCheck;
 
+	bool m_SideWallCheck;
+
 public:
+	void SetSideWallCheck(bool Check)
+	{
+		m_SideWallCheck = Check;
+	}
+
 	void SetFloorCheck(bool Check)
 	{
 		m_FloorCheck = Check;
@@ -86,6 +93,7 @@ public:
 			m_Jump = true;
 			m_IsGruond = false;
 
+			m_FallTime = 0.f;
 			m_FallStartY = m_Pos.y;
 		}
 	}

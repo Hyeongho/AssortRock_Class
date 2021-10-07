@@ -146,7 +146,8 @@ bool CInput::Init(HWND hWnd)
 	CreateKey("MoveDown", 'S');
 	CreateKey("MoveLeft", 'A');
 	CreateKey("MoveRight", 'D');
-	CreateKey("Fire", VK_SPACE);
+	CreateKey("Jump", VK_SPACE);
+	CreateKey("Fire", VK_LBUTTON);
 	//SetCtrlKey("Fire", true);
 
 	CreateKey("Pause", 'P');

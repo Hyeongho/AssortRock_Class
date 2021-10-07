@@ -49,6 +49,8 @@ bool CMainScene::Init()
 
 	CPlayer* Player = CreateObject<CPlayer>("Player");
 
+	Player->SetPos(300.f, 0.f);
+
 	SetPlayer(Player);
 
 	GetCamera()->SetTarget(Player);

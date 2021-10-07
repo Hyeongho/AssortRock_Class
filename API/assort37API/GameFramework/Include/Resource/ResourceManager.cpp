@@ -75,7 +75,7 @@ bool CResourceManager::Init()
 	LoadOtherFont(TEXT("NotoSansKR-Bold.otf"));
 	LoadOtherFont(TEXT("NotoSansKR-Regular.otf"));
 
-	LoadFont("DefaultFont", TEXT("NotoSansKR-Regular"), 30, 30);
+	LoadFont("DefaultFont", TEXT("NotoSansKR-Regular"));
 
 	return true;
 }

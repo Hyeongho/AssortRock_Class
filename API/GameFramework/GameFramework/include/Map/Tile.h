@@ -22,8 +22,14 @@ private:
 	ETileOption m_Option;
 	Vector2 m_StartFrame;
 	Vector2 m_EndFrame;
+	bool m_SideCollision;
 
 public:
+	void SetSideCollision(bool SideCollision)
+	{
+		m_SideCollision = SideCollision;
+	}
+
 	void SetStartFrame(const Vector2& Frame)
 	{
 		m_StartFrame = Frame;
@@ -35,6 +41,11 @@ public:
 	}
 
 public:
+	bool GetSideCollision() const
+	{
+		return m_SideCollision;
+	}
+
 	ETileOption GetTileOption() const
 	{
 		return m_Option;
@@ -43,6 +54,11 @@ public:
 	Vector2 GetPos() const
 	{
 		return m_Pos;
+	}
+
+	Vector2 GetSize() const
+	{
+		return m_Size;
 	}
 
 public:

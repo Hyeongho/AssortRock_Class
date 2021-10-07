@@ -55,7 +55,7 @@ void CSceneCollision::CollisionMouse(float DeltaTime)
 		vecWidget[WidgetOffset] = m_SelectWidget;
 		++WidgetOffset;
 	}
-	
+
 	for (size_t i = 0; i < WindowCount; ++i)
 	{
 		int	Count = m_vecUIWindow[i]->GetWidgetCount();

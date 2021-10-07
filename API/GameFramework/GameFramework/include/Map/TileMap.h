@@ -42,6 +42,7 @@ public:
 	bool SetTileTexture(CTexture* Texture, int IndexX, int IndexY);
 	void SetTileTexture(const Vector2& Pos, CTexture* Texture);
 	void ChangeTileOption(const Vector2& Pos, ETileOption Option);
+	void ChangeTileSideCollision(const Vector2 Pos, bool SideCollision);
 	void SetTileFrmae(const Vector2& Pos, const Vector2& Start, const Vector2& End);
 	CTile* GetTile(const Vector2& Pos);
 	CTile* GetTile(int Index);

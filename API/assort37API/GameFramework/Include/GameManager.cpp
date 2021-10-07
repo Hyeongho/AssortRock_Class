@@ -185,7 +185,7 @@ bool CGameManager::Collision(float DeltaTime)
 }
 
 void CGameManager::Render(float DeltaTime)
-{ 
+{
 	// 임시로 화면을 지우기 위한 Rect를 그려준다.
 	Rectangle(m_hBackDC, -1, -1, m_RS.Width + 1, m_RS.Height + 1);
 
@@ -234,7 +234,7 @@ ATOM CGameManager::Register()
 BOOL CGameManager::Create()
 {
 	m_hWnd = CreateWindowW(TEXT("GameFramework"), TEXT("GameFramework"), WS_OVERLAPPEDWINDOW,
-		100, 100, 1280, 720, nullptr, nullptr, m_hInst, nullptr);
+		0, 0, 1280, 720, nullptr, nullptr, m_hInst, nullptr);
 
 	if (!m_hWnd)
 	{
@@ -252,7 +252,7 @@ BOOL CGameManager::Create()
 	AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
 	// 위에서 얻어온 Rect를 이용해서 윈도우 크기를 지정한다.
-	SetWindowPos(m_hWnd, HWND_TOPMOST, 100, 100, rc.right - rc.left, 
+	SetWindowPos(m_hWnd, HWND_TOPMOST, 1920, 100, rc.right - rc.left, 
 		rc.bottom - rc.top,
 		SWP_NOZORDER);
 
